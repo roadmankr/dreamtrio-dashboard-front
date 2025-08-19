@@ -1,0 +1,1 @@
+export const EXCEL_VALID_EXTENSIONS = ['.xls', '.xlsx'];

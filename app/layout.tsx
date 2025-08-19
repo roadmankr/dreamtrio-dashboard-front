@@ -1,15 +1,19 @@
+import { Toaster } from "@/components/ui/sonner";
+import QueryProvider from "@/shared/providers/query-provider";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Roboto, Sora } from 'next/font/google';
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+const roboto = Roboto({
+  subsets: ['latin'],
+  variable: '--font-roboto',
+  display: 'swap',
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const sora = Sora({
+  subsets: ['latin'],
+  variable: '--font-sora',
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -25,9 +29,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${roboto.variable} ${sora.variable} antialiased`}
       >
-        {children}
+        <QueryProvider>
+            <div className='flex min-h-dvh w-full min-w-[280px] flex-1 flex-row overflow-hidden font-sora'>
+                <Toaster
+                  richColors
+                  // position='top-center'
+                  // expand={true}
+                  className='pointer-events-auto z-50 touch-manipulation select-text'
+                />
+                {children}
+              </div>
+        </QueryProvider>
       </body>
     </html>
   );
