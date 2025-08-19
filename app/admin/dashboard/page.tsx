@@ -21,25 +21,18 @@ const DashboardPage = async () => {
   return (
     <div className='flex min-w-full flex-col'>
       <HydrationBoundary state={dehydrate(queryClient)}>
-        <div className='flex w-full flex-col gap-3 p-3'>
-          <Suspense>
+        <Suspense>
+          <div className='flex w-full flex-col gap-3 p-3'>
             <StoreDateFilter />
-          </Suspense>
 
-          <div className='flex gap-3'>
-            <Suspense>
+            <div className='flex gap-3'>
               <GenderDashboardChart />
-            </Suspense>
-
-            <Suspense>
               <AgeDashboardChart />
-            </Suspense>
-          </div>
+            </div>
 
-          <Suspense>
             <ProductDashboardChart />
-          </Suspense>
-        </div>
+          </div>
+        </Suspense>
       </HydrationBoundary>
     </div>
   );

@@ -19,6 +19,10 @@ const useGetSalesBreakDown = ({ dimension }: Props) => {
     () => ({ storeName, saleDate, dimension }),
     [storeName, saleDate, dimension],
   );
+  const enabled = useMemo(
+    () => !!params.storeName && !!params.saleDate && !!params.dimension,
+    [params],
+  );
 
   return useQuery<
     TSalesBreakDownResponse[],
@@ -27,9 +31,8 @@ const useGetSalesBreakDown = ({ dimension }: Props) => {
   >({
     queryKey: queries.sales.getSales(params).queryKey,
     queryFn: () => getSalesBreakDown(params),
-    enabled: !!params.storeName && !!params.saleDate && !!params.dimension,
+    enabled,
     select: (data) => {
-      console.log(data);
       return data.map((d) => ({ name: d.key, value: d.totalPrice }));
     },
   });
