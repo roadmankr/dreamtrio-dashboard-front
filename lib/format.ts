@@ -1,4 +1,3 @@
-
 export const formatPhoneNumber = (value: string) => {
   if (!value) {
     return '';
@@ -61,10 +60,10 @@ export const formatBizNumber = (value: string) => {
   return `${digits.slice(0, 3)}-${digits.slice(3, 5)}-${digits.slice(5, 10)}`;
 };
 
-export const debounce = (func: Function, delay: number) => {
-  let timer: NodeJS.Timeout;
-  return function (...args: any[]) {
-    clearTimeout(timer);
-    timer = setTimeout(() => func(...args), delay);
-  };
-};
+// export const debounce = (func: Function, delay: number) => {
+//   let timer: NodeJS.Timeout;
+//   return function (...args: any[]) {
+//     clearTimeout(timer);
+//     timer = setTimeout(() => func(...args), delay);
+//   };
+// };

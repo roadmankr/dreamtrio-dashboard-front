@@ -1,0 +1,99 @@
+'use client';
+import { DIMENSION } from '@/shared/types/sales';
+import {
+  Cell,
+  Legend,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
+} from 'recharts';
+import useGetSalesBreakDown from '../_api/useGetSalesBreakDown';
+const data = [
+  { name: 'Apple', value: 400 },
+  { name: 'Banana', value: 300 },
+  { name: 'Cherry', value: 300 },
+  { name: 'Date', value: 200 },
+];
+
+const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+
+const GenderDashboardChart = () => {
+  const { data } = useGetSalesBreakDown({ dimension: DIMENSION.GENDER });
+
+  return (
+    <div className='aspect-square w-1/2'>
+      <ResponsiveContainer width='100%' height='100%'>
+        <PieChart>
+          <Pie
+            data={data}
+            cx='50%'
+            cy='50%'
+            labelLine={false}
+            outerRadius={'50%'}
+            fill='#8884d8'
+            dataKey='value'
+            label={({ name, value, x, y, cx, index }) => {
+              const isRight = x > cx; // 중심보다 오른쪽이면 true
+              return (
+                <text
+                  x={isRight ? x - 10 : x + 10}
+                  y={y}
+                  fill={COLORS[index ?? 0 % COLORS.length]}
+                  fontSize={12}
+                  textAnchor={isRight ? 'start' : 'end'} // 오른쪽은 start, 왼쪽은 end
+                  dominantBaseline='central'
+                >
+                  {`${name}: ${value?.toLocaleString()}`}
+                </text>
+              );
+            }}
+          >
+            {data?.map((entry, index) => (
+              <Cell
+                key={`cell-${index}`}
+                fill={COLORS[index % COLORS.length]}
+              />
+            ))}
+          </Pie>
+          <Tooltip />
+
+          <Legend
+            content={() => (
+              <ul
+                style={{
+                  display: 'flex',
+                  gap: 12,
+                  listStyle: 'none',
+                  padding: 0,
+                  width: '100%',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                {data?.map((item, index) => (
+                  <li
+                    key={item.name}
+                    style={{ display: 'flex', alignItems: 'center', gap: 6 }}
+                  >
+                    <span
+                      style={{
+                        width: 10,
+                        height: 10,
+                        background: COLORS[index ?? 0 % COLORS.length],
+                        display: 'inline-block',
+                      }}
+                    />
+                    <span>{item.name}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          />
+        </PieChart>
+      </ResponsiveContainer>
+    </div>
+  );
+};
+
+export default GenderDashboardChart;

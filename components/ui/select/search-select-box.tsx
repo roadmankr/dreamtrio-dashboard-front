@@ -60,11 +60,9 @@ export default function SearchSelectBox({
   }, [open, onFocus]);
 
   return (
-    <div className='space-y-2'>
+    <div className='w-full space-y-2'>
       {label && <Label htmlFor='select-41'>{label}</Label>}
-      <Popover
-        open={open}
-        onOpenChange={setOpen}>
+      <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
             ref={ref}
@@ -73,15 +71,17 @@ export default function SearchSelectBox({
             role='combobox'
             aria-expanded={open}
             className={cn(
-              `h-10 w-full justify-between bg-transparent px-3 font-normal outline-offset-0 hover:bg-background focus-visible:border-ring focus-visible:outline-[3px] focus-visible:outline-ring/20`,
+              `hover:bg-background focus-visible:border-ring focus-visible:outline-ring/20 h-10 w-full justify-between bg-transparent px-3 font-normal outline-offset-0 focus-visible:outline-[3px]`,
               className,
             )}
-            disabled={disabled}>
+            disabled={disabled}
+          >
             <span
               className={cn(
                 `w-full truncate ${labelTextPosition === 'left' ? 'text-left' : 'text-center'}`,
                 !value && 'text-muted-foreground',
-              )}>
+              )}
+            >
               {value
                 ? options?.find((framework) => framework.value === value)?.label
                 : placeholder || '선택'}
@@ -89,14 +89,15 @@ export default function SearchSelectBox({
             <ChevronDown
               size={16}
               strokeWidth={2}
-              className='shrink-0 text-muted-foreground/80'
+              className='text-muted-foreground/80 shrink-0'
               aria-hidden='true'
             />
           </Button>
         </PopoverTrigger>
         <PopoverContent
-          className='w-full min-w-[var(--radix-popper-anchor-width)] border-input p-0'
-          align='start'>
+          className='border-input w-full min-w-[var(--radix-popper-anchor-width)] p-0'
+          align='start'
+        >
           <Command>
             {isSearchMode && (
               <CommandInput placeholder={placeholder || '선택'} />
@@ -110,14 +111,11 @@ export default function SearchSelectBox({
                     key={framework.value}
                     value={framework.value}
                     disabled={framework.disabled}
-                    onSelect={() => onChangeSelect(framework.value)}>
+                    onSelect={() => onChangeSelect(framework.value)}
+                  >
                     {framework.label}
                     {value === framework.value && (
-                      <Check
-                        size={16}
-                        strokeWidth={2}
-                        className='ml-auto'
-                      />
+                      <Check size={16} strokeWidth={2} className='ml-auto' />
                     )}
                   </CommandItem>
                 ))}

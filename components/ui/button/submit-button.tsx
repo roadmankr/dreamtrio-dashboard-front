@@ -1,27 +1,35 @@
-"use client"
+'use client';
 
 import { cn } from '@/lib/utils';
 import { ReloadIcon } from '@radix-ui/react-icons';
-import React from 'react';
+import React, { JSX } from 'react';
 import { Button } from '../button';
 
-interface Props extends React.ComponentProps<"button">{
+interface Props extends React.ComponentProps<'button'> {
   className?: string;
   submitText?: string;
-  submitIcon?: string;
-  isPending?:boolean
+  submitIcon?: JSX.Element;
+  isPending?: boolean;
 }
 
-const SubmitButton = ({className,submitText = '확인',
-submitIcon,
-isPending, ...props }: Props) => {
-  
+const SubmitButton = ({
+  className,
+  submitText = '확인',
+  submitIcon,
+  isPending,
+  ...props
+}: Props) => {
   return (
-    <Button disabled={isPending || props.disabled} {...props} type='submit' className={cn(``, className)} >
-      {isPending ? <ReloadIcon className='size-2 animate-spin'/> : submitIcon}
+    <Button
+      disabled={isPending || props.disabled}
+      {...props}
+      type='submit'
+      className={cn(`cursor-pointer`, className)}
+    >
+      {isPending ? <ReloadIcon className='size-2 animate-spin' /> : submitIcon}
       {submitText}
     </Button>
-  )
-}
+  );
+};
 
-export default SubmitButton
+export default SubmitButton;

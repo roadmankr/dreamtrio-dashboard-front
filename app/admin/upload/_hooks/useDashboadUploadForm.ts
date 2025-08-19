@@ -1,5 +1,8 @@
-import { zodResolver } from "@hookform/resolvers/zod";
+import useZodParsErrorHandler from '@/shared/hooks/useZodParsErrorHandler';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useCallback, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
+import useDashboardUpload from '../_api/useDashboardUpload';
 import { dashboardUploadSchema, TDashboardUpload } from '../_schema';
 import { validateDashboardUpload } from '../_server/service';
 
@@ -8,20 +11,32 @@ const useDashboadUploadForm = () => {
     resolver: zodResolver(dashboardUploadSchema),
     defaultValues: {
       file: null,
-      password:'',
-    }
-  })
+      password: '',
+    },
+  });
+  const { mutateAsync } = useDashboardUpload();
+  const { handlerSafeParse } = useZodParsErrorHandler<TDashboardUpload>();
 
-  const onSubmit = async (data: TDashboardUpload) => {
-    const formData = new FormData();
-    formData.append('file', data.file);
-    formData.append('password', data.password);
-    const result = await validateDashboardUpload(formData);
+  const onSubmit = useCallback(
+    async (data: TDashboardUpload) => {
+      form.clearErrors();
+      const result = await validateDashboardUpload(data.password);
 
-    console.log(result);
-  }
+      if (!result.ok) return handlerSafeParse({ form, result });
 
-  return {form, onSubmit};
-}
+      const formData = new FormData();
+      formData.append('file', data.file);
+      // await mutateAsync(formData);
+    },
+    [handlerSafeParse],
+  );
 
-export default useDashboadUploadForm
+  const rootError = useMemo(
+    () => form.formState.errors.root?.message,
+    [form.formState.errors.root?.message],
+  );
+
+  return { form, onSubmit, rootError };
+};
+
+export default useDashboadUploadForm;

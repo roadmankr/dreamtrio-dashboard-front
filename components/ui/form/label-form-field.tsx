@@ -18,7 +18,7 @@ import { Button } from '../button';
 import FileUpload from '../file/file-upload';
 import SearchSelectBox from '../select/search-select-box';
 
-const LabelFormField = <T extends FieldValues, TExtra extends object = {}>({
+const LabelFormField = <T extends FieldValues, TExtra extends object = any>({
   form,
   name,
   label,
@@ -31,7 +31,7 @@ const LabelFormField = <T extends FieldValues, TExtra extends object = {}>({
   ...props
 }: FormProps<T, TExtra>) => {
   return (
-    <div className={cn(`flex w-full flex-1 text-fluid`, fieldClassName)}>
+    <div className={cn(`text-fluid flex w-full flex-1`, fieldClassName)}>
       <FormField
         key={name}
         control={form.control}
@@ -47,7 +47,7 @@ const LabelFormField = <T extends FieldValues, TExtra extends object = {}>({
               {/* label */}
               <div
                 className={cn(
-                  `flex min-w-[calc(4rem,15vw,5rem)] shrink-0 items-center justify-start gap-1 text-fluid`,
+                  `text-fluid flex min-w-[calc(4rem,15vw,5rem)] shrink-0 items-center justify-start gap-1`,
                   // `flex ${labelFlexPosition === 'row' ? 'min-w-[calc(4rem,15vw,5rem)] shrink-0' : ''} flex-col justify-center`,
                 )}
               >

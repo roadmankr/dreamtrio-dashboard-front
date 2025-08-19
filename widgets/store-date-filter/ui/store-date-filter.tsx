@@ -1,0 +1,39 @@
+'use client';
+
+import SubmitButton from '@/components/ui/button/submit-button';
+import CardWrapper from '@/components/ui/card/card-wrapper';
+import { Form } from '@/components/ui/form';
+import LabelFormField from '@/components/ui/form/label-form-field';
+import { SearchIcon } from 'lucide-react';
+import useStoreDateFilterForm from '../model/useStoreDateFilterForm';
+
+const StoreDateFilter = () => {
+  const { form, onSubmit, formFields, disabled } = useStoreDateFilterForm();
+
+  return (
+    <CardWrapper className='flex'>
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className='flex w-full items-end gap-3'
+        >
+          {formFields.map((fields) => (
+            <LabelFormField
+              form={form}
+              key={fields.name}
+              {...fields}
+              className='flex-1'
+            />
+          ))}
+          <SubmitButton
+            disabled={disabled}
+            submitText='검색'
+            submitIcon={<SearchIcon />}
+          />
+        </form>
+      </Form>
+    </CardWrapper>
+  );
+};
+
+export default StoreDateFilter;
