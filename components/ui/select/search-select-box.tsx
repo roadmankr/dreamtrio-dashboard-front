@@ -82,7 +82,7 @@ export default function SearchSelectBox({
                 !value && 'text-muted-foreground',
               )}
             >
-              {value
+              {value !== null && value !== undefined
                 ? options?.find((framework) => framework.value === value)?.label
                 : placeholder || '선택'}
             </span>

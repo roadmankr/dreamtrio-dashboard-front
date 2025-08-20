@@ -1,4 +1,4 @@
-import { getStoreList } from '@/features/store-options/service';
+import { getStoreListInServer } from '@/actions/store.server';
 import { queries } from '@/shared/queries';
 import StoreDateFilter from '@/widgets/store-date-filter/ui/store-date-filter';
 import {
@@ -17,7 +17,7 @@ const DashboardPage = async () => {
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
     queryKey: queries.store.getStoreList.queryKey,
-    queryFn: getStoreList,
+    queryFn: getStoreListInServer,
   });
 
   return (

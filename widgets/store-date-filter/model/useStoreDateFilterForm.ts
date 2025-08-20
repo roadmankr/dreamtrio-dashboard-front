@@ -14,7 +14,7 @@ import useStoreDateSearchParams from './useStoreDateSearchParams';
 const useStoreDateFilterForm = () => {
   const router = useRouter();
   const pathname = usePathname();
-  const { data } = useStoreOptions();
+  const { storeOptions } = useStoreOptions({ isNeedTotalOption: true });
   const { storeName, saleDate } = useStoreDateSearchParams();
   const form = useForm<TStoreDateFilter>({
     resolver: zodResolver(storeDateFilterSchema),
@@ -46,8 +46,8 @@ const useStoreDateFilterForm = () => {
   );
 
   const storeField = useMemo(
-    () => ({ ...storeFormFields, options: data }),
-    [data],
+    () => ({ ...storeFormFields, options: storeOptions }),
+    [storeOptions],
   );
 
   const formFields: FormDataType<TStoreDateFilter>[] = useMemo(

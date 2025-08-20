@@ -71,7 +71,8 @@ export const fmt = (v: number) => {
 
 // 축 간단 포맷 (compact)
 export const fmtCompact = (v: number) => fmt(v);
-
+export const fmtPercent = (v: number) =>
+  `${(v * 100).toFixed(v >= 0.1 ? 1 : 2)}%`;
 /**
  * 금액 단위를 천원/만원 단위로 줄여주는 formatter
  * @param value 원 단위 숫자

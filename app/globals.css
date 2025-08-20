@@ -1,5 +1,5 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -41,7 +41,7 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  --font-size-fluid: clamp(0.9rem,1.23vw,1rem);
+  --font-size-fluid: clamp(0.9rem, 1.23vw, 1rem);
   --font-roboto: var(--font-roboto, ui-sans-serif, system-ui, sans-serif);
   --font-sora: var(--font-sora, ui-sans-serif, system-ui, sans-serif);
 }
