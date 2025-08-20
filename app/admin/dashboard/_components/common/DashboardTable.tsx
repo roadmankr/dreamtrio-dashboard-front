@@ -27,7 +27,7 @@ export default function DashboardTable({ data, columnTitle }: Props) {
         </div>
       </div>
 
-      <div className='max-h-[484px] w-full overflow-y-auto'>
+      <div className='scrollbar-hide max-h-[484px] w-full overflow-y-auto px-1'>
         <table className='min-w-full border-separate border-spacing-0'>
           <thead className='sticky top-0 z-10 bg-white font-semibold'>
             <tr className='[&>th]:px-3 [&>th]:py-2 [&>th]:font-semibold [&>th]:text-gray-500'>
