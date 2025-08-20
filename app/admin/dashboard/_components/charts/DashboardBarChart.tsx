@@ -24,6 +24,7 @@ const DashboardBarChart = ({ data }: Props) => {
   const avg = data?.length
     ? data.reduce((s, d) => s + d.totalPrice, 0) / data.length
     : 0;
+
   return (
     <ResponsiveContainer width='100%' height='100%'>
       <BarChart
@@ -36,7 +37,28 @@ const DashboardBarChart = ({ data }: Props) => {
         <CartesianGrid strokeDasharray='3 3' stroke='#ECEFF1' />
         <XAxis
           dataKey='name'
-          tick={{ fontSize: 16, fill: '#6B7280' }}
+          // tick={{ fontSize: 16, fill: '#6B7280' }}
+          tick={({ x, y, payload, ...props }) => {
+            // payload.value = dataKey 값 (상품명)
+            // payload.payload = 실제 데이터 row 전체
+            const totalPrice = data?.find((d) => d.name === payload.value);
+            return (
+              <g transform={`translate(${x},${y + 10})`}>
+                <text textAnchor='middle' fill='#374151' fontSize={12} dy={0}>
+                  {payload.value}
+                </text>
+                <text
+                  textAnchor='middle'
+                  fill='#6B7280'
+                  fontSize={11}
+                  dy={14} // 첫 줄 아래로 내려주기
+                >
+                  {`(${totalPrice?.totalPrice.toLocaleString()})`}
+                  {/* ({fmt(item.value)}) */}
+                </text>
+              </g>
+            );
+          }}
           interval={0}
           // angle={-25}
           // textAnchor='end'
