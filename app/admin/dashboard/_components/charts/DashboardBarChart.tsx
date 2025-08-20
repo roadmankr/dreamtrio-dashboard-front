@@ -12,15 +12,14 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
+import useBarChartData from '../../_model/useBarChartData';
 
 interface Props {
   data?: TSalesBreakDownResponse[];
 }
 
 const DashboardBarChart = ({ data }: Props) => {
-  const avg = data?.length
-    ? data.reduce((s, d) => s + d.totalPrice, 0) / data.length
-    : 0;
+  const { chargAvg } = useBarChartData({ data });
 
   return (
     <ResponsiveContainer width='100%' height='100%'>
@@ -70,7 +69,7 @@ const DashboardBarChart = ({ data }: Props) => {
         />
 
         {/* 평균 참조선 */}
-        <ReferenceLine y={avg} stroke='#94A3B8' strokeDasharray='4 4'>
+        <ReferenceLine y={chargAvg} stroke='#94A3B8' strokeDasharray='4 4'>
           {/* 평균 라벨 */}
         </ReferenceLine>
 
@@ -78,14 +77,16 @@ const DashboardBarChart = ({ data }: Props) => {
         <Tooltip
           separator=': '
           contentStyle={{ borderRadius: 8, borderColor: '#E5E7EB' }}
-          formatter={(value: number, ...props) => {
+          formatter={(_, ...props) => {
             const key = props?.[1].payload.key;
             const object = data?.find((d) => d.key === key);
             const v =
-              props?.[0] === '매출액' ? (object?.totalPrice ?? 0) : value;
+              props?.[0] === '매출액'
+                ? (object?.totalPrice ?? 0)
+                : (object?.profitPrice ?? 0);
             return [`${v.toLocaleString()}`, props?.[0]];
           }}
-          labelFormatter={(label: string) => `상품: ${label}`}
+          labelFormatter={(label: string) => `${label}`}
         />
 
         {/* 심플 범례 */}
@@ -96,22 +97,21 @@ const DashboardBarChart = ({ data }: Props) => {
           wrapperStyle={{ fontSize: 16, color: '#6B7280' }}
         />
 
-        {/* 값 라벨 (바 상단) */}
-
         {/* 아래층 (모서리 0) */}
         <Bar
-          dataKey='profitPrice'
+          dataKey='profitPriceForChart'
           name='이익액'
           stackId='s'
           fill={'#59A14F'}
           radius={[0, 0, 0, 0]}
         >
+          {/* 값 라벨 */}
           <LabelList
             position='insideTop'
             fill='white'
             style={{ fontSize: 11, zIndex: 50 }}
             formatter={(v: any) =>
-              v.toLocaleString() as unknown as React.ReactNode
+              (v ? v.toLocaleString() : '') as unknown as React.ReactNode
             }
           />
         </Bar>
@@ -124,6 +124,7 @@ const DashboardBarChart = ({ data }: Props) => {
           fill={'#4E79A7'}
           radius={[8, 8, 0, 0]}
         >
+          {/* 값 라벨 (바 상단) */}
           <LabelList
             position='top'
             fill='#374151'

@@ -31,6 +31,7 @@ const useGetSalesBreakDown = ({ dimension }: Props) => {
       data.map((d) => ({
         ...d,
         name: d.key,
+        profitPriceForChart: d.profitPrice < 0 ? 0 : d.profitPrice,
         base: Math.max(0, (d.totalPrice || 0) - d.profitPrice),
       })),
   });

@@ -4,7 +4,7 @@ import { getErrorMessage } from '@/lib/error';
 import { apis } from '@/shared/api/endpoints';
 import { serverKy } from '@/shared/api/ky/ky.server';
 
-export const getStoreList = async (): Promise<string[]> => {
+export const getStoreListInServer = async (): Promise<string[]> => {
   try {
     const result = await serverKy(...apis.store.getStoreList).json<string[]>();
     return result;

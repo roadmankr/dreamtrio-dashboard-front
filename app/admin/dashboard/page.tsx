@@ -8,6 +8,8 @@ import {
 } from '@tanstack/react-query';
 import { Suspense } from 'react';
 import AgeDashboardChart from './_components/AgeDashboardChart.client';
+import AnimationDashboardChart from './_components/AnimationDashboardChart.client';
+import BrandDashboardChart from './_components/BrandDashboardChart.client';
 import GenderDashboardChart from './_components/GenderDashboardChart.client';
 import ProductDashboardChart from './_components/ProductDashboardChart.client';
 
@@ -31,6 +33,8 @@ const DashboardPage = async () => {
             </div>
 
             <ProductDashboardChart />
+            <BrandDashboardChart />
+            <AnimationDashboardChart />
           </div>
         </Suspense>
       </HydrationBoundary>

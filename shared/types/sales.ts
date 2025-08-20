@@ -36,6 +36,7 @@ export type TSalesBreakDownResponse = {
   totalPrice: number;
   profitPrice: number;
   profitRate: number;
+  profitPriceForChart: number; // 차트에 그려질 이익가격. 마이너스이면 0처리
 };
 
 export type TSalesBreakDownQuery = TStoreDateFilter & { dimension: DIMENSION };
