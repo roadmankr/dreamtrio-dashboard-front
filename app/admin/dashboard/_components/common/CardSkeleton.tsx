@@ -18,16 +18,7 @@ export function CardSkeleton({
   minHeightClassName = 'h-72',
 }: CardSkeletonProps) {
   return (
-    <div
-      className={cn(
-        'bg-card/50 w-full rounded-2xl border p-4',
-        '[&_.shimmer]:relative [&_.shimmer]:overflow-hidden [&_.shimmer]:rounded-md',
-        minHeightClassName,
-        className,
-      )}
-      role='status'
-      aria-label='차트 로딩 중'
-    >
+    <div className={cn('h-full w-full')} aria-label='차트 로딩 중'>
       <div className='flex h-full flex-col'>
         {withHeader && (
           <div className='mb-3 flex items-center justify-between'>

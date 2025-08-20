@@ -6,12 +6,13 @@ import { Card, CardContent } from '../card';
 
 interface Props {
   children: React.ReactNode;
+  containerClassName?: string;
   className?: string;
 }
 
-const CardWrapper = ({ children, className }: Props) => {
+const CardWrapper = ({ children, className, containerClassName }: Props) => {
   return (
-    <Card className='flex h-full w-full'>
+    <Card className={cn('flex w-full', containerClassName)}>
       <CardContent
         className={cn('relative flex flex-1 flex-col gap-3', className)}
       >

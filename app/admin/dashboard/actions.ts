@@ -1,8 +1,4 @@
-'use server';
-
-import { getErrorMessage } from '@/lib/error';
-import { apis } from '@/shared/api/endpoints';
-import { serverKy } from '@/shared/api/ky/ky.server';
+import { clintKy } from '@/shared/api/ky/ky.client';
 import {
   TSalesBreakDownQuery,
   TSalesBreakDownResponse,
@@ -13,18 +9,17 @@ export const getSalesBreakDown = async ({
   storeName,
   dimension,
 }: TSalesBreakDownQuery) => {
-  try {
-    const result = (
-      await serverKy(
-        ...apis.sales.getSalesBreakDown({
-          saleDate,
-          storeName,
-          dimension,
-        }),
-      ).json
-    )<TSalesBreakDownResponse[]>();
-    return result;
-  } catch (err: unknown) {
-    throw new Error(await getErrorMessage(err));
+  if (typeof window === 'undefined') {
+    const { getSalesBreakDownInServer } = await import(
+      '@/actions/sales.server'
+    );
+    return getSalesBreakDownInServer({ saleDate, storeName, dimension });
+  } else {
+    const result = await clintKy
+      .get(
+        `/api/sales?storeName=${storeName}&saleDate=${saleDate}&dimension=${dimension}`,
+      )
+      .json<{ data: TSalesBreakDownResponse[] }>();
+    return result.data;
   }
 };

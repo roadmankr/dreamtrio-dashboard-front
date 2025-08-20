@@ -28,14 +28,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={`${roboto.variable} ${sora.variable} antialiased`}>
+      <body
+        className={`${roboto.variable} ${sora.variable} flex min-h-dvh w-full min-w-full justify-center bg-gray-50 antialiased`}
+      >
         <QueryProvider>
-          <div className='font-sora flex min-h-dvh w-full bg-gray-50'>
+          <div className='font-sora flex min-h-dvh w-full max-w-[1440px]'>
             <Toaster
               richColors
               className='pointer-events-auto z-50 touch-manipulation select-text'
             />
-            <div className='flex min-w-0 flex-1'>{children}</div>
+            <div className='flex flex-1'>{children}</div>
           </div>
         </QueryProvider>
       </body>

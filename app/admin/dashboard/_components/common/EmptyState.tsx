@@ -52,37 +52,27 @@ export function EmptyState({
   return (
     <div
       className={cn(
-        'bg-card/50 flex w-full items-center justify-center rounded-2xl border p-6',
-        minHeightClassName,
-        className,
+        'flex flex-1 flex-col items-center justify-center text-center',
+        sizeMap[size].gap,
       )}
-      role='status'
-      aria-live='polite'
     >
       <div
         className={cn(
-          'flex flex-col items-center text-center',
-          sizeMap[size].gap,
+          'bg-muted flex items-center justify-center rounded-full p-3',
+          palette.icon,
         )}
       >
-        <div
-          className={cn(
-            'bg-muted flex items-center justify-center rounded-full p-3',
-            palette.icon,
-          )}
-        >
-          {icon ?? <Search className={cn(sizeMap[size].icon)} />}
-        </div>
-        <h3 className={cn('font-medium', sizeMap[size].title, palette.title)}>
-          {title}
-        </h3>
-        {desc ? (
-          <p className={cn('text-muted-foreground', sizeMap[size].desc)}>
-            {desc}
-          </p>
-        ) : null}
-        {action ? <div className='pt-1'>{action}</div> : null}
+        {icon ?? <Search className={cn(sizeMap[size].icon)} />}
       </div>
+      <h3 className={cn('font-medium', sizeMap[size].title, palette.title)}>
+        {title}
+      </h3>
+      {desc ? (
+        <p className={cn('text-muted-foreground', sizeMap[size].desc)}>
+          {desc}
+        </p>
+      ) : null}
+      {action ? <div className='pt-1'>{action}</div> : null}
     </div>
   );
 }

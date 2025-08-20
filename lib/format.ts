@@ -60,6 +60,59 @@ export const formatBizNumber = (value: string) => {
   return `${digits.slice(0, 3)}-${digits.slice(3, 5)}-${digits.slice(5, 10)}`;
 };
 
+// 값 포맷터 (원 단위 → 자동: 억/만/천)
+export const fmt = (v: number) => {
+  if (v == null || isNaN(v)) return '-';
+  if (v >= 100000000) return `${(v / 100000000).toLocaleString()}억`;
+  if (v >= 10000) return `${(v / 10000).toLocaleString()}만`;
+  if (v >= 1000) return `${(v / 1000).toLocaleString()}천`;
+  return v.toLocaleString();
+};
+
+// 축 간단 포맷 (compact)
+export const fmtCompact = (v: number) => fmt(v);
+
+/**
+ * 금액 단위를 천원/만원 단위로 줄여주는 formatter
+ * @param value 원 단위 숫자
+ * @param unitType "천원" | "만원" | "억" 자동 계산 옵션
+ */
+export function formatCurrency(
+  value: number,
+  unitType: 'auto' | '천원' | '만원' | '억' = 'auto',
+): string {
+  if (value == null || isNaN(value)) return '-';
+
+  // 자동 모드: 숫자 크기에 맞춰 단위 결정
+  if (unitType === 'auto') {
+    if (value >= 100000000) {
+      // 1억 이상
+      return `${Math.floor(value / 100000000).toLocaleString()}억`;
+    }
+    if (value >= 10000) {
+      // 1만 이상
+      return `${Math.floor(value / 10000).toLocaleString()}만`;
+    }
+    if (value >= 1000) {
+      // 1천 이상
+      return `${Math.floor(value / 1000).toLocaleString()}천`;
+    }
+    return value.toLocaleString();
+  }
+
+  // 고정 모드
+  switch (unitType) {
+    case '천원':
+      return `${Math.floor(value / 1000).toLocaleString()}천원`;
+    case '만원':
+      return `${Math.floor(value / 10000).toLocaleString()}만원`;
+    case '억':
+      return `${Math.floor(value / 100000000).toLocaleString()}억`;
+    default:
+      return value.toLocaleString();
+  }
+}
+
 // export const debounce = (func: Function, delay: number) => {
 //   let timer: NodeJS.Timeout;
 //   return function (...args: any[]) {

@@ -1,21 +1,8 @@
 'use client';
 import { DIMENSION } from '@/shared/types/sales';
-import {
-  Cell,
-  Legend,
-  Pie,
-  PieChart,
-  ResponsiveContainer,
-  Tooltip,
-} from 'recharts';
 import useGetSalesBreakDown from '../_api/useGetSalesBreakDown';
+import DashboardPieChart from './charts/DashboardPieChart';
 import QueryGuard from './common/QueryGuard';
-const data = [
-  { name: 'Apple', value: 400 },
-  { name: 'Banana', value: 300 },
-  { name: 'Cherry', value: 300 },
-  { name: 'Date', value: 200 },
-];
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
@@ -29,11 +16,14 @@ const GenderDashboardChart = () => {
       enabled={isEnabled}
       isPending={isPending}
       isError={isError}
+      sectionType='aspect-square'
+      chartTitle='성별 매출 통계'
       hasData={!!data && data.length > 0}
       emptyMessage='해당 조건의 성별 차트 데이터가 없습니다.'
     >
-      <div className='aspect-square w-1/2'>
-        <ResponsiveContainer width='100%' height='100%'>
+      <div className='aspect-square'>
+        <DashboardPieChart data={data} />
+        {/* <ResponsiveContainer width='100%' height='100%'>
           <PieChart>
             <Pie
               data={data}
@@ -101,7 +91,7 @@ const GenderDashboardChart = () => {
               )}
             />
           </PieChart>
-        </ResponsiveContainer>
+        </ResponsiveContainer> */}
       </div>
     </QueryGuard>
   );

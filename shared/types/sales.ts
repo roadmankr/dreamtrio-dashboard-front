@@ -30,8 +30,11 @@ export type TPieChartData = {
 
 export type TSalesBreakDownResponse = {
   key: string;
+  name: string;
   count: number;
   totalPrice: number;
+  profitPrice: number;
+  profitRate: number;
 };
 
 export type TSalesBreakDownQuery = TStoreDateFilter & { dimension: DIMENSION };

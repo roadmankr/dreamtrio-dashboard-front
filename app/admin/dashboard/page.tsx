@@ -25,7 +25,7 @@ const DashboardPage = async () => {
           <div className='flex w-full flex-col gap-3 p-3'>
             <StoreDateFilter />
 
-            <div className='flex gap-3'>
+            <div className='flex flex-col gap-3 lg:flex-row'>
               <GenderDashboardChart />
               <AgeDashboardChart />
             </div>
