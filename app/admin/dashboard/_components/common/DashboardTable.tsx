@@ -4,10 +4,10 @@ import useDashboardTableData from '../../_model/useDashboardTableData';
 
 type Props = {
   data: TSalesBreakDownResponse[];
-  topN?: number; // 상위 N개 (매출 기준)
+  columnTitle: string; // 테이블 제일 앞에 들어가는
 };
 
-export default function DashboardTable({ data }: Props) {
+export default function DashboardTable({ data, columnTitle }: Props) {
   const { totals } = useDashboardTableData({ data });
 
   // 이익률 배지 색상
@@ -31,7 +31,9 @@ export default function DashboardTable({ data }: Props) {
         <table className='min-w-full border-separate border-spacing-0'>
           <thead className='sticky top-0 z-10 bg-white'>
             <tr className='[&>th]:px-3 [&>th]:py-2 [&>th]:font-semibold [&>th]:text-gray-500'>
-              <th className='sticky left-0 bg-white text-left'>상품명</th>
+              <th className='sticky left-0 bg-white text-left'>
+                {columnTitle}
+              </th>
               <th className='text-right'>총 매출액</th>
               <th className='text-right'>이익액</th>
               <th className='text-right'>이익률</th>
@@ -42,7 +44,7 @@ export default function DashboardTable({ data }: Props) {
           <tbody className='[&>tr>td]:px-3 [&>tr>td]:py-2'>
             {data.map((r, i) => {
               const tone = rateTone(r.profitRate / 100);
-              const percent = Math.min(100, r.profitRate);
+
               return (
                 <tr
                   key={r.name}

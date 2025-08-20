@@ -1,5 +1,5 @@
 import { fmtCompact } from '@/lib/format';
-import { TSalesBreakDownResponse } from '@/shared/types/sales';
+import { DIMENSION, TSalesBreakDownResponse } from '@/shared/types/sales';
 import {
   Bar,
   BarChart,
@@ -12,13 +12,15 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
+import { dashboadProductTitleConfig } from '../../_constants';
 import useBarChartData from '../../_model/useBarChartData';
 
 interface Props {
+  dimension: DIMENSION;
   data?: TSalesBreakDownResponse[];
 }
 
-const DashboardBarChart = ({ data }: Props) => {
+const DashboardBarChart = ({ dimension, data }: Props) => {
   const { chargAvg } = useBarChartData({ data });
 
   return (
@@ -86,7 +88,12 @@ const DashboardBarChart = ({ data }: Props) => {
                 : (object?.profitPrice ?? 0);
             return [`${v.toLocaleString()}`, props?.[0]];
           }}
-          labelFormatter={(label: string) => `${label}`}
+          labelFormatter={(label: string) => (
+            <span className='flex items-center gap-1'>
+              <span className='text-sm'>{`${dashboadProductTitleConfig[dimension]}명  `}</span>
+              <span className='font-semibold'>{label}</span>
+            </span>
+          )}
         />
 
         {/* 심플 범례 */}

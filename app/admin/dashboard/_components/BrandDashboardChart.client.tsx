@@ -20,7 +20,10 @@ const BrandDashboardChart = () => {
       emptyMessage='해당 조건의 브랜드 차트 데이터가 없습니다.'
     >
       <div className='flex aspect-video w-full items-center justify-center'>
-        <DashboardBarChart data={data?.slice(0, 10) ?? []} />
+        <DashboardBarChart
+          data={data?.slice(0, 10) ?? []}
+          dimension={DIMENSION.BRAND}
+        />
       </div>
     </QueryGuard>
   );
