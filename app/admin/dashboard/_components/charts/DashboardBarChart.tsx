@@ -4,17 +4,14 @@ import {
   Bar,
   BarChart,
   CartesianGrid,
-  Cell,
   LabelList,
   Legend,
-  Rectangle,
   ReferenceLine,
   ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
 } from 'recharts';
-import { pichartCololrsConfig } from '../../_config';
 
 interface Props {
   data?: TSalesBreakDownResponse[];
@@ -38,10 +35,10 @@ const DashboardBarChart = ({ data }: Props) => {
         <XAxis
           dataKey='name'
           // tick={{ fontSize: 16, fill: '#6B7280' }}
-          tick={({ x, y, payload, ...props }) => {
-            // payload.value = dataKey 값 (상품명)
-            // payload.payload = 실제 데이터 row 전체
-            const totalPrice = data?.find((d) => d.name === payload.value);
+          tick={({ x, y, payload }) => {
+            const totalPrice =
+              data?.find((d) => d.name === payload.value)?.totalPrice ?? 0;
+
             return (
               <g transform={`translate(${x},${y + 10})`}>
                 <text textAnchor='middle' fill='#374151' fontSize={12} dy={0}>
@@ -53,8 +50,7 @@ const DashboardBarChart = ({ data }: Props) => {
                   fontSize={11}
                   dy={14} // 첫 줄 아래로 내려주기
                 >
-                  {`(${totalPrice?.totalPrice.toLocaleString()})`}
-                  {/* ({fmt(item.value)}) */}
+                  {`(${totalPrice.toLocaleString()})`}
                 </text>
               </g>
             );
@@ -67,6 +63,9 @@ const DashboardBarChart = ({ data }: Props) => {
         <YAxis
           tickFormatter={fmtCompact}
           tick={{ fontSize: 16, fill: '#6B7280' }}
+          domain={[0, 'auto']}
+          interval={0} // 모든 tick 표시
+          tickCount={12}
           width={68}
         />
 
@@ -79,7 +78,13 @@ const DashboardBarChart = ({ data }: Props) => {
         <Tooltip
           separator=': '
           contentStyle={{ borderRadius: 8, borderColor: '#E5E7EB' }}
-          formatter={(value: number) => [`${value.toLocaleString()}`, '매출액']}
+          formatter={(value: number, ...props) => {
+            const key = props?.[1].payload.key;
+            const object = data?.find((d) => d.key === key);
+            const v =
+              props?.[0] === '매출액' ? (object?.totalPrice ?? 0) : value;
+            return [`${v.toLocaleString()}`, props?.[0]];
+          }}
           labelFormatter={(label: string) => `상품: ${label}`}
         />
 
@@ -91,63 +96,41 @@ const DashboardBarChart = ({ data }: Props) => {
           wrapperStyle={{ fontSize: 16, color: '#6B7280' }}
         />
 
-        {/* 그라데이션 정의 (각 바마다 고유 id) */}
-        <defs>
-          {data?.map((_, i) => (
-            <linearGradient
-              key={i}
-              id={`barGrad-${i}`}
-              x1='0'
-              y1='0'
-              x2='0'
-              y2='1'
-            >
-              <stop
-                offset='0%'
-                stopColor={
-                  pichartCololrsConfig[i % pichartCololrsConfig.length]
-                }
-                stopOpacity={0.95}
-              />
-              <stop
-                offset='100%'
-                stopColor={
-                  pichartCololrsConfig[i % pichartCololrsConfig.length]
-                }
-                stopOpacity={0.75}
-              />
-            </linearGradient>
-          ))}
-        </defs>
+        {/* 값 라벨 (바 상단) */}
 
+        {/* 아래층 (모서리 0) */}
         <Bar
-          dataKey='totalPrice'
-          name='매출액'
-          radius={[8, 8, 0, 0]}
-          // hover 효과
-          activeBar={<Rectangle fill='rgba(59,130,246,0.2)' stroke='#3B82F6' />}
+          dataKey='profitPrice'
+          name='이익액'
+          stackId='s'
+          fill={'#59A14F'}
+          radius={[0, 0, 0, 0]}
         >
-          {data?.map((_, i) => (
-            <Rectangle key={i} />
-          ))}
-          {/* 각 바에 색/그라데이션 적용 */}
-          {data?.map((_, i) => (
-            <Cell
-              key={`cell-${i}`}
-              fill={`url(#barGrad-${i})`}
-              stroke='transparent'
-            />
-          ))}
-
-          {/* 값 라벨 (바 상단) */}
           <LabelList
-            dataKey='totalPrice'
+            position='insideTop'
+            fill='white'
+            style={{ fontSize: 11, zIndex: 50 }}
             formatter={(v: any) =>
               v.toLocaleString() as unknown as React.ReactNode
             }
+          />
+        </Bar>
+
+        {/* 윗층 (위쪽만 둥글게) */}
+        <Bar
+          dataKey='base'
+          name='매출액'
+          stackId='s'
+          fill={'#4E79A7'}
+          radius={[8, 8, 0, 0]}
+        >
+          <LabelList
             position='top'
-            className='fill-gray-700'
+            fill='#374151'
             style={{ fontSize: 12 }}
+            formatter={(v: any, ...props) => {
+              return v.toLocaleString() as unknown as React.ReactNode;
+            }}
           />
         </Bar>
       </BarChart>

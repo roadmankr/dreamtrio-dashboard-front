@@ -32,6 +32,7 @@ export type TSalesBreakDownResponse = {
   key: string;
   name: string;
   count: number;
+  base: number;
   totalPrice: number;
   profitPrice: number;
   profitRate: number;

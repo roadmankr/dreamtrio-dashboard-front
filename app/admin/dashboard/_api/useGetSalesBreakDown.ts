@@ -27,7 +27,12 @@ const useGetSalesBreakDown = ({ dimension }: Props) => {
     queryKey: queries.sales.getSales(params).queryKey,
     queryFn: () => getSalesBreakDown(params),
     enabled,
-    select: (data) => data.map((d) => ({ ...d, name: d.key })),
+    select: (data) =>
+      data.map((d) => ({
+        ...d,
+        name: d.key,
+        base: Math.max(0, (d.totalPrice || 0) - d.profitPrice),
+      })),
   });
 };
 
