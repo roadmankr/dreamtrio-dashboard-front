@@ -27,7 +27,7 @@ export default function DashboardTable({ data, columnTitle }: Props) {
         </div>
       </div>
 
-      <div className='w-full'>
+      <div className='max-h-[484px] w-full overflow-y-auto'>
         <table className='min-w-full border-separate border-spacing-0'>
           <thead className='sticky top-0 z-10 bg-white'>
             <tr className='[&>th]:px-3 [&>th]:py-2 [&>th]:font-semibold [&>th]:text-gray-500'>
@@ -110,7 +110,7 @@ export default function DashboardTable({ data, columnTitle }: Props) {
           </tbody>
 
           {/* 합계 행 */}
-          <tfoot>
+          <tfoot className='sticky bottom-0 bg-white'>
             <tr className='bg-slate-50/70'>
               <td className='px-3 py-3 text-left text-sm font-semibold text-gray-700'>
                 합계

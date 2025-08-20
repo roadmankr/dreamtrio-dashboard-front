@@ -30,7 +30,7 @@ const ProductDashboardChart = () => {
         </div>
 
         <DashboardTable
-          data={list}
+          data={data ?? []}
           columnTitle={dashboadProductTitleConfig[DIMENSION.PRODUCT]}
         />
       </div>
