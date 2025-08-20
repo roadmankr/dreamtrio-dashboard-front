@@ -1,5 +1,4 @@
-import { fmt, fmtPercent } from '@/lib/format';
-import { cn } from '@/lib/utils';
+import { fmtPercent } from '@/lib/format';
 import { TSalesBreakDownResponse } from '@/shared/types/sales';
 import useDashboardTableData from '../../_model/useDashboardTableData';
 
@@ -36,7 +35,7 @@ export default function DashboardTable({ data }: Props) {
               <th className='text-right'>총 매출액</th>
               <th className='text-right'>이익액</th>
               <th className='text-right'>이익률</th>
-              <th className='pr-4 text-right'>구성비(이익/매출)</th>
+              <th className='pr-4 text-right'>판매수량</th>
             </tr>
           </thead>
 
@@ -64,12 +63,12 @@ export default function DashboardTable({ data }: Props) {
 
                   {/* 매출액 */}
                   <td className='text-right font-mono text-sm text-gray-800 tabular-nums'>
-                    {fmt(r.totalPrice)}
+                    {r.totalPrice.toLocaleString()}
                   </td>
 
                   {/* 이익액 */}
                   <td className='text-right font-mono text-sm text-gray-800 tabular-nums'>
-                    {fmt(r.profitPrice)}
+                    {r.profitPrice.toLocaleString()}
                   </td>
 
                   {/* 이익률 배지 */}
@@ -81,8 +80,11 @@ export default function DashboardTable({ data }: Props) {
                     </span>
                   </td>
 
+                  <td className='text-right font-mono text-sm text-gray-800 tabular-nums'>
+                    {r.count.toLocaleString()}
+                  </td>
                   {/* 구성비 미니 바(Progress) */}
-                  <td className='pr-4'>
+                  {/* <td className='pr-4'>
                     <div className='flex items-center justify-end gap-2'>
                       <div className='h-2 w-28 rounded-full bg-slate-100'>
                         <div
@@ -99,7 +101,7 @@ export default function DashboardTable({ data }: Props) {
                         {percent.toFixed(0)}%
                       </span>
                     </div>
-                  </td>
+                  </td> */}
                 </tr>
               );
             })}
@@ -112,22 +114,25 @@ export default function DashboardTable({ data }: Props) {
                 합계
               </td>
               <td className='px-3 py-3 text-right font-mono text-sm font-bold text-gray-800 tabular-nums'>
-                {fmt(totals.total)}
+                {totals.total.toLocaleString()}
               </td>
               <td className='px-3 py-3 text-right font-mono text-sm font-bold text-gray-800 tabular-nums'>
-                {fmt(totals.profit)}
+                {totals.profit.toLocaleString()}
               </td>
               <td className='px-3 py-3 text-right text-sm font-bold text-gray-800'>
                 {fmtPercent(totals.rate)}
               </td>
-              <td className='flex items-center justify-end gap-3 px-3 py-3 pr-4 text-xs font-semibold'>
+              <td className='px-3 py-3 text-right font-mono text-sm font-bold text-gray-800 tabular-nums'>
+                {totals.count.toLocaleString()}
+              </td>
+              {/* <td className='flex items-center justify-end gap-3 px-3 py-3 pr-4 text-xs font-semibold'>
                 <div className='inline-flex h-2 w-28 rounded-full bg-slate-200'>
                   <div
                     className='h-2 rounded-full bg-emerald-500'
                     style={{ width: `${Math.min(100, totals.rate * 100)}%` }}
                   />
                 </div>
-              </td>
+              </td> */}
             </tr>
           </tfoot>
         </table>
