@@ -29,10 +29,10 @@ export default function DashboardTable({ data, columnTitle }: Props) {
 
       <div className='max-h-[484px] w-full overflow-y-auto'>
         <table className='min-w-full border-separate border-spacing-0'>
-          <thead className='sticky top-0 z-10 bg-white'>
+          <thead className='sticky top-0 z-10 bg-white font-semibold'>
             <tr className='[&>th]:px-3 [&>th]:py-2 [&>th]:font-semibold [&>th]:text-gray-500'>
               <th className='sticky left-0 bg-white text-left'>
-                {columnTitle}
+                {`${columnTitle} (${data.length})`}
               </th>
               <th className='text-right'>총 매출액</th>
               <th className='text-right'>이익액</th>
