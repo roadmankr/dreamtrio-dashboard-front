@@ -1,7 +1,9 @@
 'use client';
 import { DIMENSION } from '@/shared/types/sales';
 import useGetSalesBreakDown from '../_api/useGetSalesBreakDown';
+import { dashboadProductTitleConfig } from '../_constants';
 import DashboardBarChart from './charts/DashboardBarChart';
+import DashboardTable from './common/DashboardTable';
 import QueryGuard from './common/QueryGuard';
 
 const BrandDashboardChart = () => {
@@ -19,10 +21,14 @@ const BrandDashboardChart = () => {
       hasData={!!data && data.length > 0}
       emptyMessage='해당 조건의 브랜드 차트 데이터가 없습니다.'
     >
-      <div className='flex aspect-video w-full items-center justify-center'>
+      <div className='gap2 flex w-full flex-col'>
         <DashboardBarChart
           data={data?.slice(0, 10) ?? []}
           dimension={DIMENSION.BRAND}
+        />
+        <DashboardTable
+          data={data ?? []}
+          columnTitle={dashboadProductTitleConfig[DIMENSION.BRAND]}
         />
       </div>
     </QueryGuard>

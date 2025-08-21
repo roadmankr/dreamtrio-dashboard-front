@@ -9,13 +9,60 @@ import {
   Tooltip,
 } from 'recharts';
 import { pichartCololrsConfig } from '../../_config';
-import ChartLegend from './ChartLegend.component';
 
-interface Props {
+const RAD = Math.PI / 180;
+
+const renderLeaderLabel = (props: any) => {
+  const { cx, cy, midAngle, outerRadius, value, index, name } = props;
+  const color = pichartCololrsConfig[index % pichartCololrsConfig.length];
+
+  // 각도 방향 벡터
+  const sin = Math.sin(-RAD * midAngle);
+  const cos = Math.cos(-RAD * midAngle);
+
+  // 라인 시작/중간/끝 좌표 (필요시 수치 조절)
+  const r1 = outerRadius + 6; // 파이 밖으로 1차 돌출
+  const r2 = outerRadius + 16; // 2차 돌출
+  const sx = cx + r1 * cos,
+    sy = cy + r1 * sin;
+  const mx = cx + r2 * cos,
+    my = cy + r2 * sin;
+  const ex = mx + (cos >= 0 ? 14 : -14),
+    ey = my; // 수평 꼬리
+
+  const anchor = cos >= 0 ? 'start' : 'end';
+
+  return (
+    <g>
+      {/* 리더 라인 */}
+      <path
+        d={`M${sx},${sy} L${mx},${my} L${ex},${ey}`}
+        stroke={color}
+        fill='none'
+      />
+      {/* (선택) 끝점 점 */}
+      <circle cx={ex} cy={ey} r={2} fill={color} />
+      {/* 숫자 */}
+      <text
+        x={ex + (cos >= 0 ? 4 : -4)}
+        y={ey}
+        textAnchor={anchor}
+        dominantBaseline='central'
+        fill={color}
+        fontSize={14}
+        fontWeight={600}
+      >
+        {`${name} : ${formatCurrency(value ?? 0)}`}
+      </text>
+    </g>
+  );
+};
+
+export default function DashboardPieChart({
+  data,
+}: {
   data?: TSalesBreakDownResponse[];
-}
-
-const DashboardPieChart = ({ data }: Props) => {
+}) {
   return (
     <ResponsiveContainer width='100%' height='100%'>
       <PieChart>
@@ -23,57 +70,30 @@ const DashboardPieChart = ({ data }: Props) => {
           data={data}
           cx='50%'
           cy='50%'
-          labelLine={false}
-          outerRadius={'70%'}
-          paddingAngle={1.5} // 조각 간격 약간 주기
-          minAngle={2} // 매우 작은 섹션 각 최소값
           dataKey='totalPrice'
-          label={({ name, value, x, y, cx, index }) => {
-            const isRight = x > cx; // 중심보다 오른쪽이면 true
-
-            return (
-              <text
-                x={isRight ? x - 10 : x + 10}
-                y={y}
-                fill={
-                  pichartCololrsConfig[index ?? 0 % pichartCololrsConfig.length]
-                }
-                fontSize={14}
-                textAnchor={isRight ? 'start' : 'end'} // 오른쪽은 start, 왼쪽은 end
-                dominantBaseline='central'
-              >
-                {`${name}: ${formatCurrency(value ?? 0)}`}
-              </text>
-            );
-          }}
+          outerRadius='60%'
+          paddingAngle={1.5}
+          minAngle={2}
+          // 리더 라인 + 숫자만 (이름 표시 원하면 텍스트에 name도 합치세요)
+          label={renderLeaderLabel}
+          labelLine={false} // 라인은 우리가 직접 그림
         >
-          {/* 파이 부분 */}
-          {data?.map((_, index) => (
+          {data?.map((_, i) => (
             <Cell
-              key={`cell-${index}`}
-              fill={pichartCololrsConfig[index % pichartCololrsConfig.length]}
+              key={i}
+              fill={pichartCololrsConfig[i % pichartCololrsConfig.length]}
             />
           ))}
         </Pie>
 
-        {/* hover시 보여지는 부분 */}
         <Tooltip
-          formatter={(value: number) => value?.toLocaleString()}
+          formatter={(v: number) => formatCurrency(v ?? 0)}
           separator=': '
           contentStyle={{ borderRadius: 8 }}
         />
 
-        {/* 밑 부분 */}
-        <Legend
-          verticalAlign='bottom'
-          align='center'
-          iconType='square'
-          iconSize={10}
-          content={() => <ChartLegend data={data} />}
-        />
+        <Legend /* ... */ />
       </PieChart>
     </ResponsiveContainer>
   );
-};
-
-export default DashboardPieChart;
+}
