@@ -58,8 +58,8 @@ const ProductInfoCard = () => {
 
             <div className='grid gap-4 sm:grid-cols-4'>
               <DataSection
-                title='브랜드'
-                text={searchProduct.typeBrand}
+                title='연령'
+                text={searchProduct.typeAge}
                 textDirection='row'
               />
               <DataSection
@@ -67,14 +67,16 @@ const ProductInfoCard = () => {
                 text={searchProduct.typeGender}
                 textDirection='row'
               />
+
               <DataSection
-                title='연령'
-                text={searchProduct.typeAge}
+                title='브랜드'
+                text={searchProduct.typeBrand}
                 textDirection='row'
               />
+
               <DataSection
                 title='신상품'
-                text={searchProduct.new ? '해당' : '해당없음'}
+                text={searchProduct.new ? '신상품' : '해당없음'}
                 textDirection='row'
               />
             </div>

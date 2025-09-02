@@ -21,11 +21,12 @@ export const getAgeColor = (data: TSalesBreakDownResponse[], key?: string) => {
     acc += r.totalPrice ?? 0;
     if (r.key === key) {
       const cumShare = +(acc / total).toFixed(2);
+      const text = `상위 ${cumShare * 100}%`;
       return cumShare <= getThreshold('AGE', 'GREEN')
-        ? { colorInfo: colorConfig.green, data: cumShare }
+        ? { colorInfo: colorConfig.green, data: text }
         : cumShare <= getThreshold('AGE', 'YELLOW')
-          ? { colorInfo: colorConfig.yellow, data: cumShare }
-          : { colorInfo: colorConfig.red, data: cumShare };
+          ? { colorInfo: colorConfig.yellow, data: text }
+          : { colorInfo: colorConfig.red, data: text };
     }
   }
 
@@ -44,11 +45,12 @@ export const getBrandColor = (
     acc += r.totalPrice ?? 0;
     if (r.key === key) {
       const cumShare = +(acc / total).toFixed(2);
+      const text = `상위 ${cumShare * 100}%`;
       return cumShare <= getThreshold('BRAND', 'GREEN')
-        ? { colorInfo: colorConfig.green, data: cumShare }
+        ? { colorInfo: colorConfig.green, data: text }
         : cumShare <= getThreshold('BRAND', 'YELLOW')
-          ? { colorInfo: colorConfig.yellow, data: cumShare }
-          : { colorInfo: colorConfig.red, data: cumShare };
+          ? { colorInfo: colorConfig.yellow, data: text }
+          : { colorInfo: colorConfig.red, data: text };
     }
   }
 
@@ -63,19 +65,19 @@ export const getGenderColor = (
 
   if (data?.[0].key === key)
     return {
-      data: `${key} (${nf.format(data?.[0].count)})`,
+      data: `1등`,
       colorInfo: colorConfig.green,
     };
 
   if (data?.[1].key === key)
     return {
-      data: `${key} (${nf.format(data?.[1].count)})`,
+      data: `2등`,
       colorInfo: colorConfig.yellow,
     };
 
   if (data?.[2].key === key)
     return {
-      data: `${key} (${nf.format(data?.[2].count)})`,
+      data: `3등`,
       colorInfo: colorConfig.red,
     };
 
@@ -125,7 +127,7 @@ export const getStockRateColor = (stockRate?: number) => {
   if (stockRate === undefined || stockRate === null)
     return { data: null, colorInfo: colorConfig.gray };
 
-  const data = `${nf.format(stockRate)}`;
+  const data = `${nf.format(stockRate)}%`;
   if (stockRate > 10) return { data, colorInfo: colorConfig.green };
   if (stockRate > 5) return { data, colorInfo: colorConfig.yellow };
 
@@ -136,7 +138,7 @@ export const getSaleRateColor = (saleRate?: number) => {
   if (saleRate === undefined || saleRate === null)
     return { data: null, colorInfo: colorConfig.gray };
 
-  const data = `${nf.format(saleRate)}`;
+  const data = `${nf.format(saleRate)}%`;
   if (saleRate > 60) return { data, colorInfo: colorConfig.green };
   if (saleRate > 30) return { data, colorInfo: colorConfig.yellow };
 

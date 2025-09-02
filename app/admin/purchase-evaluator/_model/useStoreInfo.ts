@@ -11,16 +11,18 @@ import { searchProductListStore, selectedStore } from '../_store';
 import useEffectiveOptimal from './useEffectiveOptimal';
 
 const useStoreInfo = () => {
-  const { storeId, age, gender, brand, storeName, isPending } = selectedStore(
-    useShallow((state) => ({
-      storeId: state.storeInfo.storeId,
-      age: state.storeInfo.age,
-      gender: state.storeInfo.gender,
-      brand: state.storeInfo.brand,
-      storeName: state.storeInfo.storeName,
-      isPending: state.isPending,
-    })),
-  );
+  const { storeId, age, gender, brand, storeName, isPending, storeInfo } =
+    selectedStore(
+      useShallow((state) => ({
+        storeId: state.storeInfo.storeId,
+        age: state.storeInfo.age,
+        gender: state.storeInfo.gender,
+        brand: state.storeInfo.brand,
+        storeName: state.storeInfo.storeName,
+        isPending: state.isPending,
+        storeInfo: state.storeInfo,
+      })),
+    );
   const optimal = useEffectiveOptimal();
   const product = searchProductListStore((state) => state.searchProduct);
 
