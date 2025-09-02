@@ -19,6 +19,7 @@ const ProductDashboardChart = () => {
       enabled={isEnabled}
       isPending={isPending}
       isError={isError}
+      dimension={DIMENSION.PRODUCT}
       sectionType='aspect-video'
       chartTitle={`${dashboadProductTitleConfig[DIMENSION.PRODUCT]}별 매출 TOP10`}
       hasData={!!data && data.length > 0}

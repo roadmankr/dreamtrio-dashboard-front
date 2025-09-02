@@ -17,6 +17,7 @@ const AgeDashboardChart = () => {
       sectionType='aspect-square'
       hasData={!!data && data.length > 0}
       chartTitle='나이별 매출 통계'
+      dimension={DIMENSION.AGE}
       emptyMessage='해당 조건의 나이 차트 데이터가 없습니다.'
     >
       <div className='aspect-square'>

@@ -16,6 +16,7 @@ const AnimationDashboardChart = () => {
       enabled={isEnabled}
       isPending={isPending}
       isError={isError}
+      dimension={DIMENSION.ANIMATION}
       sectionType='aspect-video'
       chartTitle='애니메이션 매출 TOP10'
       hasData={!!data && data.length > 0}

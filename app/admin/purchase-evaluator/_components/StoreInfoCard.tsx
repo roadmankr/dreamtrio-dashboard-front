@@ -15,7 +15,9 @@ const StoreInfoCard = () => {
     typeBrandColor,
     storeName,
     optimalColor,
-    actionType,
+    ageActionType,
+    brandActionType,
+    genderActionType,
   } = useStoreInfo();
 
   return (
@@ -38,17 +40,17 @@ const StoreInfoCard = () => {
                 <DataSection
                   title='연령 분포'
                   {...typeAgeColor}
-                  actionType={actionType}
+                  actionType={ageActionType}
                 />
                 <DataSection
                   title='성별 분포'
                   {...typeGenderColor}
-                  actionType={actionType}
+                  actionType={genderActionType}
                 />
                 <DataSection
                   title='브랜드 판매율'
                   {...typeBrandColor}
-                  actionType={actionType}
+                  actionType={brandActionType}
                 />
                 <DataSection title='가용/적정 재고' {...optimalColor} />
               </div>

@@ -1,4 +1,5 @@
 import { buildQuery } from '@/lib/http';
+import { DIMENSION } from '@/shared/types/sales';
 import { useMemo } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 import { ActionType } from '../_components/common/DataSection.component';
@@ -55,8 +56,31 @@ const useStoreInfo = () => {
 
   const actionType = {
     type: 'link',
-    url: `${process.env.NEXT_PUBLIC__BASE_URL!}/admin/dashboard${buildQuery({ storeId, saleDate: SEARCH_SALE_DATE })}`,
+    url: `${process.env.NEXT_PUBLIC__BASE_URL!}/admin/dashboard`,
+    // url: `${process.env.NEXT_PUBLIC__BASE_URL!}/admin/dashboard${buildQuery({ storeId, saleDate: SEARCH_SALE_DATE })}`,
   } satisfies ActionType;
+
+  const ageActionType = useMemo(
+    () => ({
+      ...actionType,
+      url: `${actionType.url}${buildQuery({ storeId, saleDate: SEARCH_SALE_DATE, dimesion: DIMENSION.AGE })}`,
+    }),
+    [storeId],
+  );
+  const brandActionType = useMemo(
+    () => ({
+      ...actionType,
+      url: `${actionType.url}${buildQuery({ storeId, saleDate: SEARCH_SALE_DATE, dimesion: DIMENSION.BRAND })}`,
+    }),
+    [storeId],
+  );
+  const genderActionType = useMemo(
+    () => ({
+      ...actionType,
+      url: `${actionType.url}${buildQuery({ storeId, saleDate: SEARCH_SALE_DATE, dimesion: DIMENSION.GENDER })}`,
+    }),
+    [storeId],
+  );
 
   const status = isPending
     ? SearchStatus.PENDING
@@ -76,6 +100,9 @@ const useStoreInfo = () => {
     typeGenderColor,
     status,
     actionType,
+    ageActionType,
+    brandActionType,
+    genderActionType,
   };
 };
 

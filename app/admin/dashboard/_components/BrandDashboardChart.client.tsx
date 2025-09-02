@@ -16,6 +16,7 @@ const BrandDashboardChart = () => {
       enabled={isEnabled}
       isPending={isPending}
       isError={isError}
+      dimension={DIMENSION.BRAND}
       sectionType='aspect-video'
       chartTitle='브랜드 매출 TOP10'
       hasData={!!data && data.length > 0}
