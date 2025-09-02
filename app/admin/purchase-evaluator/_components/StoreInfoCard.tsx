@@ -15,6 +15,7 @@ const StoreInfoCard = () => {
     typeBrandColor,
     storeName,
     optimalColor,
+    actionType,
   } = useStoreInfo();
 
   return (
@@ -34,9 +35,21 @@ const StoreInfoCard = () => {
             <div className='flex flex-col gap-4'>
               <DataSection title='매장명' data={storeName} />
               <div className='grid gap-3 sm:grid-cols-4'>
-                <DataSection title='연령 분포' {...typeAgeColor} />
-                <DataSection title='성별 분포' {...typeGenderColor} />
-                <DataSection title='브랜드 판매율' {...typeBrandColor} />
+                <DataSection
+                  title='연령 분포'
+                  {...typeAgeColor}
+                  actionType={actionType}
+                />
+                <DataSection
+                  title='성별 분포'
+                  {...typeGenderColor}
+                  actionType={actionType}
+                />
+                <DataSection
+                  title='브랜드 판매율'
+                  {...typeBrandColor}
+                  actionType={actionType}
+                />
                 <DataSection title='가용/적정 재고' {...optimalColor} />
               </div>
             </div>

@@ -15,7 +15,7 @@ const ProductInfoCard = () => {
     stockRateColor,
     optimalStockColor,
     searchProduct,
-    saleProceColor,
+    salePriceColor,
   } = useProductInfo();
 
   return (
@@ -85,7 +85,7 @@ const ProductInfoCard = () => {
               <DataSection title='보유/적정 재고' {...optimalStockColor} />
               <DataSection title='재고회전율' {...stockRateColor} />
               <DataSection title='판매율' {...saleRateColor} />
-              <DataSection title='온라인/매장 판매가' {...saleProceColor} />
+              <DataSection title='온라인/매장 판매가' {...salePriceColor} />
             </div>
           </div>
         )}

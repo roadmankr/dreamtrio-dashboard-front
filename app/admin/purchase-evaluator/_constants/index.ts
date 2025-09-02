@@ -3,7 +3,8 @@ export const BARCODE_KEY = 'barcode';
 export const PRODUCT_INPUT_ID = 'product';
 
 export const NOT_PRODUCT_LIST_TEXT = '매장 선택 후 상품을 검색해주세요.';
-
+// export const SEARCH_MOTH = getMonthOptions()?.[1].value;
+export const SEARCH_SALE_DATE = '2025-07';
 export const COLOR_THRESHOLD = {
   BRAND: {
     GREEN: 0.15,

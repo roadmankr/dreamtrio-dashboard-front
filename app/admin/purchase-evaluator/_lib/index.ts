@@ -21,7 +21,8 @@ export const getAgeColor = (data: TSalesBreakDownResponse[], key?: string) => {
     acc += r.totalPrice ?? 0;
     if (r.key === key) {
       const cumShare = +(acc / total).toFixed(2);
-      const text = `상위 ${cumShare * 100}%`;
+      const text = `상위 ${Math.floor(cumShare * 100)}%`;
+
       return cumShare <= getThreshold('AGE', 'GREEN')
         ? { colorInfo: colorConfig.green, data: text }
         : cumShare <= getThreshold('AGE', 'YELLOW')
@@ -41,11 +42,13 @@ export const getBrandColor = (
 
   const total = data.reduce((s, r) => s + (r.totalPrice ?? 0), 0);
   let acc = 0;
+
   for (const r of data) {
     acc += r.totalPrice ?? 0;
     if (r.key === key) {
       const cumShare = +(acc / total).toFixed(2);
-      const text = `상위 ${cumShare * 100}%`;
+      const text = `상위 ${Math.floor(cumShare * 100)}%`;
+
       return cumShare <= getThreshold('BRAND', 'GREEN')
         ? { colorInfo: colorConfig.green, data: text }
         : cumShare <= getThreshold('BRAND', 'YELLOW')

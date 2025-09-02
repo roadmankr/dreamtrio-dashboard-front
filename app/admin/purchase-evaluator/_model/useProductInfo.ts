@@ -34,7 +34,7 @@ const useProductInfo = () => {
     [searchProduct?.saleRate],
   );
 
-  const saleProceColor = useMemo(
+  const salePriceColor = useMemo(
     () => getSalePriceColor(),
     [searchProduct?.barcode],
   );
@@ -54,7 +54,7 @@ const useProductInfo = () => {
     stockRateColor,
     optimalStockColor,
     searchProduct,
-    saleProceColor,
+    salePriceColor,
   };
 };
 

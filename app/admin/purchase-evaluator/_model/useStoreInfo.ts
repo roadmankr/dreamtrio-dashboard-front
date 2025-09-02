@@ -1,6 +1,8 @@
+import { buildQuery } from '@/lib/http';
 import { useMemo } from 'react';
 import { useShallow } from 'zustand/react/shallow';
-import { SearchStatus } from '../_constants';
+import { ActionType } from '../_components/common/DataSection.component';
+import { SEARCH_SALE_DATE, SearchStatus } from '../_constants';
 import {
   getAgeColor,
   getBrandColor,
@@ -11,23 +13,25 @@ import { searchProductListStore, selectedStore } from '../_store';
 import useEffectiveOptimal from './useEffectiveOptimal';
 
 const useStoreInfo = () => {
-  const { storeId, age, gender, brand, storeName, isPending, storeInfo } =
-    selectedStore(
-      useShallow((state) => ({
-        storeId: state.storeInfo.storeId,
-        age: state.storeInfo.age,
-        gender: state.storeInfo.gender,
-        brand: state.storeInfo.brand,
-        storeName: state.storeInfo.storeName,
-        isPending: state.isPending,
-        storeInfo: state.storeInfo,
-      })),
-    );
+  const { storeId, age, gender, brand, storeName, isPending } = selectedStore(
+    useShallow((state) => ({
+      storeId: state.storeInfo.storeId,
+      age: state.storeInfo.age,
+      gender: state.storeInfo.gender,
+      brand: state.storeInfo.brand,
+      storeName: state.storeInfo.storeName,
+      isPending: state.isPending,
+      storeInfo: state.storeInfo,
+    })),
+  );
   const optimal = useEffectiveOptimal();
   const product = searchProductListStore((state) => state.searchProduct);
 
   const typeAgeColor = useMemo(
-    () => getAgeColor(age, product?.typeAge),
+    () => ({
+      ...getAgeColor(age, product?.typeAge),
+      actionType: {},
+    }),
     [age, product?.typeAge],
   );
 
@@ -35,10 +39,12 @@ const useStoreInfo = () => {
     () => getGenderColor(gender, product?.typeGender),
     [gender, product?.typeGender],
   );
+
   const typeBrandColor = useMemo(
     () => getBrandColor(brand, product?.typeBrand),
     [brand, product?.typeBrand],
   );
+
   const optimalColor = useMemo(
     () => ({
       colorInfo: getOptimalColor(optimal),
@@ -46,6 +52,11 @@ const useStoreInfo = () => {
     }),
     [optimal],
   );
+
+  const actionType = {
+    type: 'link',
+    url: `${process.env.NEXT_PUBLIC__BASE_URL!}/admin/dashboard${buildQuery({ storeId, saleDate: SEARCH_SALE_DATE })}`,
+  } satisfies ActionType;
 
   const status = isPending
     ? SearchStatus.PENDING
@@ -64,6 +75,7 @@ const useStoreInfo = () => {
     optimalColor,
     typeGenderColor,
     status,
+    actionType,
   };
 };
 
