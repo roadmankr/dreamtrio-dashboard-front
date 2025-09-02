@@ -111,6 +111,7 @@ export type FormDataType<T extends FieldValues = FieldValues, TExtra = {}> = (
   autoFocus?: boolean;
   extra?: TExtra;
   label?: string;
+  disabled?: boolean;
   labelFlexPosition?: 'row' | 'col';
   className?: string;
   fieldClassName?: string;
