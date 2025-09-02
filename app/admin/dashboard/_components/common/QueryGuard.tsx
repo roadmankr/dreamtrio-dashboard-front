@@ -4,6 +4,7 @@
 import CardWrapper from '@/components/ui/card/card-wrapper';
 import { cn } from '@/lib/utils';
 import { DIMENSION } from '@/shared/types/sales';
+import useScroll from '../../_model/useScroll';
 import ChartTitle from '../charts/ChartTitle.component';
 import { CardSkeleton } from './CardSkeleton';
 import { EmptyState } from './EmptyState';
@@ -31,6 +32,8 @@ export default function QueryGuard({
   emptyMessage = '데이터가 없습니다.',
   children,
 }: Props) {
+  const success = enabled && !isPending && !isError && hasData;
+  useScroll({ success });
   return (
     <CardWrapper
       containerClassName={cn('p-4 w-full aspect-square ', sectionType)}
@@ -52,7 +55,7 @@ export default function QueryGuard({
           <EmptyState title={emptyMessage} />
         )}
 
-        {enabled && !isPending && !isError && hasData && (
+        {success && (
           <div className='flex w-full flex-1 flex-col gap-2'>
             <ChartTitle title={chartTitle} />
             <div className='flex w-full flex-1'>{children}</div>

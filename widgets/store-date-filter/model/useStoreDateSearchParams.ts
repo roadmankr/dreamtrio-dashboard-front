@@ -4,7 +4,7 @@ import useTransitionRouter from '@/features/navigation/model/useTransitionRouter
 import { getMonthOptions } from '@/features/sales-date-options/model/lib';
 import { DIMENSION } from '@/shared/types/sales';
 import { usePathname, useSearchParams } from 'next/navigation';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 
 const useStoreDateSearchParams = () => {
   const pathname = usePathname();
@@ -18,22 +18,6 @@ const useStoreDateSearchParams = () => {
   const resetParams = useCallback(() => {
     push(pathname);
   }, [push, pathname]);
-
-  useEffect(() => {
-    setTimeout(() => {
-      const id = requestAnimationFrame(() => {
-        const el = document.querySelector<HTMLElement>(
-          `[data-section="${dimension}"]`,
-        );
-        console.log(el);
-        if (!el) return;
-
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
-
-      return () => cancelAnimationFrame(id);
-    }, 0);
-  }, [dimension]);
 
   const returnStoreID = useMemo(() => (storeId ? +storeId : null), [storeId]);
 
