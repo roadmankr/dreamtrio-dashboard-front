@@ -61,24 +61,27 @@ const useStoreInfo = () => {
   } satisfies ActionType;
 
   const ageActionType = useMemo(
-    () => ({
-      ...actionType,
-      url: `${actionType.url}${buildQuery({ storeId, saleDate: SEARCH_SALE_DATE, dimension: DIMENSION.AGE })}`,
-    }),
+    () =>
+      ({
+        type: 'link',
+        url: `${process.env.NEXT_PUBLIC_BASE_URL!}/admin/dashboard${buildQuery({ storeId, saleDate: SEARCH_SALE_DATE, dimension: DIMENSION.AGE })}`,
+      }) satisfies ActionType,
     [storeId],
   );
   const brandActionType = useMemo(
-    () => ({
-      ...actionType,
-      url: `${actionType.url}${buildQuery({ storeId, saleDate: SEARCH_SALE_DATE, dimension: DIMENSION.BRAND })}`,
-    }),
+    () =>
+      ({
+        type: 'link',
+        url: `${process.env.NEXT_PUBLIC_BASE_URL!}/admin/dashboard${buildQuery({ storeId, saleDate: SEARCH_SALE_DATE, dimension: DIMENSION.BRAND })}`,
+      }) satisfies ActionType,
     [storeId],
   );
   const genderActionType = useMemo(
-    () => ({
-      ...actionType,
-      url: `${actionType.url}${buildQuery({ storeId, saleDate: SEARCH_SALE_DATE, dimension: DIMENSION.GENDER })}`,
-    }),
+    () =>
+      ({
+        type: 'link',
+        url: `${process.env.NEXT_PUBLIC_BASE_URL!}/admin/dashboard${buildQuery({ storeId, saleDate: SEARCH_SALE_DATE, dimension: DIMENSION.GENDER })}`,
+      }) satisfies ActionType,
     [storeId],
   );
 
