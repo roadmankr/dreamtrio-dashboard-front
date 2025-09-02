@@ -7,4 +7,7 @@ export const store = createQueryKeys('store', {
   getSalesDateList: {
     queryKey: ['dateList'],
   },
+  getStoreDetail: (storeId: number) => ({
+    queryKey: ['detail', storeId],
+  }),
 });

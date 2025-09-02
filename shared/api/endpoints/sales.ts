@@ -1,27 +1,19 @@
+import { UploadFile, UploadFileMap } from '@/app/admin/upload/_config';
+import { buildQuery } from '@/lib/http';
 import { TSalesBreakDownQuery } from '@/shared/types/sales';
 
 export const sales = {
-  getSalesBreakDown: ({
-    saleDate,
-    storeName,
-    dimension,
-  }: TSalesBreakDownQuery) =>
+  getSalesBreakDown: ({ saleDate, storeId, dimension }: TSalesBreakDownQuery) =>
     [
-      `sales/breakdown?storeName=${storeName}&saleDate=${saleDate}&dimension=${dimension}`,
-      { method: 'get' },
+      `sales/breakdown${buildQuery({ saleDate, storeId, dimension })}`,
+      { method: 'GET' },
     ] as const,
-  getSalesBreakDownType: ({
-    saleDate,
-    storeName,
-    dimension,
-  }: TSalesBreakDownQuery) => ({
-    server: [
-      `sales/breakdown?storeName=${storeName}&saleDate=${saleDate}&dimension=${dimension}`,
-      { method: 'get' },
-    ] as const,
-    client: {
-      url: `sales/breakdown?storeName=${storeName}&saleDate=${saleDate}&dimension=${dimension}`,
-      method: 'get',
-    },
-  }),
+  uploadSalesFile: ({
+    uploadType = UploadFileMap.STOCK,
+    formData,
+  }: {
+    uploadType: UploadFile;
+    formData: FormData;
+  }) =>
+    [`file/upload/${uploadType}`, { method: 'POST', body: formData }] as const,
 } as const;

@@ -24,7 +24,7 @@ const SubmitButton = ({
       disabled={isPending || props.disabled}
       {...props}
       type='submit'
-      className={cn(`cursor-pointer`, className)}
+      className={cn(`group h-10 cursor-pointer`, className)}
     >
       {isPending ? <ReloadIcon className='size-2 animate-spin' /> : submitIcon}
       {submitText}

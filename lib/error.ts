@@ -1,13 +1,23 @@
-import { ErrorCode } from "@/shared/constants";
-import { HTTPError, TimeoutError } from "ky";
+import { ErrorCode } from '@/shared/constants';
+import { HTTPError, TimeoutError } from 'ky';
 
 export const getErrorMessage = async (error: unknown) => {
   if (error instanceof HTTPError) {
     try {
       const errorBody = await error.response.json().catch(() => null);
 
-      if (errorBody && typeof errorBody === 'object' && 'message' in errorBody) {
+      if (
+        errorBody &&
+        typeof errorBody === 'object' &&
+        'message' in errorBody
+      ) {
         return String(errorBody.message);
+      } else if (
+        errorBody &&
+        typeof errorBody === 'object' &&
+        'error' in errorBody
+      ) {
+        return String(errorBody.error);
       }
 
       return JSON.stringify(errorBody ?? (await error.response.text()));

@@ -1,6 +1,6 @@
 import { Toaster } from '@/components/ui/sonner';
 import QueryProvider from '@/shared/providers/query-provider';
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Roboto, Sora } from 'next/font/google';
 import './globals.css';
 
@@ -15,6 +15,14 @@ const sora = Sora({
   variable: '--font-sora',
   display: 'swap',
 });
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  viewportFit: 'cover',
+};
 
 export const metadata: Metadata = {
   title: '드림트리오 - Dashboard',

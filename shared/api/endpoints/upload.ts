@@ -1,3 +1,4 @@
 export const upload = {
-  dashboardUpload : [``,{method:'post'}]as const,
-}as const
+  dashboardUpload: (formData: FormData) =>
+    [`file/upload/sales`, { method: 'post', body: formData }] as const,
+} as const;

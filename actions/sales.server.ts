@@ -1,5 +1,6 @@
 'use server';
 
+import { UploadFile } from '@/app/admin/upload/_config';
 import { getErrorMessage } from '@/lib/error';
 import { apis } from '@/shared/api/endpoints';
 import { serverKy } from '@/shared/api/ky/ky.server';
@@ -10,12 +11,12 @@ import {
 
 export const getSalesBreakDownInServer = async ({
   saleDate,
-  storeName,
+  storeId,
   dimension,
 }: TSalesBreakDownQuery) => {
   try {
     const result = await serverKy(
-      ...apis.sales.getSalesBreakDown({ saleDate, storeName, dimension }),
+      ...apis.sales.getSalesBreakDown({ saleDate, storeId, dimension }),
     ).json<TSalesBreakDownResponse[]>();
 
     return result;
@@ -24,21 +25,19 @@ export const getSalesBreakDownInServer = async ({
   }
 };
 
-// const ApiPathKey = {
-//   server: {},
-//   client:{},
-// };
+export const uploadSalesFile = async ({
+  uploadType,
+  formData,
+}: {
+  uploadType: UploadFile;
+  formData: FormData;
+}) => {
+  try {
+    const [url, options] = apis.sales.uploadSalesFile({ uploadType, formData });
+    const result = await serverKy(url, options).json<number>();
 
-// export const fetchers = {
-//   async universal<T>(key: keyof typeof ApiPathKey): Promise< KyResponse<T>> {
-//     if (typeof window === 'undefined') {
-//       const data = await serverKy.get<T>(API_PATH[key].server); // 외부로 직행
-//       return data;
-//     }
-//     const res = await ky<T>(`/api${API_PATH[key].client}`, {
-//       credentials: 'include',
-//     }); // 내부 프록시
-//     if (!res.ok) throw new Error(`${key} ${res.status}`);
-//     return res;
-//   },
-// };
+    return result;
+  } catch (err: unknown) {
+    throw new Error(await getErrorMessage(err));
+  }
+};

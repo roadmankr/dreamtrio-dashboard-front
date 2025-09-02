@@ -8,7 +8,10 @@ import {
 } from 'react-hook-form';
 
 export type SelectOption = { label: string; value: any; disabled?: boolean };
-
+export type TFormBaseChange<T extends FieldValues> = {
+  value: any;
+  form: UseFormReturn<T>;
+};
 export type TFormValue =
   | ''
   | undefined
@@ -70,13 +73,7 @@ export type FormInputType<T extends FieldValues = FieldValues> = {
   placeholder?: string;
   maxLength?: number;
   parse?: (v: string) => void;
-  onChange?: ({
-    value,
-    form,
-  }: {
-    value: string;
-    form: UseFormReturn<T>;
-  }) => any;
+  onChange?: ({ value, form }: TFormBaseChange<T>) => any;
 };
 
 export type FormInputFileType = {
@@ -92,26 +89,28 @@ export type FormInputFileType = {
 export type FormSelectType<T extends FieldValues = FieldValues, TExtra = {}> = {
   type: 'select';
   isSearchMode?: boolean;
+  disabled?: boolean;
   defaultValue?: any;
   options?: { label: string; value: any }[];
   placeholder?: string;
   useSearchMode?: boolean;
-  onChange?: (props?: { value: any; form: UseFormReturn<T> } & TExtra) => any;
+  onChange?: (props?: TFormBaseChange<T> & TExtra) => any;
   // onChange?: (v: string) => void;
 };
 
 export type FormDataType<T extends FieldValues = FieldValues, TExtra = {}> = (
   | FormSelectType<T, TExtra>
   | FormInputType<T>
-  | ComponentForm<T,TExtra>
+  | ComponentForm<T, TExtra>
   | FormLabelType
   | FormInputFileType
   | FormDateType
   | FormHiddenType
 ) & {
   name: FieldPath<T>;
+  autoFocus?: boolean;
+  extra?: TExtra;
   label?: string;
-  disabled?: boolean;
   labelFlexPosition?: 'row' | 'col';
   className?: string;
   fieldClassName?: string;
@@ -120,7 +119,10 @@ export type FormDataType<T extends FieldValues = FieldValues, TExtra = {}> = (
   subComponent?: JSX.Element;
 };
 
-export type FormProps<T extends FieldValues, TExtra = {}> = FormDataType<T, TExtra> & {
+export type FormProps<T extends FieldValues, TExtra = {}> = FormDataType<
+  T,
+  TExtra
+> & {
   form: UseFormReturn<T>;
   autoFocus?: boolean;
   extra?: TExtra;

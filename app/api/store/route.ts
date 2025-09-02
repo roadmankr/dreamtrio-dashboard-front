@@ -6,7 +6,7 @@ export const GET = async () => {
     const data = await getStoreListInServer();
     return NextResponse.json({ data });
   } catch (err: any) {
-    return new Response(JSON.stringify({ error: err.message }), {
+    return new Response(JSON.stringify({ message: err.message }), {
       status: 500,
     });
   }

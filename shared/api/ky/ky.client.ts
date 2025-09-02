@@ -1,7 +1,9 @@
 import ky from 'ky';
 
-export const clintKy = ky.create({
+export const clientKy = ky.create({
   // prefixUrl: 'api',
-  timeout: 300000,
+  timeout: 30000,
   credentials: 'include',
+  cache: 'no-store',
+  retry: 2,
 });

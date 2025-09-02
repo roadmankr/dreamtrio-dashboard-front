@@ -132,15 +132,19 @@
   body::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Edge */
   }
+
+  input:disabled {
+    background-color: white;
+  }
 }
 
-@layer utilities {
+/* @layer utilities {
   .scrollbar-hide {
-    -ms-overflow-style: none; /* IE, Edge 구형 */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; 
+    scrollbar-width: none; 
   }
 
   .scrollbar-hide::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Edge */
+    display: none; 
   }
-}
+} */

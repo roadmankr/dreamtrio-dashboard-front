@@ -2,7 +2,10 @@ import dayjs from '@/lib/dayjs';
 import z from 'zod';
 
 export const storeDateFilterSchema = z.object({
-  storeName: z.string().optional(),
+  storeId: z
+    .number()
+    .nullable()
+    .transform((v) => (v ? +v : null)),
   saleDate: z
     .string()
     .refine(
@@ -13,3 +16,5 @@ export const storeDateFilterSchema = z.object({
 });
 
 export type TStoreDateFilter = z.infer<typeof storeDateFilterSchema>;
+export type TStoreDateFilterInput = z.input<typeof storeDateFilterSchema>;
+export type TStoreDateFilterOutput = z.output<typeof storeDateFilterSchema>;

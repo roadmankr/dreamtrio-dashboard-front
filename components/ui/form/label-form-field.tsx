@@ -155,6 +155,7 @@ const LabelFormField = <T extends FieldValues, TExtra extends object = any>({
                         {...field}
                         key={name}
                         value={field.value}
+                        disabled={disabled}
                         placeholder={props.placeholder}
                         options={props.options}
                         onValueChange={(value: any) => {
@@ -173,6 +174,7 @@ const LabelFormField = <T extends FieldValues, TExtra extends object = any>({
                       <SelectBox
                         {...field}
                         key={name}
+                        disabled={disabled}
                         // isDeletable={props.isDeletable}
                         defaultValue={props.defaultValue ?? ''}
                         value={field.value}
@@ -193,6 +195,7 @@ const LabelFormField = <T extends FieldValues, TExtra extends object = any>({
                   {(props.type === 'text' || props.type === 'password') && (
                     <Input
                       {...field}
+                      id={field.name}
                       autoFocus={autoFocus}
                       type={props.type || 'text'}
                       value={getParseFieldValue(field.value, props.valueType)}

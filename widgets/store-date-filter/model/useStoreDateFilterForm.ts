@@ -2,12 +2,13 @@
 
 import { getMonthOptions } from '@/features/sales-date-options/model/lib';
 import useStoreOptions from '@/features/store-options/model/useStoreOptions';
+import { buildQuery } from '@/lib/http';
 import { FormDataType } from '@/shared/types/form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { usePathname, useRouter } from 'next/navigation';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
-import { saleDateFormFields, storeFormFields } from './config';
+import { storeDateFormFields } from './config';
 import { storeDateFilterSchema, TStoreDateFilter } from './schema';
 import useStoreDateSearchParams from './useStoreDateSearchParams';
 
@@ -15,43 +16,37 @@ const useStoreDateFilterForm = () => {
   const router = useRouter();
   const pathname = usePathname();
   const { storeOptions } = useStoreOptions({ isNeedTotalOption: true });
-  const { storeName, saleDate } = useStoreDateSearchParams();
+  const { storeId, saleDate, resetParams } = useStoreDateSearchParams();
   const form = useForm<TStoreDateFilter>({
     resolver: zodResolver(storeDateFilterSchema),
     defaultValues: {
-      storeName,
+      storeId: null,
       saleDate: saleDate || getMonthOptions()?.[0].value,
     },
   });
 
   useEffect(() => {
     form.reset({
-      storeName,
+      storeId,
       saleDate: saleDate || getMonthOptions()?.[0].value || '',
     });
-  }, [storeName, saleDate, form]);
+  }, [storeId, saleDate, form]);
 
   const onSubmit = useCallback(
     (data: TStoreDateFilter) => {
-      const sp = new URLSearchParams();
-
-      data.storeName
-        ? sp.set('storeName', data.storeName)
-        : sp.delete('storeName');
-      data.saleDate ? sp.set('saleDate', data.saleDate) : sp.delete('saleDate');
-
-      router.push(`${pathname}?${sp.toString()}`);
+      const query = buildQuery(data);
+      router.push(`${pathname}${query}`);
     },
     [pathname, router],
   );
 
   const storeField = useMemo(
-    () => ({ ...storeFormFields, options: storeOptions }),
+    () => ({ ...storeDateFormFields.storeId, options: storeOptions }),
     [storeOptions],
   );
 
   const formFields: FormDataType<TStoreDateFilter>[] = useMemo(
-    () => [storeField, saleDateFormFields],
+    () => [storeField, storeDateFormFields.saleDate],
     [storeField],
   );
 
@@ -60,7 +55,7 @@ const useStoreDateFilterForm = () => {
     [form.formState.isValid, form.formState.isSubmitting],
   );
 
-  return { form, onSubmit, formFields, disabled };
+  return { form, onSubmit, formFields, disabled, resetParams };
 };
 
 export default useStoreDateFilterForm;

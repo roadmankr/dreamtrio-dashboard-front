@@ -25,6 +25,7 @@ const DashboardPage = async () => {
       <HydrationBoundary state={dehydrate(queryClient)}>
         <Suspense>
           <div className='flex w-full flex-col gap-3 p-3'>
+            {/* 매장/일자 검색 */}
             <StoreDateFilter />
 
             <div className='flex flex-col gap-3 lg:flex-row'>

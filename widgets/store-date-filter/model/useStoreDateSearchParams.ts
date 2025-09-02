@@ -1,15 +1,24 @@
 'use client';
 
+import useTransitionRouter from '@/features/navigation/model/useTransitionRouter';
 import { getMonthOptions } from '@/features/sales-date-options/model/lib';
-import { useSearchParams } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { useCallback, useMemo } from 'react';
 
 const useStoreDateSearchParams = () => {
+  const pathname = usePathname();
+  const { push } = useTransitionRouter();
   const searchParams = useSearchParams();
-  const storeName = searchParams.get('storeName') ?? '';
+  const storeId = searchParams.get('storeId') ?? '';
   const saleDate =
     searchParams.get('saleDate') ?? getMonthOptions()?.[1].value ?? '';
 
-  return { storeName, saleDate };
+  const resetParams = useCallback(() => {
+    push(pathname);
+  }, [push, pathname]);
+
+  const returnStoreID = useMemo(() => (storeId ? +storeId : null), [storeId]);
+  return { storeId: returnStoreID, saleDate, resetParams };
 };
 
 export default useStoreDateSearchParams;

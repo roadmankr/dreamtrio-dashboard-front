@@ -1,11 +1,12 @@
 import { getSalesBreakDownInServer } from '@/actions/sales.server';
+import { getErrorMessage } from '@/lib/error';
 import { DIMENSION } from '@/shared/types/sales';
 import { NextRequest, NextResponse } from 'next/server';
 
 export const GET = async (request: NextRequest) => {
   const searchParams = request.nextUrl.searchParams;
   const saleDate = searchParams.get('saleDate') ?? '';
-  const storeName = searchParams.get('storeName') ?? '';
+  const storeId = searchParams.get('storeId') ?? '';
   const dimension = (searchParams.get('dimension') as DIMENSION) ?? '';
 
   try {
@@ -14,13 +15,35 @@ export const GET = async (request: NextRequest) => {
 
     const data = await getSalesBreakDownInServer({
       saleDate,
-      storeName,
+      storeId:
+        Number(storeId) && !isNaN(Number(storeId)) ? Number(storeId) : null,
       dimension,
     });
     return NextResponse.json({ data });
-  } catch (err: any) {
-    return new Response(JSON.stringify({ error: err.message }), {
-      status: 500,
-    });
+  } catch (err: unknown) {
+    return new Response(
+      JSON.stringify({ message: await getErrorMessage(err) }),
+      {
+        status: 500,
+      },
+    );
   }
 };
+
+// export const POST = async (request: NextRequest) => {
+//   try {
+//     const formData = await request.formData();
+//     const file = formData.get('file');
+
+//     if (!file) throw new Error('파일 없음');
+
+//     const data = await uploadSalesFile(formData);
+
+//     return NextResponse.json({ data });
+//   } catch (error: unknown) {
+//     return NextResponse.json(
+//       { message: await getErrorMessage(error) },
+//       { status: 500 },
+//     );
+//   }
+// };

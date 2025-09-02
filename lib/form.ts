@@ -1,4 +1,3 @@
-
 import { SelectOption, TFormValue } from '@/shared/types/form';
 import { formatBizNumber, formatDateString, formatPhoneNumber } from './format';
 
@@ -58,3 +57,13 @@ export const defaultParse = (value: string, type?: TFormValue): any => {
 export const getParseFieldValue = (value: string, valueType?: TFormValue) => {
   return defaultParse(value, valueType) ?? '';
 };
+
+export function isFormData(value: unknown): value is FormData {
+  return (
+    typeof value === 'object' &&
+    typeof FormData !== 'undefined' &&
+    value instanceof FormData
+  );
+}
+
+export const nf = new Intl.NumberFormat('ko-KR');

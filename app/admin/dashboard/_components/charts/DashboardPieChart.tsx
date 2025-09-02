@@ -9,6 +9,7 @@ import {
   Tooltip,
 } from 'recharts';
 import { pichartCololrsConfig } from '../../_config';
+import PieChartLegend from './PieChartLegend.component';
 
 const RAD = Math.PI / 180;
 
@@ -92,7 +93,13 @@ export default function DashboardPieChart({
           contentStyle={{ borderRadius: 8 }}
         />
 
-        <Legend /* ... */ />
+        <Legend
+          verticalAlign='bottom'
+          align='center'
+          iconType='circle'
+          iconSize={10}
+          content={() => <PieChartLegend data={data} />}
+        />
       </PieChart>
     </ResponsiveContainer>
   );

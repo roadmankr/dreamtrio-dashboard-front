@@ -3,6 +3,8 @@ import 'server-only';
 
 export const serverKy = ky.create({
   prefixUrl: process.env.API_BASE_URL,
-  timeout: 300000,
+  // timeout: 300000,
+  timeout: false,
   retry: 0,
+  cache: 'no-store',
 });

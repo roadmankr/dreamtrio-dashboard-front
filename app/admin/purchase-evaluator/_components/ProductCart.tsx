@@ -1,0 +1,60 @@
+'use client';
+
+import { SearchStatus } from '../_constants';
+import useProductCart from '../_model/useProductCart';
+import CartContents from './cart/CartContents';
+import CartFooter from './cart/CartFooter';
+import EmptyState from './cart/EmptyState';
+import InfoSectionWrapper from './common/InfoSectionWrapper';
+
+const ProductCart = () => {
+  const {
+    cartList,
+    removeCart,
+    onChangeQtyInCart,
+    isPending,
+    downloadExcel,
+    status,
+    totalQty,
+    totalPrice,
+  } = useProductCart();
+
+  return (
+    <InfoSectionWrapper title='담은 상품' className='h-auto min-h-0'>
+      <div
+        aria-busy={status === SearchStatus.PENDING}
+        className='flex flex-col'
+      >
+        <div className='overflow-hidden rounded-2xl border'>
+          {status === SearchStatus.FAIL && <EmptyState />}
+
+          {status === SearchStatus.SUCCESS && (
+            <div className='relative grid'>
+              <div className='[grid-area:1/1] sm:h-auto' aria-hidden />
+              <div className='w-full overflow-x-auto overflow-y-hidden p-2 [grid-area:1/1] sm:p-3'>
+                {/* <div className='w-full overflow-x-auto overflow-y-hidden p-2 [-webkit-overflow-scrolling:touch] [grid-area:1/1] [scrollbar-gutter:stable_both-edges] sm:p-3'> */}
+                <CartContents
+                  cartList={cartList}
+                  onChangeQtyInCart={onChangeQtyInCart}
+                  removeCart={removeCart}
+                />
+              </div>
+            </div>
+          )}
+        </div>
+
+        {status === SearchStatus.SUCCESS && (
+          <CartFooter
+            totalPrice={totalPrice}
+            totalCartLength={cartList.length}
+            totalQty={totalQty}
+            onDownloadExcel={downloadExcel}
+            isPending={isPending}
+          />
+        )}
+      </div>
+    </InfoSectionWrapper>
+  );
+};
+
+export default ProductCart;

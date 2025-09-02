@@ -100,8 +100,9 @@ const DashboardBarChart = ({ dimension, data }: Props) => {
           {/* 심플 범례 */}
           <Legend
             verticalAlign='bottom'
-            height={28}
-            iconSize={14}
+            align='center'
+            iconType='circle'
+            iconSize={10}
             wrapperStyle={{ fontSize: 16, color: '#6B7280' }}
           />
 

@@ -12,7 +12,7 @@ interface Props {
 
 const CardWrapper = ({ children, className, containerClassName }: Props) => {
   return (
-    <Card className={cn('flex w-full', containerClassName)}>
+    <Card className={cn('flex h-full w-full', containerClassName)}>
       <CardContent
         className={cn('relative flex flex-1 flex-col gap-3', className)}
       >
