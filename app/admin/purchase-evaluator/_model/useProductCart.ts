@@ -4,6 +4,7 @@ import { useCallback, useTransition } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 
 import { ViewState } from '@/shared/model/status';
+import { getSearchSaleDate } from '../_lib';
 import {
   cartProductListStore,
   searchProductListStore,
@@ -27,7 +28,7 @@ const useProductCart = () => {
   const downloadExcel = useCallback(() => {
     startTransition(() => {
       const rows = cartList.map((c) => ({
-        상품코드: c.barcode,
+        바코드: c.barcode,
         상품명: c.productName,
         브랜드: c.typeBrand ?? '',
         수량: c.qty,
@@ -35,8 +36,8 @@ const useProductCart = () => {
         금액: c.qty * c.price,
       }));
 
-      const header = ['상품코드', '상품명', '브랜드', '수량', '단가', '금액'];
-      const filename = `${storeName}_${barcode}`;
+      const header = ['바코드', '상품명', '브랜드', '수량', '단가', '금액'];
+      const filename = `${getSearchSaleDate()}_${storeName}`;
 
       exportToXlsx(rows, {
         columns: header,

@@ -1,4 +1,5 @@
 import { TStoreOptimal } from '@/entities/stores/model/type';
+import { getMonthOptions } from '@/features/sales-date-options/model/lib';
 import { nf } from '@/lib/form';
 import { buildQuery } from '@/lib/http';
 import type { Dimension } from '@/shared/model/dimension';
@@ -193,7 +194,7 @@ export const resultChipVariant = (status: ViewState, hasSearched: boolean) => {
   return chipClass('muted');
 };
 
-export const getSearchSaleDate = () => '2025-07';
+export const getSearchSaleDate = () => getMonthOptions()?.[1].value;
 
 export const makeActionTypeByDimension = (
   storeId: number,
@@ -206,5 +207,3 @@ export const makeActionTypeByDimension = (
     url: `${process.env.NEXT_PUBLIC_BASE_URL!}/admin/dashboard${buildQuery({ storeId, saleDate: getSearchSaleDate(), dimension })}`,
   };
 };
-
-//getMonthOptions()?.[1].value;

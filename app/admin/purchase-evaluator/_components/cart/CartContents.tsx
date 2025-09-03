@@ -27,7 +27,7 @@ const CartContents = ({ cartList, onChangeQtyInCart, removeCart }: Props) => {
         <TableRow className='font-bold hover:bg-transparent'>
           <TableHead className='min-w-2xs'>상품명</TableHead>
           <TableHead className='w-[9rem] min-w-[9rem]'>바코드</TableHead>
-          <TableHead className='w-[7.5rem] min-w-[7.5rem] text-center'>
+          <TableHead className='w-[6.5rem] min-w-[6.5rem] text-center'>
             수량
           </TableHead>
           <TableHead className='w-[10rem] min-w-[10rem] text-right'>

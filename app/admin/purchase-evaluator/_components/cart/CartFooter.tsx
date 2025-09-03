@@ -23,15 +23,31 @@ const Stat = ({
 }) => {
   return (
     <div
-      className={cn('flex flex-1 items-center gap-3 rounded-2xl border p-3')}
+      className={cn(
+        'flex w-full items-center gap-3 rounded-2xl border p-3 sm:w-auto',
+      )}
+      aria-label={label}
     >
-      <div className='flex h-9 w-9 items-center justify-center rounded-xl border bg-slate-50'>
+      <div
+        className='flex h-9 w-9 items-center justify-center rounded-xl border bg-slate-50'
+        aria-hidden='true'
+      >
         <Icon className='h-4 w-4' />
       </div>
-      <div>
+      <div className='min-w-0'>
         <div className='text-xs text-slate-500'>{label}</div>
-        <div className='text-sm font-semibold whitespace-nowrap text-slate-900'>
-          {value ?? '-'}
+        <div
+          className='text-sm font-semibold whitespace-nowrap text-slate-900'
+          aria-live='polite'
+        >
+          {value ? (
+            <>
+              <span>{value.replace(/[^\d,.-]/g, '')}</span>
+              <span className='ml-0.5'>{value.replace(/^[\d,.-\s]*/, '')}</span>
+            </>
+          ) : (
+            '-'
+          )}
         </div>
       </div>
     </div>
@@ -45,29 +61,28 @@ const CartFooter = ({
   onDownloadExcel,
   isPending = false,
 }: Props) => {
+  const priceText = `${nf.format(totalPrice)}원`;
+  const qtyText = `${nf.format(totalQty)}개`;
+  const cartText = `${nf.format(totalCartLength)}개`;
+
   return (
-    <div className='mt-2 flex w-full flex-col gap-3 sm:flex-row sm:items-center sm:justify-between'>
-      <div className='flex flex-row flex-wrap items-center gap-2'>
-        <Stat
-          icon={Package2}
-          label='상품 수'
-          value={`${nf.format(totalCartLength)}개`}
-        />
-        <Stat
-          icon={BarChart2}
-          label='총 수량'
-          value={`${nf.format(totalQty)}개`}
-        />
+    <div
+      className='mt-2 flex w-full flex-col gap-3 sm:flex-row sm:items-center sm:justify-between'
+      aria-busy={isPending ? 'true' : 'false'}
+    >
+      <div className='flex w-full flex-col flex-wrap items-start gap-2 sm:flex-row'>
+        <Stat icon={Package2} label='총 상품' value={cartText} />
+        <Stat icon={BarChart2} label='총 수량' value={qtyText} />
+        <Stat icon={DollarSignIcon} label='총 금액' value={priceText} />
       </div>
 
       <div className='flex w-full flex-col justify-end gap-2 sm:w-auto md:flex-row md:items-center'>
-        <Stat
-          icon={DollarSignIcon}
-          label='총 금액'
-          value={`${nf.format(totalPrice)}원`}
-        />
         <Button
           onClick={onDownloadExcel}
+          disabled={isPending}
+          aria-disabled={isPending ? 'true' : 'false'}
+          aria-busy={isPending ? 'true' : 'false'}
+          aria-label={isPending ? '엑셀 다운로드 중' : '엑셀 다운로드'}
           className={cn(
             'inline-flex cursor-pointer items-center gap-2 rounded-xl border px-3 py-2 text-sm shadow-sm focus:ring-2 focus:outline-none',
             isPending
@@ -76,11 +91,18 @@ const CartFooter = ({
           )}
         >
           {isPending ? (
-            <ReloadIcon className='animate-spin' aria-hidden />
+            <span
+              role='status'
+              aria-live='polite'
+              className='inline-flex items-center gap-2'
+            >
+              <ReloadIcon className='animate-spin' aria-hidden='true' />
+              <span className='sr-only'>다운로드 중…</span>
+            </span>
           ) : (
-            <DownloadIcon aria-hidden />
+            <DownloadIcon aria-hidden='true' />
           )}
-          엑셀다운로드
+          <span aria-hidden='true'>엑셀다운로드</span>
         </Button>
       </div>
     </div>
