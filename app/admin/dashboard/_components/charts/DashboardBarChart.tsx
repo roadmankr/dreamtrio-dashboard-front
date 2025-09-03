@@ -1,5 +1,6 @@
 import { fmtCompact } from '@/lib/format';
-import { DIMENSION, TSalesBreakDownResponse } from '@/shared/types/sales';
+import type { Dimension } from '@/shared/model/dimension';
+import { TSalesBreakDownResponse } from '@/shared/types/sales';
 import {
   Bar,
   BarChart,
@@ -16,7 +17,7 @@ import { dashboadProductTitleConfig } from '../../_constants';
 import useBarChartData from '../../_model/useBarChartData';
 
 interface Props {
-  dimension: DIMENSION;
+  dimension: Dimension;
   data?: TSalesBreakDownResponse[];
 }
 

@@ -2,7 +2,8 @@
 
 import { cn } from '@/lib/utils';
 import { labelByStatus } from '../_config';
-import { SearchStatus } from '../_constants';
+
+import { ViewState } from '@/shared/model/status';
 import { chipClass, resultChipVariant } from '../_lib';
 import usePurchaseSearchStepper from '../_model/usePurchaseSearchStepper';
 
@@ -50,7 +51,7 @@ const PurchaseSearchStepper = () => {
         step={2}
         text='상품 바코드 검색'
         className={chipClass(
-          hasSelectedStore && status === SearchStatus.IDLE ? 'active' : 'muted',
+          hasSelectedStore && status === ViewState.IDLE ? 'active' : 'muted',
         )}
       />
 
@@ -58,7 +59,7 @@ const PurchaseSearchStepper = () => {
 
       <Step
         step={3}
-        text={labelByStatus[hasSearched ? status : SearchStatus.IDLE]}
+        text={labelByStatus[hasSearched ? status : ViewState.IDLE]}
         className={resultChipVariant(status, hasSearched)}
       />
     </div>

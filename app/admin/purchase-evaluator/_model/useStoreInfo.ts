@@ -1,38 +1,34 @@
-import { buildQuery } from '@/lib/http';
-import { DIMENSION } from '@/shared/types/sales';
+import { DIMENSION } from '@/shared/model/dimension';
 import { useMemo } from 'react';
 import { useShallow } from 'zustand/react/shallow';
-import { ActionType } from '../_components/common/DataSection.component';
-import { SEARCH_SALE_DATE, SearchStatus } from '../_constants';
+
+import { ViewState } from '@/shared/model/status';
 import {
   getAgeColor,
   getBrandColor,
   getGenderColor,
   getOptimalColor,
+  makeActionTypeByDimension,
 } from '../_lib';
 import { searchProductListStore, selectedStore } from '../_store';
 import useEffectiveOptimal from './useEffectiveOptimal';
 
 const useStoreInfo = () => {
   const { storeId, age, gender, brand, storeName, isPending } = selectedStore(
-    useShallow((state) => ({
-      storeId: state.storeInfo.storeId,
-      age: state.storeInfo.age,
-      gender: state.storeInfo.gender,
-      brand: state.storeInfo.brand,
-      storeName: state.storeInfo.storeName,
-      isPending: state.isPending,
-      storeInfo: state.storeInfo,
+    useShallow((s) => ({
+      storeId: s.storeInfo.storeId,
+      age: s.storeInfo.age,
+      gender: s.storeInfo.gender,
+      brand: s.storeInfo.brand,
+      storeName: s.storeInfo.storeName,
+      isPending: s.isPending,
     })),
   );
-  const optimal = useEffectiveOptimal();
+  const optimal = useEffectiveOptimal(); // optimal값은 위에 store에서 안꺼내고 해당 훅에서 가공 후 리턴
   const product = searchProductListStore((state) => state.searchProduct);
 
   const typeAgeColor = useMemo(
-    () => ({
-      ...getAgeColor(age, product?.typeAge),
-      actionType: {},
-    }),
+    () => getAgeColor(age, product?.typeAge),
     [age, product?.typeAge],
   );
 
@@ -46,52 +42,30 @@ const useStoreInfo = () => {
     [brand, product?.typeBrand],
   );
 
-  const optimalColor = useMemo(
-    () => ({
-      colorInfo: getOptimalColor(optimal),
-      data: `${optimal.optimalStockCost.toLocaleString()} / ${optimal.currentStockCost.toLocaleString()}`,
-    }),
-    [optimal],
-  );
-
-  const actionType = {
-    type: 'link',
-    url: `${process.env.NEXT_PUBLIC_BASE_URL!}/admin/dashboard`,
-    // url: `${process.env.NEXT_PUBLIC__BASE_URL!}/admin/dashboard${buildQuery({ storeId, saleDate: SEARCH_SALE_DATE })}`,
-  } satisfies ActionType;
+  const optimalColor = useMemo(() => getOptimalColor(optimal), [optimal]);
 
   const ageActionType = useMemo(
-    () =>
-      ({
-        type: 'link',
-        url: `${process.env.NEXT_PUBLIC_BASE_URL!}/admin/dashboard${buildQuery({ storeId, saleDate: SEARCH_SALE_DATE, dimension: DIMENSION.AGE })}`,
-      }) satisfies ActionType,
+    () => makeActionTypeByDimension(storeId, DIMENSION.AGE),
     [storeId],
   );
+
   const brandActionType = useMemo(
-    () =>
-      ({
-        type: 'link',
-        url: `${process.env.NEXT_PUBLIC_BASE_URL!}/admin/dashboard${buildQuery({ storeId, saleDate: SEARCH_SALE_DATE, dimension: DIMENSION.BRAND })}`,
-      }) satisfies ActionType,
+    () => makeActionTypeByDimension(storeId, DIMENSION.BRAND),
     [storeId],
   );
+
   const genderActionType = useMemo(
-    () =>
-      ({
-        type: 'link',
-        url: `${process.env.NEXT_PUBLIC_BASE_URL!}/admin/dashboard${buildQuery({ storeId, saleDate: SEARCH_SALE_DATE, dimension: DIMENSION.GENDER })}`,
-      }) satisfies ActionType,
+    () => makeActionTypeByDimension(storeId, DIMENSION.GENDER),
     [storeId],
   );
 
   const status = isPending
-    ? SearchStatus.PENDING
+    ? ViewState.PENDING
     : !storeId
-      ? SearchStatus.IDLE
+      ? ViewState.IDLE
       : storeId > 0 && !isPending
-        ? SearchStatus.SUCCESS
-        : SearchStatus.FAIL;
+        ? ViewState.SUCCESS
+        : ViewState.ERROR;
 
   return {
     storeId,
@@ -102,7 +76,6 @@ const useStoreInfo = () => {
     optimalColor,
     typeGenderColor,
     status,
-    actionType,
     ageActionType,
     brandActionType,
     genderActionType,

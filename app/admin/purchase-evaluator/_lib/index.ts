@@ -1,8 +1,12 @@
 import { TStoreOptimal } from '@/entities/stores/model/type';
 import { nf } from '@/lib/form';
+import { buildQuery } from '@/lib/http';
+import type { Dimension } from '@/shared/model/dimension';
+import { ViewState } from '@/shared/model/status';
 import { TSalesBreakDownResponse } from '@/shared/types/sales';
+import { ActionType } from '../_components/common/DataSection.component';
 import { colorConfig } from '../_config';
-import { Category, COLOR_THRESHOLD, SearchStatus } from '../_constants';
+import { Category, COLOR_THRESHOLD } from '../_constants';
 
 export function getThreshold<
   C extends Category,
@@ -91,11 +95,15 @@ export const getOptimalColor = ({
   optimalStockCost,
   currentStockCost,
 }: TStoreOptimal) => {
+  const data = `${optimalStockCost.toLocaleString()} / ${currentStockCost.toLocaleString()}`;
   if (optimalStockCost < currentStockCost * getThreshold('OPTIMAL', 'GREEN'))
-    return colorConfig.green;
-  if (optimalStockCost < currentStockCost) return colorConfig.yellow;
-  if (optimalStockCost >= currentStockCost) return colorConfig.red;
-  return colorConfig.gray;
+    return { data, colorInfo: colorConfig.green };
+  if (optimalStockCost < currentStockCost)
+    return { data, colorInfo: colorConfig.yellow };
+  if (optimalStockCost >= currentStockCost)
+    return { data, colorInfo: colorConfig.red };
+
+  return { data: null, colorInfo: colorConfig.gray };
 };
 export function getOptimalStockColor({
   quantity,
@@ -174,16 +182,29 @@ export const chipClass = (base: 'active' | 'muted') =>
     : 'bg-slate-200 text-slate-700';
 
 // PurchaseSearchStepper.tsx에서 보여질 css
-export const resultChipVariant = (
-  status: SearchStatus,
-  hasSearched: boolean,
-) => {
+export const resultChipVariant = (status: ViewState, hasSearched: boolean) => {
   if (!hasSearched) return chipClass('muted');
-  if (status === SearchStatus.FAIL)
+  if (status === ViewState.ERROR)
     return 'bg-rose-50     text-rose-700  border-rose-200';
-  if (status === SearchStatus.SUCCESS)
+  if (status === ViewState.SUCCESS)
     return 'bg-emerald-50  text-emerald-700 border-emerald-200';
-  if (status === SearchStatus.PENDING)
+  if (status === ViewState.PENDING)
     return 'bg-slate-100   text-slate-600  border-slate-200';
   return chipClass('muted');
 };
+
+export const getSearchSaleDate = () => '2025-07';
+
+export const makeActionTypeByDimension = (
+  storeId: number,
+  dimension: Dimension,
+): ActionType | undefined => {
+  if (!storeId) return undefined;
+
+  return {
+    type: 'link',
+    url: `${process.env.NEXT_PUBLIC_BASE_URL!}/admin/dashboard${buildQuery({ storeId, saleDate: getSearchSaleDate(), dimension })}`,
+  };
+};
+
+//getMonthOptions()?.[1].value;

@@ -3,7 +3,8 @@
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { ShoppingCartIcon } from 'lucide-react';
-import { SearchStatus } from '../_constants';
+
+import { ViewState } from '@/shared/model/status';
 import useProductSearchResult from '../_model/useProductSearchResult';
 import usePurchaseSearchStepper from '../_model/usePurchaseSearchStepper';
 import ProductInputFilter from './filter/ProductInputFilter';
@@ -23,13 +24,13 @@ const PurchaseSearchFilters = () => {
         <ProductInputFilter />
 
         <Button
-          disabled={status !== SearchStatus.SUCCESS}
-          onClick={status === SearchStatus.SUCCESS ? addToCart : undefined}
-          aria-disabled={status !== SearchStatus.SUCCESS}
+          disabled={status !== ViewState.SUCCESS}
+          onClick={status === ViewState.SUCCESS ? addToCart : undefined}
+          aria-disabled={status !== ViewState.SUCCESS}
           aria-label='검색된 상품을 장바구니에 담기'
           className={cn(
             `h-10`,
-            status === SearchStatus.SUCCESS
+            status === ViewState.SUCCESS
               ? 'cursor-pointer bg-emerald-500 hover:bg-emerald-600'
               : 'disabled:pointer-events-none disabled:opacity-50',
           )}

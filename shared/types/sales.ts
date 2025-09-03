@@ -1,15 +1,5 @@
+import type { Dimension } from '@/shared/model/dimension';
 import { TStoreDateFilter } from '@/widgets/store-date-filter/model/schema';
-
-export enum DIMENSION {
-  GENDER = 'typeGender',
-  AGE = 'typeAge',
-  BRAND = 'typeBrand',
-  ANIMATION = 'typeAnimation',
-  PRODUCT = 'typeProduct',
-  LAGE_CATEGORY = 'categoryLarge',
-  MEDIUM_CATEGORY = 'categoryMedium',
-  SMALL_CATEGORY = 'categorySmall',
-}
 
 export enum Chart {
   BAR = 'bar',
@@ -39,7 +29,7 @@ export type TSalesBreakDownResponse = {
   profitPriceForChart: number; // 차트에 그려질 이익가격. 마이너스이면 0처리
 };
 
-export type TSalesBreakDownQuery = TStoreDateFilter & { dimension: DIMENSION };
+export type TSalesBreakDownQuery = TStoreDateFilter & { dimension: Dimension };
 
 export type TChartMap = {
   [Chart.BAR]: (data?: TSalesBreakDownResponse[]) => TBarChartData[];

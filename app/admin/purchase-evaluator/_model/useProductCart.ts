@@ -2,7 +2,8 @@ import { exportToXlsx } from '@/lib/excel';
 import { defaultParse } from '@/lib/form';
 import { useCallback, useTransition } from 'react';
 import { useShallow } from 'zustand/react/shallow';
-import { SearchStatus } from '../_constants';
+
+import { ViewState } from '@/shared/model/status';
 import {
   cartProductListStore,
   searchProductListStore,
@@ -33,7 +34,7 @@ const useProductCart = () => {
         단가: c.price,
         금액: c.qty * c.price,
       }));
-      // const header = ['상품코드', '상품명', '브랜드', '수량', '단가', '합계'];
+
       const header = ['상품코드', '상품명', '브랜드', '수량', '단가', '금액'];
       const filename = `${storeName}_${barcode}`;
 
@@ -54,10 +55,10 @@ const useProductCart = () => {
   );
 
   const status = isPending
-    ? SearchStatus.PENDING
+    ? ViewState.PENDING
     : cartList.length > 0
-      ? SearchStatus.SUCCESS
-      : SearchStatus.FAIL;
+      ? ViewState.SUCCESS
+      : ViewState.ERROR;
 
   const totalQty = cartList.reduce((acc, curr) => acc + curr.qty, 0);
   const totalPrice = cartList.reduce(

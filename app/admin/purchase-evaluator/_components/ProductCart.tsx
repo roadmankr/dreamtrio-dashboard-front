@@ -1,6 +1,6 @@
 'use client';
 
-import { SearchStatus } from '../_constants';
+import { ViewState } from '@/shared/model/status';
 import useProductCart from '../_model/useProductCart';
 import CartContents from './cart/CartContents';
 import CartFooter from './cart/CartFooter';
@@ -21,14 +21,11 @@ const ProductCart = () => {
 
   return (
     <InfoSectionWrapper title='담은 상품' className='h-auto min-h-0'>
-      <div
-        aria-busy={status === SearchStatus.PENDING}
-        className='flex flex-col'
-      >
+      <div aria-busy={status === ViewState.PENDING} className='flex flex-col'>
         <div className='overflow-hidden rounded-2xl border'>
-          {status === SearchStatus.FAIL && <EmptyState />}
+          {status === ViewState.ERROR && <EmptyState />}
 
-          {status === SearchStatus.SUCCESS && (
+          {status === ViewState.SUCCESS && (
             <div className='relative grid'>
               <div className='[grid-area:1/1] sm:h-auto' aria-hidden />
               <div className='w-full overflow-x-auto overflow-y-hidden p-2 [grid-area:1/1] sm:p-3'>
@@ -43,7 +40,7 @@ const ProductCart = () => {
           )}
         </div>
 
-        {status === SearchStatus.SUCCESS && (
+        {status === ViewState.SUCCESS && (
           <CartFooter
             totalPrice={totalPrice}
             totalCartLength={cartList.length}

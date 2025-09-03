@@ -28,7 +28,6 @@ const DataSection = ({
   scrollable = false,
   ...props
 }: Props) => {
-  // 값 한 번만 결정 (둘 다 출력되는 문제 방지)
   const value =
     'text' in props
       ? (props.text ?? '-')
@@ -53,6 +52,7 @@ const DataSection = ({
               target='_blank'
               rel='noopener noreferrer'
               aria-label='dashboard 바로가기'
+              title='대시보드로 이동'
             >
               <Info className='h-4 w-4 cursor-pointer' aria-hidden />
             </Link>
@@ -64,8 +64,12 @@ const DataSection = ({
             'w-full min-w-0',
             scrollable && 'overflow-x-auto whitespace-nowrap',
           )}
+          aria-describedby={scrollable ? `${title}-scroll-hint` : undefined}
         >
-          <span className='inline-block align-middle text-sm font-semibold'>
+          <span
+            className='inline-block align-middle text-sm font-semibold'
+            aria-live='polite'
+          >
             {value}
           </span>
         </div>

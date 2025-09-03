@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { useShallow } from 'zustand/react/shallow';
-import { SearchStatus } from '../_constants';
+
+import { ViewState } from '@/shared/model/status';
 import {
   getOptimalStockColor,
   getSalePriceColor,
@@ -41,12 +42,12 @@ const useProductInfo = () => {
 
   const status =
     !storeId && !isPending
-      ? SearchStatus.IDLE
+      ? ViewState.IDLE
       : storeId > 0 && isPending
-        ? SearchStatus.PENDING
+        ? ViewState.PENDING
         : searchProduct?.barcode && !isPending
-          ? SearchStatus.SUCCESS
-          : SearchStatus.FAIL;
+          ? ViewState.SUCCESS
+          : ViewState.EMPTY;
 
   return {
     status,

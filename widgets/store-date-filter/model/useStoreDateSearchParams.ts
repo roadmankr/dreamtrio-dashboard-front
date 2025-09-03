@@ -2,7 +2,7 @@
 
 import useTransitionRouter from '@/features/navigation/model/useTransitionRouter';
 import { getMonthOptions } from '@/features/sales-date-options/model/lib';
-import { DIMENSION } from '@/shared/types/sales';
+import type { Dimension } from '@/shared/model/dimension';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useCallback, useMemo } from 'react';
 
@@ -11,7 +11,7 @@ const useStoreDateSearchParams = () => {
   const { push } = useTransitionRouter();
   const searchParams = useSearchParams();
   const storeId = searchParams.get('storeId') ?? '';
-  const dimension = (searchParams.get('dimension') as DIMENSION) ?? '';
+  const dimension = (searchParams.get('dimension') as Dimension) ?? '';
   const saleDate =
     searchParams.get('saleDate') ?? getMonthOptions()?.[1].value ?? '';
 

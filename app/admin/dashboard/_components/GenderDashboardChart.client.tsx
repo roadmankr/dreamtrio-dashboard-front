@@ -1,18 +1,19 @@
 'use client';
-import { DIMENSION } from '@/shared/types/sales';
+
+import { DIMENSION } from '@/shared/model/dimension';
 import useGetSalesBreakDown from '../_api/useGetSalesBreakDown';
 import DashboardPieChart from './charts/DashboardPieChart';
 import QueryGuard from './common/QueryGuard';
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
-
 const GenderDashboardChart = () => {
-  const { data, isPending, isError, isEnabled } = useGetSalesBreakDown({
-    dimension: DIMENSION.GENDER,
-  });
+  const { data, isPending, isError, isEnabled, isFetched } =
+    useGetSalesBreakDown({
+      dimension: DIMENSION.GENDER,
+    });
 
   return (
     <QueryGuard
+      isFetched={isFetched}
       enabled={isEnabled}
       isPending={isPending}
       isError={isError}

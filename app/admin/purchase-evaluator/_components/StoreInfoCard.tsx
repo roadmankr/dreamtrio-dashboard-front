@@ -1,6 +1,6 @@
 'use client';
 
-import { SearchStatus } from '../_constants';
+import { ViewState } from '@/shared/model/status';
 import useStoreInfo from '../_model/useStoreInfo';
 import DataSection from './common/DataSection.component';
 import InfoSectionWrapper from './common/InfoSectionWrapper';
@@ -24,15 +24,14 @@ const StoreInfoCard = () => {
     <InfoSectionWrapper title='매장 정보'>
       <div
         className='flex h-full w-full flex-col'
-        aria-busy={status === SearchStatus.PENDING}
+        aria-busy={status === ViewState.PENDING}
+        aria-live='polite'
       >
-        {status === SearchStatus.IDLE && (
-          <NoResult text='매장을 선택해주세요.' />
-        )}
+        {status === ViewState.IDLE && <NoResult text='매장을 선택해주세요.' />}
 
-        {status === SearchStatus.PENDING && <Loading text='매장 검색중...' />}
+        {status === ViewState.PENDING && <Loading text='매장 검색중...' />}
 
-        {status === SearchStatus.SUCCESS && (
+        {status === ViewState.SUCCESS && (
           <>
             <div className='flex flex-col gap-4'>
               <DataSection title='매장명' data={storeName} />

@@ -1,5 +1,6 @@
+import { ViewState } from '@/shared/model/status';
 import { FormDataType } from '@/shared/types/form';
-import { BARCODE_KEY, SearchStatus, STORE_KEY } from '../_constants';
+import { BARCODE_KEY, STORE_KEY } from '../_constants';
 import { TSearchProduct, TSearchStore } from '../_schema';
 
 export const searchStoreFormField = {
@@ -34,11 +35,12 @@ export const colorConfig = {
   gray: { bg: 'bg-gray-300', text: 'text-gray-600', border: 'border-gray-300' }, // 검색 전
 } as const;
 
-export const labelByStatus: Record<SearchStatus, string> = {
-  [SearchStatus.IDLE]: '검색 전',
-  [SearchStatus.PENDING]: '검색 중',
-  [SearchStatus.SUCCESS]: '검색 성공',
-  [SearchStatus.FAIL]: '검색 실패',
+export const labelByStatus: Record<ViewState, string> = {
+  [ViewState.IDLE]: '검색 전',
+  [ViewState.PENDING]: '검색 중',
+  [ViewState.SUCCESS]: '검색 성공',
+  [ViewState.ERROR]: '검색 실패',
+  [ViewState.EMPTY]: '검색 실패',
 };
 
 export const CART_TABLE_COLS = ['', '9rem', '7.5rem', '10rem', '6rem'] as const;

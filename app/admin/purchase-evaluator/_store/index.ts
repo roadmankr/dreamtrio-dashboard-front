@@ -123,10 +123,7 @@ export const cartProductListStore = create<CartProduct>((set, get) => ({
       index === -1
         ? [{ ...product, qty: 1 }, ...list]
         : [
-            {
-              ...list[index],
-              qty: list[index].qty + 1,
-            },
+            { ...list[index], qty: list[index].qty + 1 },
             ...list.slice(0, index),
             ...list.slice(index + 1),
           ];

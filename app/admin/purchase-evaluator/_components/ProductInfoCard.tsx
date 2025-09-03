@@ -1,7 +1,8 @@
 'use client';
 
 import { nf } from '@/lib/form';
-import { NOT_PRODUCT_LIST_TEXT, SearchStatus } from '../_constants';
+import { ViewState } from '@/shared/model/status';
+import { NOT_PRODUCT_LIST_TEXT } from '../_constants';
 import useProductInfo from '../_model/useProductInfo';
 import DataSection from './common/DataSection.component';
 import InfoSectionWrapper from './common/InfoSectionWrapper';
@@ -22,19 +23,17 @@ const ProductInfoCard = () => {
     <InfoSectionWrapper title='상품 정보'>
       <div
         className='flex h-full w-full flex-col'
-        aria-busy={status === SearchStatus.PENDING}
+        aria-busy={status === ViewState.PENDING}
       >
-        {status === SearchStatus.IDLE && (
-          <NoResult text={NOT_PRODUCT_LIST_TEXT} />
-        )}
+        {status === ViewState.IDLE && <NoResult text={NOT_PRODUCT_LIST_TEXT} />}
 
-        {status === SearchStatus.FAIL && (
+        {status === ViewState.EMPTY && (
           <NoResult text={'상품 검색결과가 없습니다'} />
         )}
 
-        {status === SearchStatus.PENDING && <Loading text='상품 검색중...' />}
+        {status === ViewState.PENDING && <Loading text='상품 검색중...' />}
 
-        {status === SearchStatus.SUCCESS && searchProduct && (
+        {status === ViewState.SUCCESS && searchProduct && (
           <div className='flex flex-col gap-4'>
             <div className='flex w-full gap-4'>
               <div className='max-w-full min-w-0 flex-1'>

@@ -1,13 +1,13 @@
 import { getSalesBreakDownInServer } from '@/actions/sales.server';
 import { getErrorMessage } from '@/lib/error';
-import { DIMENSION } from '@/shared/types/sales';
+import type { Dimension } from '@/shared/model/dimension';
 import { NextRequest, NextResponse } from 'next/server';
 
 export const GET = async (request: NextRequest) => {
   const searchParams = request.nextUrl.searchParams;
   const saleDate = searchParams.get('saleDate') ?? '';
   const storeId = searchParams.get('storeId') ?? '';
-  const dimension = (searchParams.get('dimension') as DIMENSION) ?? '';
+  const dimension = (searchParams.get('dimension') as Dimension) ?? '';
 
   try {
     if (!dimension) throw new Error('타입이 존재하지 않습니다.');

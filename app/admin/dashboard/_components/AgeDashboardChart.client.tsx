@@ -1,16 +1,19 @@
 'use client';
-import { DIMENSION } from '@/shared/types/sales';
+
+import { DIMENSION } from '@/shared/model/dimension';
 import useGetSalesBreakDown from '../_api/useGetSalesBreakDown';
 import DashboardPieChart from './charts/DashboardPieChart';
 import QueryGuard from './common/QueryGuard';
 
 const AgeDashboardChart = () => {
-  const { data, isEnabled, isPending, isError } = useGetSalesBreakDown({
-    dimension: DIMENSION.AGE,
-  });
+  const { data, isEnabled, isPending, isError, isFetched } =
+    useGetSalesBreakDown({
+      dimension: DIMENSION.AGE,
+    });
 
   return (
     <QueryGuard
+      isFetched={isFetched}
       enabled={isEnabled}
       isPending={isPending}
       isError={isError}

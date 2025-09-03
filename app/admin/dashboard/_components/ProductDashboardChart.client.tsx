@@ -1,5 +1,6 @@
 'use client';
-import { DIMENSION } from '@/shared/types/sales';
+
+import { DIMENSION } from '@/shared/model/dimension';
 import { useMemo } from 'react';
 import useGetSalesBreakDown from '../_api/useGetSalesBreakDown';
 import { dashboadProductTitleConfig } from '../_constants';
@@ -8,14 +9,16 @@ import DashboardTable from './common/DashboardTable';
 import QueryGuard from './common/QueryGuard';
 
 const ProductDashboardChart = () => {
-  const { data, isPending, isEnabled, isError } = useGetSalesBreakDown({
-    dimension: DIMENSION.PRODUCT,
-  });
+  const { data, isPending, isEnabled, isError, isFetched } =
+    useGetSalesBreakDown({
+      dimension: DIMENSION.PRODUCT,
+    });
 
   const list = useMemo(() => data?.slice(0, 10) ?? [], [data]);
 
   return (
     <QueryGuard
+      isFetched={isFetched}
       enabled={isEnabled}
       isPending={isPending}
       isError={isError}

@@ -2,12 +2,13 @@ import { salesQueries } from '@/entities/sales/model/queries';
 import { storeQueries } from '@/entities/stores/model/queries';
 import useStoreOptions from '@/features/store-options/model/useStoreOptions';
 import { showToastError } from '@/lib/toast';
-import { DIMENSION } from '@/shared/types/sales';
+import { DIMENSION } from '@/shared/model/dimension';
 import { TStoreDateFilter } from '@/widgets/store-date-filter/model/schema';
 import { useQueryClient } from '@tanstack/react-query';
 import { useCallback, useEffect, useTransition } from 'react';
 import { useShallow } from 'zustand/react/shallow';
-import { SEARCH_SALE_DATE } from '../_constants';
+
+import { getSearchSaleDate } from '../_lib';
 import {
   cartProductListStore,
   searchProductListStore,
@@ -60,8 +61,7 @@ const useSearchStoreHandler = () => {
 
           const params = {
             storeId: storeId,
-            saleDate: SEARCH_SALE_DATE,
-            // saleDate: getMonthOptions()?.[1].value,
+            saleDate: getSearchSaleDate(),
           } satisfies TStoreDateFilter;
 
           const [age, brand, gender] = await Promise.all([

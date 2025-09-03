@@ -1,5 +1,6 @@
 'use client';
-import { DIMENSION } from '@/shared/types/sales';
+
+import { DIMENSION } from '@/shared/model/dimension';
 import useGetSalesBreakDown from '../_api/useGetSalesBreakDown';
 import { dashboadProductTitleConfig } from '../_constants';
 import DashboardBarChart from './charts/DashboardBarChart';
@@ -7,12 +8,14 @@ import DashboardTable from './common/DashboardTable';
 import QueryGuard from './common/QueryGuard';
 
 const BrandDashboardChart = () => {
-  const { data, isPending, isEnabled, isError } = useGetSalesBreakDown({
-    dimension: DIMENSION.BRAND,
-  });
+  const { data, isPending, isEnabled, isError, isFetched } =
+    useGetSalesBreakDown({
+      dimension: DIMENSION.BRAND,
+    });
 
   return (
     <QueryGuard
+      isFetched={isFetched}
       enabled={isEnabled}
       isPending={isPending}
       isError={isError}

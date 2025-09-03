@@ -1,12 +1,13 @@
 'use client';
 
 import { useGetSales } from '@/entities/sales/model/model';
-import { DIMENSION } from '@/shared/types/sales';
+import type { Dimension } from '@/shared/model/dimension';
+
 import useStoreDateSearchParams from '@/widgets/store-date-filter/model/useStoreDateSearchParams';
 import { useMemo } from 'react';
 
 interface Props {
-  dimension: DIMENSION;
+  dimension: Dimension;
   chartType?: 'bar' | 'pie';
 }
 
