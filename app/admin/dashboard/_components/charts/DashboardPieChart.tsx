@@ -28,7 +28,7 @@ const renderLeaderLabel = (props: any) => {
   const sy = cy + r1 * sin;
 
   // 원래 mx,my
-  let mx = cx + r2 * cos;
+  const mx = cx + r2 * cos;
   let my = cy + r2 * sin;
 
   // y 보정: sin 방향(위/아래)으로 추가 오프셋
@@ -105,7 +105,11 @@ export default function DashboardPieChart({
                 )?.color;
 
                 return [
-                  <span className='text-sm font-semibold' style={{ color }}>
+                  <span
+                    key={key}
+                    className='text-sm font-semibold'
+                    style={{ color }}
+                  >
                     {key}
                     <strong className='ml-2 text-sm text-neutral-700'>
                       {nf.format(Number(value ?? 0))}
