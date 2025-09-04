@@ -5,5 +5,5 @@ export const clientKy = ky.create({
   timeout: 30000,
   credentials: 'include',
   cache: 'no-store',
-  retry: 2,
+  retry: 1,
 });

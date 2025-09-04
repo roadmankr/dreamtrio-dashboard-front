@@ -5,9 +5,8 @@ import { buildQuery } from '@/lib/http';
 import type { Dimension } from '@/shared/model/dimension';
 import { ViewState } from '@/shared/model/status';
 import { TSalesBreakDownResponse } from '@/shared/types/sales';
-import { ActionType } from '../_components/common/DataSection.component';
 import { colorConfig } from '../_config';
-import { Category, COLOR_THRESHOLD } from '../_constants';
+import { Action, Category, COLOR_THRESHOLD } from '../_constants';
 
 export function getThreshold<
   C extends Category,
@@ -199,7 +198,7 @@ export const getSearchSaleDate = () => getMonthOptions()?.[1].value;
 export const makeActionTypeByDimension = (
   storeId: number,
   dimension: Dimension,
-): ActionType | undefined => {
+): Action | undefined => {
   if (!storeId) return undefined;
 
   return {

@@ -39,7 +39,7 @@ const ProductInfoCard = () => {
               <div className='max-w-full min-w-0 flex-1'>
                 <DataSection
                   title='상품명'
-                  text={searchProduct.productName}
+                  data={searchProduct.productName}
                   textDirection='row'
                   scrollable
                 />
@@ -48,7 +48,7 @@ const ProductInfoCard = () => {
               <div className='min-w-0 flex-[0.3]'>
                 <DataSection
                   title='단가'
-                  text={`${nf.format(searchProduct.price)}원`}
+                  data={`${nf.format(searchProduct.price)}원`}
                   textDirection='row'
                   scrollable
                 />
@@ -58,24 +58,24 @@ const ProductInfoCard = () => {
             <div className='grid gap-4 sm:grid-cols-4'>
               <DataSection
                 title='연령'
-                text={searchProduct.typeAge}
+                data={searchProduct.typeAge}
                 textDirection='row'
               />
               <DataSection
                 title='성별'
-                text={searchProduct.typeGender}
+                data={searchProduct.typeGender}
                 textDirection='row'
               />
 
               <DataSection
                 title='브랜드'
-                text={searchProduct.typeBrand}
+                data={searchProduct.typeBrand}
                 textDirection='row'
               />
 
               <DataSection
                 title='신상품'
-                text={searchProduct.new ? '신상품' : '해당없음'}
+                data={searchProduct.new ? '신상품' : '해당없음'}
                 textDirection='row'
               />
             </div>

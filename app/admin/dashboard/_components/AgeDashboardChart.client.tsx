@@ -23,9 +23,7 @@ const AgeDashboardChart = () => {
       dimension={DIMENSION.AGE}
       emptyMessage='해당 조건의 나이 차트 데이터가 없습니다.'
     >
-      <div className='aspect-square'>
-        <DashboardPieChart data={data} />
-      </div>
+      <DashboardPieChart data={data} />
     </QueryGuard>
   );
 };

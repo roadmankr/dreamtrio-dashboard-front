@@ -45,7 +45,11 @@ export default function QueryGuard({
 
   return (
     <CardWrapper
-      containerClassName={cn('p-4 w-full aspect-square ', sectionType)}
+      containerClassName={cn(
+        'p-4 w-full aspect-square ',
+        sectionType,
+        isFetched && 'aspect-auto',
+      )}
       className={cn('relative flex w-full items-center justify-center px-2')}
     >
       <div data-section={`${dimension}`} className='flex w-full flex-1'>
@@ -67,7 +71,7 @@ export default function QueryGuard({
         {status === ViewState.SUCCESS && (
           <div className='flex w-full flex-1 flex-col gap-2'>
             <ChartTitle title={chartTitle} />
-            <div className='flex w-full flex-1'>{children}</div>
+            <div className='flex w-full flex-1 overflow-x-auto'>{children}</div>
           </div>
         )}
       </div>

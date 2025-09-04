@@ -29,9 +29,7 @@ const ProductDashboardChart = () => {
       emptyMessage='해당 조건의 상품 차트 데이터가 없습니다.'
     >
       <div className='gap2 flex w-full flex-col'>
-        <div className='flex aspect-video w-full items-center justify-center'>
-          <DashboardBarChart data={list} dimension={DIMENSION.PRODUCT} />
-        </div>
+        <DashboardBarChart data={list} dimension={DIMENSION.PRODUCT} />
 
         <DashboardTable
           data={data ?? []}

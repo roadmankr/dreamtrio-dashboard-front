@@ -17,7 +17,7 @@ const StoreDateFilter = () => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className='flex w-full items-end gap-3'
+          className='flex w-full flex-col items-end gap-3 md:flex-row'
         >
           {formFields.map((fields) => (
             <LabelFormField

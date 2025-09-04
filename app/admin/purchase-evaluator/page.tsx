@@ -32,7 +32,7 @@ const PurchaseEvaluator = async () => {
           className='w-full px-2 text-right font-semibold'
         >
           <UnderlineLable
-            text={`${getSearchSaleDate()} 일자`}
+            text={`${getSearchSaleDate()} 기준`}
             className='text-sm text-slate-700'
           />
         </div>

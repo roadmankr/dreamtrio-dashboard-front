@@ -1,40 +1,29 @@
 import { cn } from '@/lib/utils';
 import { Info } from 'lucide-react';
 import Link from 'next/link';
+import { Action, ACTION_MAP } from '../../_constants';
 import Light from './Light';
 
 export type ActionType = { type: 'link'; url: string };
 
-type Base = {
+type Props = {
   title: string;
   textDirection?: 'row' | 'col';
+  data?: number | string | null;
   colorInfo?: { border: string; bg: string; text: string };
   className?: string;
   scrollable?: boolean;
-  actionType?: ActionType;
+  actionType?: Action;
 };
-
-type Props = Base &
-  (
-    | { data?: number | string | null | undefined; text?: never }
-    | { text?: string | undefined; data?: never }
-  );
 
 const DataSection = ({
   title,
-  textDirection = 'col',
+  data,
+  actionType,
   colorInfo,
   className,
   scrollable = false,
-  ...props
 }: Props) => {
-  const value =
-    'text' in props
-      ? (props.text ?? '-')
-      : 'data' in props
-        ? (props.data ?? '-')
-        : '-';
-
   return (
     <div
       className={cn(
@@ -46,9 +35,9 @@ const DataSection = ({
         <div className='flex w-full items-center justify-end text-xs text-slate-500'>
           <span className='flex-1'>{title}</span>
 
-          {props.actionType?.type === 'link' && (
+          {actionType?.type === ACTION_MAP.LINK && (
             <Link
-              href={props.actionType.url}
+              href={actionType.url}
               target='_blank'
               rel='noopener noreferrer'
               aria-label='dashboard 바로가기'
@@ -70,7 +59,7 @@ const DataSection = ({
             className='inline-block align-middle text-sm font-semibold'
             aria-live='polite'
           >
-            {value}
+            {data ?? '-'}
           </span>
         </div>
       </div>

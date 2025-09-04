@@ -1,3 +1,4 @@
+import { nf } from '@/lib/form';
 import { formatCurrency } from '@/lib/format';
 import { TSalesBreakDownResponse } from '@/shared/types/sales';
 import {
@@ -9,6 +10,7 @@ import {
   Tooltip,
 } from 'recharts';
 import { pichartCololrsConfig } from '../../_config';
+import usePieChartState from '../../_model/usePieChartState';
 import PieChartLegend from './PieChartLegend.component';
 
 const RAD = Math.PI / 180;
@@ -17,40 +19,42 @@ const renderLeaderLabel = (props: any) => {
   const { cx, cy, midAngle, outerRadius, value, index, name } = props;
   const color = pichartCololrsConfig[index % pichartCololrsConfig.length];
 
-  // 각도 방향 벡터
   const sin = Math.sin(-RAD * midAngle);
   const cos = Math.cos(-RAD * midAngle);
 
-  // 라인 시작/중간/끝 좌표 (필요시 수치 조절)
-  const r1 = outerRadius + 6; // 파이 밖으로 1차 돌출
-  const r2 = outerRadius + 16; // 2차 돌출
-  const sx = cx + r1 * cos,
-    sy = cy + r1 * sin;
-  const mx = cx + r2 * cos,
-    my = cy + r2 * sin;
-  const ex = mx + (cos >= 0 ? 14 : -14),
-    ey = my; // 수평 꼬리
+  const r1 = outerRadius + 6;
+  const r2 = outerRadius + 22; // 중간 지점 더 멀리
+  const sx = cx + r1 * cos;
+  const sy = cy + r1 * sin;
+
+  // 원래 mx,my
+  let mx = cx + r2 * cos;
+  let my = cy + r2 * sin;
+
+  // y 보정: sin 방향(위/아래)으로 추가 오프셋
+  // 값 키워줄수록 위아래로 꺾임
+  my = my - 12 * Math.sign(sin);
+
+  const ex = mx + (cos >= 0 ? 12 : -12);
+  const ey = my;
 
   const anchor = cos >= 0 ? 'start' : 'end';
 
   return (
     <g>
-      {/* 리더 라인 */}
       <path
         d={`M${sx},${sy} L${mx},${my} L${ex},${ey}`}
         stroke={color}
         fill='none'
       />
-      {/* (선택) 끝점 점 */}
       <circle cx={ex} cy={ey} r={2} fill={color} />
-      {/* 숫자 */}
       <text
         x={ex + (cos >= 0 ? 4 : -4)}
         y={ey}
         textAnchor={anchor}
         dominantBaseline='central'
         fill={color}
-        fontSize={14}
+        fontSize={13}
         fontWeight={600}
       >
         {`${name} : ${formatCurrency(value ?? 0)}`}
@@ -64,43 +68,66 @@ export default function DashboardPieChart({
 }: {
   data?: TSalesBreakDownResponse[];
 }) {
+  const { sideMargin, colorsByKey } = usePieChartState({ data });
+
   return (
-    <ResponsiveContainer width='100%' height='100%'>
-      <PieChart>
-        <Pie
-          data={data}
-          cx='50%'
-          cy='50%'
-          dataKey='totalPrice'
-          outerRadius='60%'
-          paddingAngle={1.5}
-          minAngle={2}
-          // 리더 라인 + 숫자만 (이름 표시 원하면 텍스트에 name도 합치세요)
-          label={renderLeaderLabel}
-          labelLine={false} // 라인은 우리가 직접 그림
-        >
-          {data?.map((_, i) => (
-            <Cell
-              key={i}
-              fill={pichartCololrsConfig[i % pichartCololrsConfig.length]}
+    <div className='relative grid h-full w-full'>
+      <div className='[grid-area:1/1] sm:h-auto' aria-hidden />
+
+      <div className='w-full max-w-2xl p-2 [grid-area:1/1] sm:p-3'>
+        <ResponsiveContainer width='100%' className={'aspect-square'}>
+          <PieChart margin={{ left: sideMargin, right: sideMargin }}>
+            {/* <PieChart> */}
+            <Pie
+              data={data}
+              cx='50%'
+              cy='50%'
+              dataKey='totalPrice'
+              outerRadius='60%'
+              paddingAngle={1.5}
+              minAngle={2}
+              label={renderLeaderLabel}
+              labelLine={false}
+            >
+              {data?.map((_, i) => (
+                <Cell
+                  key={i}
+                  fill={pichartCololrsConfig[i % pichartCololrsConfig.length]}
+                />
+              ))}
+            </Pie>
+
+            <Tooltip
+              formatter={(value, ...props) => {
+                const key = props?.[0];
+                const color = colorsByKey?.find(
+                  (color) => color.key === key,
+                )?.color;
+
+                return [
+                  <span className='text-sm font-semibold' style={{ color }}>
+                    {key}
+                    <strong className='ml-2 text-sm text-neutral-700'>
+                      {nf.format(Number(value ?? 0))}
+                    </strong>
+                  </span>,
+                ];
+              }}
+              // separator=': '
+              contentStyle={{ borderRadius: 8 }}
             />
-          ))}
-        </Pie>
 
-        <Tooltip
-          formatter={(v: number) => formatCurrency(v ?? 0)}
-          separator=': '
-          contentStyle={{ borderRadius: 8 }}
-        />
-
-        <Legend
-          verticalAlign='bottom'
-          align='center'
-          iconType='circle'
-          iconSize={10}
-          content={() => <PieChartLegend data={data} />}
-        />
-      </PieChart>
-    </ResponsiveContainer>
+            <Legend
+              verticalAlign='bottom'
+              align='center'
+              iconType='circle'
+              iconSize={10}
+              content={() => <PieChartLegend data={data} />}
+            />
+          </PieChart>
+        </ResponsiveContainer>
+        {/* </div> */}
+      </div>
+    </div>
   );
 }

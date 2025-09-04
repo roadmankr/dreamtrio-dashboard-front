@@ -26,13 +26,10 @@ const AnimationDashboardChart = () => {
       emptyMessage='해당 조건의 애니메이션 차트 데이터가 없습니다.'
     >
       <div className='gap2 flex w-full flex-col'>
-        <div className='flex aspect-video w-full items-center justify-center'>
-          <DashboardBarChart
-            data={data?.slice(1, 11) ?? []}
-            dimension={DIMENSION.ANIMATION}
-          />
-        </div>
-
+        <DashboardBarChart
+          data={data?.slice(1, 11) ?? []}
+          dimension={DIMENSION.ANIMATION}
+        />
         <DashboardTable
           data={data?.slice(1) ?? []}
           columnTitle={dashboadProductTitleConfig[DIMENSION.ANIMATION]}

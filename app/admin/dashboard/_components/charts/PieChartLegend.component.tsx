@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils';
 import { TSalesBreakDownResponse } from '@/shared/types/sales';
 import { useCallback } from 'react';
 import { pichartCololrsConfig } from '../../_config';
@@ -11,7 +12,7 @@ const PieChartLegend = ({ data }: Props) => {
   );
 
   return (
-    <ul className='flex w-full flex-wrap items-center justify-center gap-3'>
+    <ul className='hidden w-full flex-wrap items-center justify-center gap-2 md:flex'>
       {data?.map((item, index) => (
         <li
           key={item.key}
@@ -27,7 +28,10 @@ const PieChartLegend = ({ data }: Props) => {
               flex: '0 0 auto',
             }}
           />
-          <span style={{ whiteSpace: 'nowrap', color: color(index) }}>
+          <span
+            className={cn('text-sm whitespace-nowrap', color(index))}
+            style={{ color: color(index) }}
+          >
             {item.key}
           </span>
         </li>
