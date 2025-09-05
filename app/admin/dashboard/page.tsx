@@ -6,6 +6,7 @@ import {
   HydrationBoundary,
   QueryClient,
 } from '@tanstack/react-query';
+import { Suspense } from 'react';
 import AgeDashboardChart from './_components/AgeDashboardChart.client';
 import AnimationDashboardChart from './_components/AnimationDashboardChart.client';
 import BrandDashboardChart from './_components/BrandDashboardChart.client';
@@ -22,19 +23,21 @@ const DashboardPage = async () => {
   return (
     <div className='flex min-w-full flex-col'>
       <HydrationBoundary state={dehydrate(queryClient)}>
-        <div className='flex w-full flex-col gap-3 p-3'>
-          {/* 매장/일자 검색 */}
-          <StoreDateFilter />
+        <Suspense>
+          <div className='flex w-full flex-col gap-3 p-3'>
+            {/* 매장/일자 검색 */}
+            <StoreDateFilter />
 
-          <div className='grid gap-3 lg:grid-cols-2'>
-            <GenderDashboardChart />
-            <AgeDashboardChart />
+            <div className='grid gap-3 lg:grid-cols-2'>
+              <GenderDashboardChart />
+              <AgeDashboardChart />
+            </div>
+
+            <ProductDashboardChart />
+            <BrandDashboardChart />
+            <AnimationDashboardChart />
           </div>
-
-          <ProductDashboardChart />
-          <BrandDashboardChart />
-          <AnimationDashboardChart />
-        </div>
+        </Suspense>
       </HydrationBoundary>
     </div>
   );

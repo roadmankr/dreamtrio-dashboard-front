@@ -1,6 +1,5 @@
 'use client';
 import { cn } from '@/lib/utils';
-import { MAIN_URL } from '@/shared/constants/routes';
 import Image from 'next/image';
 import Link from 'next/link';
 import { navigations } from '../model/config';
@@ -15,7 +14,7 @@ const Header = () => {
       <div className='flex w-full items-center justify-between px-6 py-3'>
         {/* Logo */}
         <Link
-          href={MAIN_URL}
+          href={'/'}
           className='relative flex aspect-[5/1] h-full cursor-pointer items-center gap-3'
         >
           <Image

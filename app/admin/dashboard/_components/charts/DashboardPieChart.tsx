@@ -98,6 +98,7 @@ export default function DashboardPieChart({
               contentStyle={{ borderRadius: 8 }}
               formatter={(value, name) => [
                 <PieTooltip
+                  key={name}
                   name={name}
                   value={value}
                   colorsByKey={colorsByKey}
