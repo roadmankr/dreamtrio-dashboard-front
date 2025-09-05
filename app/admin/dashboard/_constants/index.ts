@@ -11,3 +11,5 @@ export const dashboadProductTitleConfig = {
   [DIMENSION.PRODUCT]: '상품분류',
   [DIMENSION.SMALL_CATEGORY]: '소분류',
 } satisfies Record<Dimension, string>;
+
+export const RAD = Math.PI / 180;

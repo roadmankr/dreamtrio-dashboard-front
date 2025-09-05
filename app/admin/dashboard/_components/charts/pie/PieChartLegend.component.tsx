@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils';
 import { TSalesBreakDownResponse } from '@/shared/types/sales';
 import { useCallback } from 'react';
-import { pichartCololrsConfig } from '../../_config';
+import { pichartCololrsConfig } from '../../../_config';
 interface Props {
   data?: TSalesBreakDownResponse[];
 }

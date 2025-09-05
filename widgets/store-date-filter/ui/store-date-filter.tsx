@@ -13,7 +13,7 @@ const StoreDateFilter = () => {
     useStoreDateFilterForm();
 
   return (
-    <CardWrapper className='flex'>
+    <CardWrapper className='flex max-w-3xl'>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -28,12 +28,14 @@ const StoreDateFilter = () => {
             />
           ))}
 
-          <ResetButton onClick={resetParams} />
-          <SubmitButton
-            disabled={disabled}
-            submitText='검색'
-            submitIcon={<SearchIcon />}
-          />
+          <div className='flex flex-row gap-2'>
+            <ResetButton onClick={resetParams} />
+            <SubmitButton
+              disabled={disabled}
+              submitText='검색'
+              submitIcon={<SearchIcon />}
+            />
+          </div>
         </form>
       </Form>
     </CardWrapper>

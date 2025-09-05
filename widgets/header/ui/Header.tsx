@@ -1,5 +1,6 @@
 'use client';
 import { cn } from '@/lib/utils';
+import { MAIN_URL } from '@/shared/constants/routes';
 import Image from 'next/image';
 import Link from 'next/link';
 import { navigations } from '../model/config';
@@ -7,14 +8,24 @@ import useActiveNavigation from '../model/hooks/useActiveNavigation';
 
 const Header = () => {
   const { isActive } = useActiveNavigation();
+
   return (
     // <header className='sticky top-0 z-50 w-full bg-white shadow-md'>
     <header className='flex h-16 w-full bg-white shadow-md'>
       <div className='flex w-full items-center justify-between px-6 py-3'>
         {/* Logo */}
-        <div className='relative flex aspect-[5/1] h-full items-center gap-3'>
-          <Image src='/assets/images/logo.png' alt='Dream Trio' fill />
-        </div>
+        <Link
+          href={MAIN_URL}
+          className='relative flex aspect-[5/1] h-full cursor-pointer items-center gap-3'
+        >
+          <Image
+            src='/assets/images/logo.png'
+            alt='Dream Trio'
+            fill
+            sizes='100%'
+            priority
+          />
+        </Link>
 
         {/* Desktop Navigation */}
         <nav className='hidden items-center gap-8 md:flex'>

@@ -13,7 +13,6 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { dashboadProductTitleConfig } from '../../_constants';
 import useBarChartData from '../../_model/useBarChartData';
 
 interface Props {
@@ -21,13 +20,13 @@ interface Props {
   data?: TSalesBreakDownResponse[];
 }
 
-const DashboardBarChart = ({ dimension, data }: Props) => {
+const DashboardBarChart = ({ data }: Props) => {
   const { chargAvg } = useBarChartData({ data });
 
   return (
     <div className='relative grid'>
       <div className='[grid-area:1/1] sm:h-auto' aria-hidden />
-      <div className='w-full overflow-x-auto overflow-y-hidden p-2 [grid-area:1/1] sm:p-3'>
+      <div className='w-full overflow-x-auto overflow-y-hidden p-2 [grid-area:1/1]'>
         <div className='aspect-video w-full min-w-4xl'>
           <ResponsiveContainer width='100%' height='100%'>
             <BarChart
@@ -105,7 +104,7 @@ const DashboardBarChart = ({ dimension, data }: Props) => {
                 }}
                 labelFormatter={(label: string) => (
                   <span className='flex items-center gap-1'>
-                    <span className='text-sm'>{`${dashboadProductTitleConfig[dimension]}명  `}</span>
+                    {/* <span className='text-sm'>{`${dashboadProductTitleConfig[dimension]}명  `}</span> */}
                     <span className='font-semibold'>{label}</span>
                   </span>
                 )}

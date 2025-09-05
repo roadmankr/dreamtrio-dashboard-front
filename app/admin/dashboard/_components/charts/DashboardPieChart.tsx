@@ -1,4 +1,3 @@
-import { nf } from '@/lib/form';
 import { formatCurrency } from '@/lib/format';
 import { TSalesBreakDownResponse } from '@/shared/types/sales';
 import {
@@ -10,10 +9,10 @@ import {
   Tooltip,
 } from 'recharts';
 import { pichartCololrsConfig } from '../../_config';
+import { RAD } from '../../_constants';
 import usePieChartState from '../../_model/usePieChartState';
-import PieChartLegend from './PieChartLegend.component';
-
-const RAD = Math.PI / 180;
+import PieChartLegend from './pie/PieChartLegend.component';
+import PieTooltip from './pie/PieTooltip.component';
 
 const renderLeaderLabel = (props: any) => {
   const { cx, cy, midAngle, outerRadius, value, index, name } = props;
@@ -23,7 +22,7 @@ const renderLeaderLabel = (props: any) => {
   const cos = Math.cos(-RAD * midAngle);
 
   const r1 = outerRadius + 6;
-  const r2 = outerRadius + 22; // 중간 지점 더 멀리
+  const r2 = outerRadius + 20; // 중간 지점 더 멀리
   const sx = cx + r1 * cos;
   const sy = cy + r1 * sin;
 
@@ -71,13 +70,10 @@ export default function DashboardPieChart({
   const { sideMargin, colorsByKey } = usePieChartState({ data });
 
   return (
-    <div className='relative grid h-full w-full'>
-      <div className='[grid-area:1/1] sm:h-auto' aria-hidden />
-
-      <div className='w-full max-w-2xl p-2 [grid-area:1/1] sm:p-3'>
-        <ResponsiveContainer width='100%' className={'aspect-square'}>
+    <div className='relative h-full w-full'>
+      <div className='aspect-square w-full max-w-2xl min-w-xl md:min-w-auto'>
+        <ResponsiveContainer width='100%' height='100%' debounce={0}>
           <PieChart margin={{ left: sideMargin, right: sideMargin }}>
-            {/* <PieChart> */}
             <Pie
               data={data}
               cx='50%'
@@ -98,27 +94,15 @@ export default function DashboardPieChart({
             </Pie>
 
             <Tooltip
-              formatter={(value, ...props) => {
-                const key = props?.[0];
-                const color = colorsByKey?.find(
-                  (color) => color.key === key,
-                )?.color;
-
-                return [
-                  <span
-                    key={key}
-                    className='text-sm font-semibold'
-                    style={{ color }}
-                  >
-                    {key}
-                    <strong className='ml-2 text-sm text-neutral-700'>
-                      {nf.format(Number(value ?? 0))}
-                    </strong>
-                  </span>,
-                ];
-              }}
               // separator=': '
               contentStyle={{ borderRadius: 8 }}
+              formatter={(value, name) => [
+                <PieTooltip
+                  name={name}
+                  value={value}
+                  colorsByKey={colorsByKey}
+                />,
+              ]}
             />
 
             <Legend
@@ -130,7 +114,6 @@ export default function DashboardPieChart({
             />
           </PieChart>
         </ResponsiveContainer>
-        {/* </div> */}
       </div>
     </div>
   );

@@ -2,7 +2,7 @@
 
 import CardWrapper from '@/components/ui/card/card-wrapper';
 import { cn } from '@/lib/utils';
-import type { Dimension } from '@/shared/model/dimension';
+import { type Dimension } from '@/shared/model/dimension';
 import { ViewState } from '@/shared/model/status';
 import useChartViewState from '../../_model/useChartViewState';
 import ChartTitle from '../charts/ChartTitle.component';
@@ -46,34 +46,43 @@ export default function QueryGuard({
   return (
     <CardWrapper
       containerClassName={cn(
-        'p-4 w-full aspect-square ',
+        'p-4 w-full aspect-square',
         sectionType,
-        isFetched && 'aspect-auto',
+        hasData && isFetched && 'aspect-auto',
       )}
       className={cn('relative flex w-full items-center justify-center px-2')}
     >
-      <div data-section={`${dimension}`} className='flex w-full flex-1'>
-        {status === ViewState.IDLE && (
-          <EmptyState title='필터를 선택하고 검색을 눌러주세요' />
-        )}
+      <div
+        data-section={`${dimension}`}
+        className='flex w-full flex-1 flex-col'
+      >
+        <ChartTitle title={chartTitle} />
 
-        {status === ViewState.PENDING && <CardSkeleton />}
+        <div className='flex w-full flex-1 flex-col gap-2 rounded-xl border border-dashed p-4 text-center text-sm text-slate-500'>
+          {status === ViewState.IDLE && (
+            <EmptyState title='필터를 선택하고 검색을 눌러주세요' />
+          )}
 
-        {status === ViewState.ERROR && (
-          <EmptyState
-            title='불러오기에 실패했어요.'
-            desc='잠시 후 다시 시도해주세요.'
-          />
-        )}
+          {status === ViewState.PENDING && <CardSkeleton />}
 
-        {status === ViewState.EMPTY && <EmptyState title={emptyMessage} />}
+          {status === ViewState.ERROR && (
+            <EmptyState
+              title='불러오기에 실패했어요.'
+              desc='잠시 후 다시 시도해주세요.'
+            />
+          )}
 
-        {status === ViewState.SUCCESS && (
-          <div className='flex w-full flex-1 flex-col gap-2'>
-            <ChartTitle title={chartTitle} />
-            <div className='flex w-full flex-1 overflow-x-auto'>{children}</div>
-          </div>
-        )}
+          {status === ViewState.EMPTY && <EmptyState title={emptyMessage} />}
+
+          {status === ViewState.SUCCESS && (
+            <div
+              className='flex w-full flex-1 overflow-x-auto'
+              style={{ contain: 'layout' }}
+            >
+              {children}
+            </div>
+          )}
+        </div>
       </div>
     </CardWrapper>
   );

@@ -29,5 +29,7 @@ export const pichartCololrsConfig = [
   '#C5B0D5', // 파스텔 퍼플
   '#C49C94', // 파스텔 브라운
 ] as const;
+export type PieChartColor = (typeof pichartCololrsConfig)[number];
 
+export type TPieChartTooltip = { key: string; color: PieChartColor };
 export const CHART_DIMENSIONS_LENGTH = 5;
