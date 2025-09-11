@@ -9,14 +9,14 @@ import { FieldValues, useFormContext } from 'react-hook-form';
 import { baseStoreOptionField } from '../config';
 import useStoreOptions from '../model/useStoreOptions';
 
-type Props<T extends FieldValues, TExtra = {}> = Partial<
+type Props<T extends FieldValues, TExtra extends object = {}> = Partial<
   Omit<FormSelectType<T, TExtra>, 'options' | 'type'>
 > &
   CommonFormPart<T, TExtra> & {
     isNeedTotalOption?: boolean;
   };
 
-const StoreField = <T extends FieldValues, TExtra = {}>({
+const StoreField = <T extends FieldValues, TExtra extends object = {}>({
   isNeedTotalOption = false,
   ...props
 }: Props<T, TExtra>) => {

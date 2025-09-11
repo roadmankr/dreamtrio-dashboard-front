@@ -18,7 +18,7 @@ import { Button } from '../button';
 import FileUpload from '../file/file-upload';
 import SearchSelectBox from '../select/search-select-box';
 
-const LabelFormField = <T extends FieldValues, TExtra = any>({
+const LabelFormField = <T extends FieldValues, TExtra extends object = object>({
   form,
   name,
   label,

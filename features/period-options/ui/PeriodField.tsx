@@ -9,14 +9,14 @@ import { FieldValues, useFormContext } from 'react-hook-form';
 import { basePeriodOptionField } from '../config';
 import { getMonthOptions } from '../model/lib';
 
-type Props<T extends FieldValues, TExtra = {}> = Partial<
+type Props<T extends FieldValues, TExtra extends object = {}> = Partial<
   Omit<FormSelectType<T, TExtra>, 'options' | 'type'>
 > &
   CommonFormPart<T, TExtra> & {
     isNeedTotalOption?: boolean;
   };
 
-const PeriodField = <T extends FieldValues, TExtra = {}>({
+const PeriodField = <T extends FieldValues, TExtra extends object = {}>({
   isNeedTotalOption = false,
   ...props
 }: Props<T, TExtra>) => {

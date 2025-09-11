@@ -16,7 +16,6 @@ const useUploadOrderEvaluatorFile = () => {
   return useMutation({
     mutationFn: uploadOrderEvaluatorFile,
     onSuccess: (data) => {
-      console.log(data);
       showToastSuccess({ description: '파일 업로드에 성공하였습니다.' });
       const products = data.productInfo.map((d) => ({
         ...d,

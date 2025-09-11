@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react';
 import { useShallow } from 'zustand/react/shallow';
-import { getDominantColorInfoFromItems } from '../_lib';
+import { getAvgScoreColor } from '../_lib';
 import { orderAnalyticsStore } from '../_store';
 
 const useOrderAnalyticsContorl = () => {
@@ -22,28 +22,52 @@ const useOrderAnalyticsContorl = () => {
     [orderAnalytics.length],
   );
 
-  const totalInfo = orderAnalytics.reduce(
-    (acc, curr) => {
-      return {
-        totalQty: acc.totalQty + curr.quantity,
-        totalPrice: acc.totalPrice + curr.price,
-      };
-    },
-    { totalQty: 0, totalPrice: 0 },
+  const totalInfo = useMemo(() => {
+    return orderAnalytics.reduce(
+      (acc, curr) => {
+        return {
+          totalQty: acc.totalQty + curr.quantity,
+          totalPrice: acc.totalPrice + curr.price,
+        };
+      },
+      { totalQty: 0, totalPrice: 0 },
+    );
+  }, [orderAnalytics]);
+
+  const totalAvgsScore = useMemo(() => {
+    const count = orderAnalytics.length;
+    const { stockRateScore, saleRateScore, optimalStockScore } =
+      orderAnalytics.reduce(
+        (acc, curr) => {
+          acc.optimalStockScore += curr.optimalStockSignal.score;
+          acc.saleRateScore += curr.saleRateSignal.score;
+          acc.stockRateScore += curr.stockRateSignal.score;
+          return acc;
+        },
+        { stockRateScore: 0, saleRateScore: 0, optimalStockScore: 0 },
+      );
+    return {
+      stockRateScore: stockRateScore / count,
+      saleRateScore: saleRateScore / count,
+      optimalStockScore: optimalStockScore / count,
+    };
+  }, [orderAnalytics]);
+
+  const totalRateStockColorInfo = useMemo(
+    () => getAvgScoreColor(totalAvgsScore.stockRateScore),
+    [totalAvgsScore.stockRateScore],
   );
 
-  const totalRateStockColorInfo = getDominantColorInfoFromItems(
-    orderAnalytics,
-    (o) => o.stockRateSignal.score,
+  const totalRateSaleColorInfo = useMemo(
+    () => getAvgScoreColor(totalAvgsScore.saleRateScore),
+    [totalAvgsScore.saleRateScore],
   );
-  const totalRateSaleColorInfo = getDominantColorInfoFromItems(
-    orderAnalytics,
-    (o) => o.saleRateSignal.score,
+
+  const totalRateOptimalColorInfo = useMemo(
+    () => getAvgScoreColor(totalAvgsScore.optimalStockScore),
+    [totalAvgsScore.optimalStockScore],
   );
-  const totalRateOptimalColorInfo = getDominantColorInfoFromItems(
-    orderAnalytics,
-    (o) => o.optimalStockSignal.score,
-  );
+
   return {
     orderAnalytics,
     totalLength,

@@ -25,6 +25,18 @@ export const groupByComposite = (
   return [...m.values()];
 };
 
+export const getAvgScoreColor = (avg: number) => {
+  const avgScore = Math.round(avg);
+
+  const colorKey = (
+    Object.keys(COLOR_SCORE) as (keyof typeof COLOR_SCORE)[]
+  ).find((key) => COLOR_SCORE[key] === avgScore);
+
+  if (!colorKey) return colorConfig.gray;
+
+  return colorConfig[colorKey];
+};
+
 export const getMostScoreColor = (data: Record<TColorScore, number>) => {
   const entries = Object.entries(data);
   const maxKey = +entries.reduce(
@@ -41,9 +53,9 @@ export const getMostScoreColor = (data: Record<TColorScore, number>) => {
   return colorConfig[colorKey];
 };
 
-export function getDominantColorInfoFromItems<T>(
-  items: T[],
-  pickScore: (item: T) => TColorScore,
+export function getDominantColorInfoFromItems(
+  items: TAnalyticsProduct[],
+  pickScore: (item: TAnalyticsProduct) => TColorScore,
 ) {
   if (!items.length) return colorConfig.gray;
 
@@ -58,3 +70,17 @@ export function getDominantColorInfoFromItems<T>(
 
   return getMostScoreColor(counts) ?? colorConfig.gray;
 }
+
+export const getTotalAvg = (
+  items: TAnalyticsProduct[],
+  pickScore: (item: TAnalyticsProduct) => number,
+) => {
+  if (!items.length) return undefined;
+
+  const counts = items.reduce((acc, item) => {
+    const s = pickScore(item);
+    return (acc += s);
+  }, 0);
+
+  return counts / items.length;
+};

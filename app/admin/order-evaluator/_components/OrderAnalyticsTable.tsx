@@ -1,3 +1,4 @@
+import { Badge } from '@/components/ui/badge';
 import CardWrapper from '@/components/ui/card/card-wrapper';
 import {
   Table,
@@ -33,7 +34,6 @@ const OrderAnalyticsTable = () => {
             결과 리스트
           </h2>
           <span className='rounded-full bg-neutral-100 px-2.5 py-0.5 text-xs font-medium text-neutral-600'>
-            {/* {`${totalLength.toLocaleString()}건`} */}
             {isPending ? '로딩중' : `${totalLength.toLocaleString()}건`}
           </span>
         </div>
@@ -79,7 +79,13 @@ const OrderAnalyticsTable = () => {
                 <TableRow key={`${g.barcode}-${gi}-${gi}`}>
                   <TableCell>{g.barcode}</TableCell>
                   <TableCell>
-                    <div className='line-clamp-2 text-sm text-neutral-800'>
+                    <div className='line-clamp-2 flex gap-2 text-sm text-neutral-800'>
+                      {g.new && (
+                        <Badge className='bg-red-500 text-xs text-white'>
+                          신상품
+                        </Badge>
+                      )}
+
                       {g.productName}
                     </div>
                   </TableCell>
