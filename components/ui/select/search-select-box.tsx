@@ -71,7 +71,7 @@ export default function SearchSelectBox({
             role='combobox'
             aria-expanded={open}
             className={cn(
-              `hover:bg-background focus-visible:border-ring focus-visible:outline-ring/20 h-10 w-full justify-between bg-transparent px-3 font-normal outline-offset-0 focus-visible:outline-[3px]`,
+              `hover:bg-background focus-visible:border-ring focus-visible:outline-ring/20 h-10 w-full justify-between bg-transparent bg-white px-3 font-normal outline-offset-0 focus-visible:outline-[3px]`,
               className,
             )}
             disabled={disabled}

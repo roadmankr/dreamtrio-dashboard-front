@@ -1,5 +1,6 @@
+import { TStoreDateFilter } from '@/app/admin/dashboard/_schema/dashboard.schema';
+import { TBaseSales } from '@/entities/sales/model/types';
 import type { Dimension } from '@/shared/model/dimension';
-import { TStoreDateFilter } from '@/widgets/store-date-filter/model/schema';
 
 export enum Chart {
   BAR = 'bar',
@@ -18,14 +19,9 @@ export type TPieChartData = {
   value: number;
 };
 
-export type TSalesBreakDownResponse = {
-  key: string;
+export type TSalesBreakDownResponse = TBaseSales & {
   name: string;
-  count: number;
   base: number;
-  totalPrice: number;
-  profitPrice: number;
-  profitRate: number;
   profitPriceForChart: number; // 차트에 그려질 이익가격. 마이너스이면 0처리
 };
 

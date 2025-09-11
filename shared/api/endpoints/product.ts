@@ -1,7 +1,7 @@
 export const product = {
   getProductByBarcode: (barcode: string, storeId: number) =>
     [
-      `store/product?barcode=${barcode}&storeId=${storeId}`,
-      { method: 'get' },
+      `store/product`,
+      { method: 'get', searchParams: { barcode, storeId } },
     ] as const,
 };

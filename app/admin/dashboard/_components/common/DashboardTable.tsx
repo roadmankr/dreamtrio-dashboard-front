@@ -1,6 +1,6 @@
 import { fmtPercent } from '@/lib/format';
 import { TSalesBreakDownResponse } from '@/shared/types/sales';
-import useDashboardTableData from '../../_model/useDashboardTableData';
+import useDashboardTableData from '../../_hooks/useDashboardTableData';
 
 type Props = {
   data: TSalesBreakDownResponse[];

@@ -3,16 +3,14 @@ import { SelectOption } from '@/shared/types/form';
 import { useMemo } from 'react';
 
 const useStoreOptions = ({
-  valueType = 'id',
   isNeedTotalOption,
 }: {
-  valueType?: 'name' | 'id';
   isNeedTotalOption?: boolean;
 } = {}) => {
   const { data } = useGetStoreList();
   const storeOptions: SelectOption[] = useMemo(
     () => data?.map((d) => ({ label: d.name, value: d.id })) || [],
-    [data, valueType],
+    [data],
   );
 
   return {

@@ -4,7 +4,7 @@ import CardWrapper from '@/components/ui/card/card-wrapper';
 import { cn } from '@/lib/utils';
 import { type Dimension } from '@/shared/model/dimension';
 import { ViewState } from '@/shared/model/status';
-import useChartViewState from '../../_model/useChartViewState';
+import useChartViewState from '../../_hooks/useChartViewState';
 import ChartTitle from '../charts/ChartTitle.component';
 import { CardSkeleton } from './CardSkeleton';
 import { EmptyState } from './EmptyState';

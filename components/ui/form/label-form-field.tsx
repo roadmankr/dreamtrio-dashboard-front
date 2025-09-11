@@ -18,7 +18,7 @@ import { Button } from '../button';
 import FileUpload from '../file/file-upload';
 import SearchSelectBox from '../select/search-select-box';
 
-const LabelFormField = <T extends FieldValues, TExtra extends object = any>({
+const LabelFormField = <T extends FieldValues, TExtra = any>({
   form,
   name,
   label,
@@ -75,11 +75,17 @@ const LabelFormField = <T extends FieldValues, TExtra extends object = any>({
                         accept={props.accept}
                         onChange={(file) => field.onChange(file)}
                       >
-                        <div className='flex items-center gap-2'>
-                          <Button type='button' variant={'outline'}>
+                        <div className='flex flex-col items-start gap-2 md:flex-row md:items-center'>
+                          <Button
+                            type='button'
+                            variant={'outline'}
+                            className='h-10'
+                          >
                             파일 선택
                           </Button>
-                          <span className='text-[clamp(0.8rem,1vw,0.875rem)]'>{`${field?.value?.name || '선택된 파일 없음'}`}</span>
+                          <span className='text-[clamp(0.8rem,1vw,0.875rem)]'>
+                            {`${field?.value?.name || '선택된 파일 없음'}`}
+                          </span>
                         </div>
                       </FileUpload>
                     </>

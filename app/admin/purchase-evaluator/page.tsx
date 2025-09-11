@@ -1,5 +1,6 @@
 import { getStoreListInServer } from '@/actions/store.server';
 import UnderlineLable from '@/components/ui/label/underline-label';
+import PageWrapper from '@/components/ui/page/page-wrapper';
 import { queries } from '@/shared/queries';
 import { QueryClient } from '@tanstack/react-query';
 import ProductCart from './_components/ProductCart';
@@ -17,7 +18,7 @@ const PurchaseEvaluator = async () => {
   });
 
   return (
-    <div className='mx-auto flex min-h-full w-full flex-col space-y-6 p-6'>
+    <PageWrapper>
       <div className='flex flex-wrap items-center gap-2 text-sm'>
         <PurchaseSearchStepper />
       </div>
@@ -48,7 +49,7 @@ const PurchaseEvaluator = async () => {
           </section>
         </div>
       </div>
-    </div>
+    </PageWrapper>
   );
 };
 

@@ -10,7 +10,7 @@ import {
 } from 'recharts';
 import { pichartCololrsConfig } from '../../_config';
 import { RAD } from '../../_constants';
-import usePieChartState from '../../_model/usePieChartState';
+import usePieChartState from '../../_hooks/usePieChartState';
 import PieChartLegend from './pie/PieChartLegend.component';
 import PieTooltip from './pie/PieTooltip.component';
 

@@ -13,7 +13,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import useBarChartData from '../../_model/useBarChartData';
+import useBarChartData from '../../_hooks/useBarChartData';
 
 interface Props {
   dimension: Dimension;

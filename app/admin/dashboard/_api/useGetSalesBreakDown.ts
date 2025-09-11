@@ -1,10 +1,10 @@
 'use client';
 
-import { useGetSales } from '@/entities/sales/model/model';
 import type { Dimension } from '@/shared/model/dimension';
 
-import useStoreDateSearchParams from '@/widgets/store-date-filter/model/useStoreDateSearchParams';
+import { useGetSales } from '@/entities/sales/api/useGetSales';
 import { useMemo } from 'react';
+import useStoreDateSearchParams from '../_hooks/useStoreDateSearchParams';
 
 interface Props {
   dimension: Dimension;

@@ -4,8 +4,8 @@ import { cn } from '@/lib/utils';
 import { labelByStatus } from '../_config';
 
 import { ViewState } from '@/shared/model/status';
+import usePurchaseSearchStepper from '../_hooks/usePurchaseSearchStepper';
 import { chipClass, resultChipVariant } from '../_lib';
-import usePurchaseSearchStepper from '../_model/usePurchaseSearchStepper';
 
 const Step = ({
   step,

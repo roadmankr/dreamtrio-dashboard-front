@@ -5,8 +5,8 @@ import { cn } from '@/lib/utils';
 import { ShoppingCartIcon } from 'lucide-react';
 
 import { ViewState } from '@/shared/model/status';
-import useProductSearchResult from '../_model/useProductSearchResult';
-import usePurchaseSearchStepper from '../_model/usePurchaseSearchStepper';
+import useProductSearchResult from '../_hooks/useProductSearchResult';
+import usePurchaseSearchStepper from '../_hooks/usePurchaseSearchStepper';
 import ProductInputFilter from './filter/ProductInputFilter';
 import StoreSelectFilter from './filter/StoreSelectFilter';
 

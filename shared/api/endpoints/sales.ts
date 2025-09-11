@@ -1,9 +1,14 @@
 import { UploadFile, UploadFileMap } from '@/app/admin/upload/_config';
 import { buildQuery } from '@/lib/http';
 import { TSalesBreakDownQuery } from '@/shared/types/sales';
+import { Options } from 'ky';
 
 export const sales = {
-  getSalesBreakDown: ({ saleDate, storeId, dimension }: TSalesBreakDownQuery) =>
+  getSalesBreakDown: ({
+    saleDate,
+    storeId,
+    dimension,
+  }: TSalesBreakDownQuery): [url: string, options: Options] =>
     [
       `sales/breakdown${buildQuery({ saleDate, storeId, dimension })}`,
       { method: 'GET' },

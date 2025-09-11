@@ -1,7 +1,7 @@
 'use client';
 
 import { ViewState } from '@/shared/model/status';
-import useProductCart from '../_model/useProductCart';
+import useProductCart from '../_hooks/useProductCart';
 import CartContents from './cart/CartContents';
 import CartFooter from './cart/CartFooter';
 import EmptyState from './cart/EmptyState';

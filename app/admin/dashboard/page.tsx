@@ -1,6 +1,6 @@
 import { getStoreListInServer } from '@/actions/store.server';
+import PageWrapper from '@/components/ui/page/page-wrapper';
 import { queries } from '@/shared/queries';
-import StoreDateFilter from '@/widgets/store-date-filter/ui/store-date-filter';
 import {
   dehydrate,
   HydrationBoundary,
@@ -10,6 +10,7 @@ import { Suspense } from 'react';
 import AgeDashboardChart from './_components/AgeDashboardChart.client';
 import AnimationDashboardChart from './_components/AnimationDashboardChart.client';
 import BrandDashboardChart from './_components/BrandDashboardChart.client';
+import DashboardFilter from './_components/DashboardFilter';
 import GenderDashboardChart from './_components/GenderDashboardChart.client';
 import ProductDashboardChart from './_components/ProductDashboardChart.client';
 
@@ -21,12 +22,13 @@ const DashboardPage = async () => {
   });
 
   return (
-    <div className='flex min-w-full flex-col'>
+    <PageWrapper>
       <HydrationBoundary state={dehydrate(queryClient)}>
         <Suspense>
           <div className='flex w-full flex-col gap-3 p-3'>
             {/* 매장/일자 검색 */}
-            <StoreDateFilter />
+            <DashboardFilter />
+            {/* <StoreDateFilter /> */}
 
             <div className='grid gap-3 lg:grid-cols-2'>
               <GenderDashboardChart />
@@ -39,7 +41,7 @@ const DashboardPage = async () => {
           </div>
         </Suspense>
       </HydrationBoundary>
-    </div>
+    </PageWrapper>
   );
 };
 

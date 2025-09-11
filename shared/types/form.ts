@@ -98,15 +98,7 @@ export type FormSelectType<T extends FieldValues = FieldValues, TExtra = {}> = {
   // onChange?: (v: string) => void;
 };
 
-export type FormDataType<T extends FieldValues = FieldValues, TExtra = {}> = (
-  | FormSelectType<T, TExtra>
-  | FormInputType<T>
-  | ComponentForm<T, TExtra>
-  | FormLabelType
-  | FormInputFileType
-  | FormDateType
-  | FormHiddenType
-) & {
+export type CommonFormPart<T extends FieldValues, TExtra> = {
   name: FieldPath<T>;
   autoFocus?: boolean;
   extra?: TExtra;
@@ -119,6 +111,17 @@ export type FormDataType<T extends FieldValues = FieldValues, TExtra = {}> = (
   labelDescription?: string;
   subComponent?: JSX.Element;
 };
+
+export type FormDataType<T extends FieldValues = FieldValues, TExtra = {}> = (
+  | FormSelectType<T, TExtra>
+  | FormInputType<T>
+  | ComponentForm<T, TExtra>
+  | FormLabelType
+  | FormInputFileType
+  | FormDateType
+  | FormHiddenType
+) &
+  CommonFormPart<T, TExtra>;
 
 export type FormProps<T extends FieldValues, TExtra = {}> = FormDataType<
   T,

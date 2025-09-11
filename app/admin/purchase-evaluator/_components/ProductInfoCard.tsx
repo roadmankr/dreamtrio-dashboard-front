@@ -3,7 +3,7 @@
 import { nf } from '@/lib/form';
 import { ViewState } from '@/shared/model/status';
 import { NOT_PRODUCT_LIST_TEXT } from '../_constants';
-import useProductInfo from '../_model/useProductInfo';
+import useProductInfo from '../_hooks/useProductInfo';
 import DataSection from './common/DataSection.component';
 import InfoSectionWrapper from './common/InfoSectionWrapper';
 import Loading from './common/Loading';
@@ -12,11 +12,11 @@ import NoResult from './common/NoResult';
 const ProductInfoCard = () => {
   const {
     status,
-    saleRateColor,
-    stockRateColor,
-    optimalStockColor,
+    saleRateSignal,
+    stockRateSignal,
+    optimalSignal,
+    priceSignal,
     searchProduct,
-    salePriceColor,
   } = useProductInfo();
 
   return (
@@ -81,10 +81,10 @@ const ProductInfoCard = () => {
             </div>
 
             <div className='grid gap-4 sm:grid-cols-4'>
-              <DataSection title='보유/적정 재고' {...optimalStockColor} />
-              <DataSection title='재고회전율' {...stockRateColor} />
-              <DataSection title='판매율' {...saleRateColor} />
-              <DataSection title='온라인/매장 판매가' {...salePriceColor} />
+              <DataSection title='보유/적정 재고' {...optimalSignal} />
+              <DataSection title='재고회전율' {...stockRateSignal} />
+              <DataSection title='판매율' {...saleRateSignal} />
+              <DataSection title='온라인/매장 판매가' {...saleRateSignal} />
             </div>
           </div>
         )}

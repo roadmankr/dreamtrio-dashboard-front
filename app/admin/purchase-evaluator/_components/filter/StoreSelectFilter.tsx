@@ -1,6 +1,6 @@
 import { Form } from '@/components/ui/form';
 import LabelFormField from '@/components/ui/form/label-form-field';
-import useSearchStoreForm from '../../_model/useSearchStoreForm';
+import useSearchStoreForm from '../../_hooks/useSearchStoreForm';
 import ResetStoreAlertModal from './ResetStoreAlertModal';
 
 const StoreSelectFilter = () => {

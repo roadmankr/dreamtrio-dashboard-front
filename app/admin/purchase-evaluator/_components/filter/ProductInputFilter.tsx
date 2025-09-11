@@ -2,7 +2,7 @@ import SubmitButton from '@/components/ui/button/submit-button';
 import { Form } from '@/components/ui/form';
 import LabelFormField from '@/components/ui/form/label-form-field';
 import { SearchIcon } from 'lucide-react';
-import useSearchProductForm from '../../_model/useSearchProductForm';
+import useSearchProductForm from '../../_hooks/useSearchProductForm';
 
 const ProductInputFilter = () => {
   const { form, onSubmit, formField, disabled } = useSearchProductForm();

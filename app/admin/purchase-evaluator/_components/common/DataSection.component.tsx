@@ -1,8 +1,9 @@
+import { TAnalytisSignal } from '@/entities/commerce-analytics/model/type';
+import AnalyticsLight from '@/entities/commerce-analytics/ui/AnalyticsLight';
 import { cn } from '@/lib/utils';
 import { Info } from 'lucide-react';
 import Link from 'next/link';
 import { Action, ACTION_MAP } from '../../_constants';
-import Light from './Light';
 
 export type ActionType = { type: 'link'; url: string };
 
@@ -10,7 +11,7 @@ type Props = {
   title: string;
   textDirection?: 'row' | 'col';
   data?: number | string | null;
-  colorInfo?: { border: string; bg: string; text: string };
+  colorInfo?: Pick<TAnalytisSignal, 'colorInfo'>['colorInfo'];
   className?: string;
   scrollable?: boolean;
   actionType?: Action;
@@ -66,7 +67,7 @@ const DataSection = ({
 
       {colorInfo && (
         <div className='mt-3 flex flex-1 items-end justify-center gap-3'>
-          <Light {...colorInfo} />
+          <AnalyticsLight {...colorInfo} />
         </div>
       )}
     </div>
