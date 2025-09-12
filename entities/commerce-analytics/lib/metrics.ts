@@ -202,9 +202,9 @@ export const getStockRateColor = (stockRate?: number): TAnalytisSignal => {
     };
 
   const data = `${nf.format(stockRate)}%`;
-  if (stockRate > 10)
+  if (stockRate > getThreshold('STOCK', 'GREEN'))
     return { data, colorInfo: colorConfig.green, score: COLOR_SCORE['green'] };
-  if (stockRate > 5)
+  if (stockRate > getThreshold('STOCK', 'YELLOW'))
     return {
       data,
       colorInfo: colorConfig.yellow,
@@ -223,9 +223,9 @@ export const getSaleRateColor = (saleRate?: number): TAnalytisSignal => {
     };
 
   const data = `${nf.format(saleRate)}%`;
-  if (saleRate > 60)
+  if (saleRate > getThreshold('SALE', 'GREEN'))
     return { data, colorInfo: colorConfig.green, score: COLOR_SCORE['green'] };
-  if (saleRate > 30)
+  if (saleRate > getThreshold('SALE', 'YELLOW'))
     return {
       data,
       colorInfo: colorConfig.yellow,

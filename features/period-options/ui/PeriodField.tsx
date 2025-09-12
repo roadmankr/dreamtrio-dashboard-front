@@ -14,10 +14,12 @@ type Props<T extends FieldValues, TExtra extends object = {}> = Partial<
 > &
   CommonFormPart<T, TExtra> & {
     isNeedTotalOption?: boolean;
+    toastOnError?: boolean;
   };
 
 const PeriodField = <T extends FieldValues, TExtra extends object = {}>({
   isNeedTotalOption = false,
+  toastOnError = false,
   ...props
 }: Props<T, TExtra>) => {
   const form = useFormContext<T>();
@@ -32,7 +34,7 @@ const PeriodField = <T extends FieldValues, TExtra extends object = {}>({
     [props],
   );
 
-  return <LabelFormField {...field} form={form} />;
+  return <LabelFormField {...field} form={form} toastOnError={toastOnError} />;
 };
 
 export default PeriodField;

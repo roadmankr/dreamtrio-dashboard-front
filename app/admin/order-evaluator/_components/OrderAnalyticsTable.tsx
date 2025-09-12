@@ -67,25 +67,28 @@ const OrderAnalyticsTable = () => {
             {isPending ? (
               <SkeletonRows padY='py-3' />
             ) : orderAnalytics.length === 0 ? (
-              <TableRow>
-                <TableCell colSpan={7} className='px-6 py-16 text-center'>
-                  <div className='mx-auto max-w-md rounded-xl border border-dashed p-8 text-neutral-500'>
+              <TableRow className=''>
+                <TableCell
+                  colSpan={7}
+                  className='px-6 py-16 text-center hover:bg-none'
+                >
+                  <div className='w-full rounded-xl border border-dashed p-12 text-neutral-500'>
                     업로드 후 결과가 여기에 표시됩니다.
                   </div>
                 </TableCell>
               </TableRow>
             ) : (
               orderAnalytics.map((g, gi) => (
-                <TableRow key={`${g.barcode}-${gi}-${gi}`}>
+                <TableRow key={`${g.barcode}-${gi}`}>
                   <TableCell>{g.barcode}</TableCell>
+
                   <TableCell>
-                    <div className='line-clamp-2 flex gap-2 text-sm text-neutral-800'>
+                    <div className='line-clamp-1 flex gap-2 text-sm text-neutral-800'>
                       {g.new && (
                         <Badge className='bg-red-500 text-xs text-white'>
                           신상품
                         </Badge>
                       )}
-
                       {g.productName}
                     </div>
                   </TableCell>

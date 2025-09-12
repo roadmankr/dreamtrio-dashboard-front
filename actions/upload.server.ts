@@ -5,7 +5,7 @@ import { apis } from '@/shared/api/endpoints';
 import { serverKy } from '@/shared/api/ky/ky.server';
 import { TOrderAnalyze } from '@/shared/types/analyze';
 
-export const uploadOrderEvaluatorFile = async (props: {
+export const uploadOrderEvaluatorFileInServer = async (props: {
   storeId: number;
   saleDate: string;
   formData: FormData;

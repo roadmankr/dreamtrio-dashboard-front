@@ -1,7 +1,7 @@
-import { NextResponse } from 'next/server';
+import { noStoreEmptyResponse } from '@/lib/http.server';
+
+export const dynamic = 'force-dynamic';
 
 export const GET = async () => {
-  return NextResponse.json({
-    status: 200,
-  });
+  return noStoreEmptyResponse({ status: 200 });
 };

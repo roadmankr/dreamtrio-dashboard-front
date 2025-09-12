@@ -1,5 +1,5 @@
-import { Toaster } from '@/components/ui/sonner';
 import QueryProvider from '@/shared/providers/query-provider';
+import ToastProvider from '@/shared/providers/toast-provider';
 import Header from '@/widgets/header/ui/Header';
 import type { Metadata, Viewport } from 'next';
 import { Roboto, Sora } from 'next/font/google';
@@ -46,12 +46,10 @@ export default function RootLayout({
       >
         <QueryProvider>
           <div className='font-sora flex min-h-dvh w-full max-w-[1440px] flex-col'>
-            <Toaster
-              richColors
-              className='pointer-events-auto z-50 touch-manipulation select-text'
-            />
-            <Header />
-            <div className='flex flex-1'>{children}</div>
+            <ToastProvider>
+              <Header />
+              <div className='flex flex-1'>{children}</div>
+            </ToastProvider>
           </div>
         </QueryProvider>
       </body>

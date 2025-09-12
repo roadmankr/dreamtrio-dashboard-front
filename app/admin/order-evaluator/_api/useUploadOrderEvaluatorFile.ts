@@ -1,4 +1,4 @@
-import { uploadOrderEvaluatorFile } from '@/actions/upload.server';
+import { uploadOrderEvaluatorFileInServer } from '@/actions/upload.server';
 import {
   getOptimalStockColor,
   getSaleRateColor,
@@ -14,7 +14,8 @@ const useUploadOrderEvaluatorFile = () => {
   );
 
   return useMutation({
-    mutationFn: uploadOrderEvaluatorFile,
+    // mutationFn: uploadAnalysticsFile,
+    mutationFn: uploadOrderEvaluatorFileInServer,
     onSuccess: (data) => {
       showToastSuccess({ description: '파일 업로드에 성공하였습니다.' });
       const products = data.productInfo.map((d) => ({

@@ -28,6 +28,7 @@ const LabelFormField = <T extends FieldValues, TExtra extends object = object>({
   fieldClassName,
   labelDescription,
   required,
+  toastOnError,
   ...props
 }: FormProps<T, TExtra>) => {
   return (
@@ -235,7 +236,10 @@ const LabelFormField = <T extends FieldValues, TExtra extends object = object>({
               </FormControl>
             </div>
 
-            <FormMessage className='text-[0.8rem]' />
+            <FormMessage
+              className='text-[0.8rem]'
+              toastOnError={toastOnError}
+            />
           </FormItem>
         )}
       />

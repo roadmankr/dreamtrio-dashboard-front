@@ -22,19 +22,21 @@ const useOrderAnalyticsContorl = () => {
     [orderAnalytics.length],
   );
 
-  const totalInfo = useMemo(() => {
-    return orderAnalytics.reduce(
-      (acc, curr) => {
-        return {
-          totalQty: acc.totalQty + curr.quantity,
-          totalPrice: acc.totalPrice + curr.price,
-        };
-      },
-      { totalQty: 0, totalPrice: 0 },
-    );
-  }, [orderAnalytics]);
+  const totalInfo = useMemo(
+    () =>
+      orderAnalytics.reduce(
+        (acc, curr) => {
+          return {
+            totalQty: acc.totalQty + curr.quantity,
+            totalPrice: acc.totalPrice + curr.price,
+          };
+        },
+        { totalQty: 0, totalPrice: 0 },
+      ),
+    [orderAnalytics],
+  );
 
-  const totalAvgsScore = useMemo(() => {
+  const totalAvgScores = useMemo(() => {
     const count = orderAnalytics.length;
     const { stockRateScore, saleRateScore, optimalStockScore } =
       orderAnalytics.reduce(
@@ -54,18 +56,18 @@ const useOrderAnalyticsContorl = () => {
   }, [orderAnalytics]);
 
   const totalRateStockColorInfo = useMemo(
-    () => getAvgScoreColor(totalAvgsScore.stockRateScore),
-    [totalAvgsScore.stockRateScore],
+    () => getAvgScoreColor(totalAvgScores.stockRateScore),
+    [totalAvgScores.stockRateScore],
   );
 
   const totalRateSaleColorInfo = useMemo(
-    () => getAvgScoreColor(totalAvgsScore.saleRateScore),
-    [totalAvgsScore.saleRateScore],
+    () => getAvgScoreColor(totalAvgScores.saleRateScore),
+    [totalAvgScores.saleRateScore],
   );
 
   const totalRateOptimalColorInfo = useMemo(
-    () => getAvgScoreColor(totalAvgsScore.optimalStockScore),
-    [totalAvgsScore.optimalStockScore],
+    () => getAvgScoreColor(totalAvgScores.optimalStockScore),
+    [totalAvgScores.optimalStockScore],
   );
 
   return {

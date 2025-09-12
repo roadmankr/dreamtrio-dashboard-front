@@ -1,7 +1,10 @@
 import { getSalesBreakDownInServer } from '@/actions/sales.server';
 import { getErrorMessage } from '@/lib/error';
+import { jsonNoStore } from '@/lib/http.server';
 import type { Dimension } from '@/shared/model/dimension';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
+
+export const dynamic = 'force-dynamic';
 
 export const GET = async (request: NextRequest) => {
   const searchParams = request.nextUrl.searchParams;
@@ -19,13 +22,12 @@ export const GET = async (request: NextRequest) => {
         Number(storeId) && !isNaN(Number(storeId)) ? Number(storeId) : null,
       dimension,
     });
-    return NextResponse.json({ data });
+
+    return jsonNoStore({ data }, { status: 200 });
   } catch (err: unknown) {
-    return new Response(
-      JSON.stringify({ message: await getErrorMessage(err) }),
-      {
-        status: 500,
-      },
+    return jsonNoStore(
+      { message: await getErrorMessage(err) },
+      { status: 500 },
     );
   }
 };

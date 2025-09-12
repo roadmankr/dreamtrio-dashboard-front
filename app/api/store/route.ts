@@ -1,13 +1,18 @@
 import { getStoreListInServer } from '@/actions/store.server';
-import { NextResponse } from 'next/server';
+import { jsonNoStore } from '@/lib/http.server';
+
+export const dynamic = 'force-dynamic';
 
 export const GET = async () => {
   try {
     const data = await getStoreListInServer();
-    return NextResponse.json({ data });
+    return jsonNoStore({ data }, { status: 200 });
   } catch (err: any) {
-    return new Response(JSON.stringify({ message: err.message }), {
-      status: 500,
-    });
+    return jsonNoStore(
+      { message: err.message },
+      {
+        status: 500,
+      },
+    );
   }
 };

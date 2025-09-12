@@ -70,17 +70,3 @@ export function getDominantColorInfoFromItems(
 
   return getMostScoreColor(counts) ?? colorConfig.gray;
 }
-
-export const getTotalAvg = (
-  items: TAnalyticsProduct[],
-  pickScore: (item: TAnalyticsProduct) => number,
-) => {
-  if (!items.length) return undefined;
-
-  const counts = items.reduce((acc, item) => {
-    const s = pickScore(item);
-    return (acc += s);
-  }, 0);
-
-  return counts / items.length;
-};

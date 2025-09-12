@@ -11,3 +11,9 @@ export type TAnalyticsGroup = {
   key: { productName: string; barcode: string };
   items: TAnalyticsProduct[];
 };
+
+export type TAnalyticsUploadProps = {
+  storeId: number;
+  saleDate: string;
+  formData: FormData;
+};

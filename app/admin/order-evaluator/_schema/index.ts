@@ -6,7 +6,8 @@ export const orderEvaluatorFileUploadSchema = z.object({
   storeId: z
     .number()
     .nullable()
-    .transform((v) => (v ? +v : null)),
+    .transform((v) => (v ? +v : null))
+    .refine((v) => v, { message: '매장을 선택해주세요' }),
   saleDate: z
     .string()
     .refine(

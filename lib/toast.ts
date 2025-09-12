@@ -4,14 +4,17 @@ export const showToastSuccess = ({
   description,
   title = '성공',
   duration = 1500,
+  formMessageId,
 }: {
   description: string;
   title?: string;
   duration?: number;
+  formMessageId?: number | string;
 }) => {
   const id = toast.success(title, {
     duration,
     description,
+    id: formMessageId,
   });
 
   // 4초 후 강제로 닫기 (hover 여부 무시)
@@ -21,11 +24,14 @@ export const showToastSuccess = ({
 export const showToastError = ({
   description,
   title = '에러',
+  formMessageId,
 }: {
   description: string;
   title?: string;
+  formMessageId?: number | string;
 }) => {
   toast.error(title, {
+    id: formMessageId,
     duration: Infinity,
     description,
     closeButton: true,

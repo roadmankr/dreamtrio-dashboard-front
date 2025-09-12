@@ -14,10 +14,12 @@ type Props<T extends FieldValues, TExtra extends object = {}> = Partial<
 > &
   CommonFormPart<T, TExtra> & {
     isNeedTotalOption?: boolean;
+    toastOnError?: boolean;
   };
 
 const StoreField = <T extends FieldValues, TExtra extends object = {}>({
   isNeedTotalOption = false,
+  toastOnError = false,
   ...props
 }: Props<T, TExtra>) => {
   const { storeOptions } = useStoreOptions({ isNeedTotalOption });
@@ -33,7 +35,7 @@ const StoreField = <T extends FieldValues, TExtra extends object = {}>({
     [props, storeOptions],
   );
 
-  return <LabelFormField {...field} form={form} />;
+  return <LabelFormField {...field} form={form} toastOnError={toastOnError} />;
 };
 
 export default StoreField;

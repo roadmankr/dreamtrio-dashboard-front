@@ -130,4 +130,5 @@ export type FormProps<T extends FieldValues, TExtra = {}> = FormDataType<
   form: UseFormReturn<T>;
   autoFocus?: boolean;
   extra?: TExtra;
+  toastOnError?: boolean;
 };

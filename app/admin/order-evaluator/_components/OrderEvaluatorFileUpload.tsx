@@ -19,23 +19,29 @@ const OrderEvaluatorFileUpload = () => {
       <FormProvider {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className='flex w-full flex-col items-end gap-3 lg:flex-row'
+          className='flex w-full flex-col items-start gap-3 lg:flex-row'
         >
           <div className='flex w-full flex-col gap-3 lg:flex-row'>
-            <StoreField<TOrderUpload> name='storeId' />
-            <PeriodField<TOrderUpload> name='saleDate' />
+            <StoreField<TOrderUpload> name='storeId' toastOnError={true} />
+            <PeriodField<TOrderUpload> name='saleDate' toastOnError={true} />
           </div>
 
           <div className='line-clamp-1 w-full truncate whitespace-nowrap'>
-            <LabelFormField form={form} {...uploadOrderEvaluatorFileField} />
+            <LabelFormField
+              form={form}
+              {...uploadOrderEvaluatorFileField}
+              toastOnError={true}
+            />
           </div>
 
-          <SubmitButton
-            submitText='발주 평가하기'
-            submitIcon={<UploadIcon />}
-            disabled={disabled}
-            isPending={isPending}
-          />
+          <div className='flex h-full items-end'>
+            <SubmitButton
+              submitText='발주 평가하기'
+              submitIcon={<UploadIcon />}
+              disabled={disabled}
+              isPending={isPending}
+            />
+          </div>
         </form>
       </FormProvider>
     </CardWrapper>

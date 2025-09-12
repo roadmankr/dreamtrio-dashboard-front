@@ -11,6 +11,14 @@ export const COLOR_THRESHOLD = {
   OPTIMAL: {
     GREEN: 0.9,
   },
+  SALE: {
+    GREEN: 60,
+    YELLOW: 30,
+  },
+  STOCK: {
+    GREEN: 10,
+    YELLOW: 5,
+  },
 } as const;
 
 export type Category = keyof typeof COLOR_THRESHOLD;
