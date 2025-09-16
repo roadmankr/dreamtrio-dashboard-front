@@ -1,3 +1,5 @@
+'use client';
+
 import { Badge } from '@/components/ui/badge';
 import CardWrapper from '@/components/ui/card/card-wrapper';
 import {

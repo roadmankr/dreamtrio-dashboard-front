@@ -1,4 +1,5 @@
 import { QueryKey, UseQueryOptions } from '@tanstack/react-query';
+import { TApiRegistry } from '../api/registry';
 
 export type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 export type TPlacement = 'query' | 'params';
@@ -52,6 +53,34 @@ export type QueryOpts<TFnData, TData, TKey extends QueryKey = QueryKey> = Omit<
   UseQueryOptions<TFnData, Error, TData, TKey>,
   'queryKey' | 'queryFn'
 >;
+type ParamKeys<S extends string> = S extends `${string}:${infer P}/${infer R}`
+  ? P | ParamKeys<R>
+  : S extends `${string}:${infer P}`
+    ? P
+    : never;
+
+// 레지스트리 K에 대한 param 키 유니온
+export type PathParamKeys<K extends keyof TApiRegistry> = ParamKeys<
+  TApiRegistry[K]['client']['path']
+>;
+
+// 반환 타입: path/query 분리
+export type SplitResult<K extends keyof TApiRegistry> = {
+  // pathParams = In 중에서 PathParamKeys<K>만 Pick
+  pathParams: Partial<
+    Pick<
+      InputOf<TApiRegistry, K>,
+      Extract<PathParamKeys<K>, keyof InputOf<TApiRegistry, K>>
+    >
+  >;
+  // restQuery = In에서 그 키들만 Omit
+  restQuery: Partial<
+    Omit<
+      InputOf<TApiRegistry, K>,
+      Extract<PathParamKeys<K>, keyof InputOf<TApiRegistry, K>>
+    >
+  >;
+};
 // export type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 // // export type ServerArgs<I> = [I] extends [void] | [undefined]
 // //   ? []

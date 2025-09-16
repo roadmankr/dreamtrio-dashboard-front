@@ -1,5 +1,3 @@
-'use client';
-
 import PageWrapper from '@/components/ui/page/page-wrapper';
 
 import OrderAnalyticsTable from './_components/OrderAnalyticsTable';

@@ -20,3 +20,20 @@ export const uploadOrderEvaluatorFileInServer = async (props: {
     throw new Error(await getErrorMessage(err));
   }
 };
+
+export const uploadAnalysticsFile = async (props: {
+  storeId: number;
+  saleDate: string;
+  formData: FormData;
+}) => {
+  const { data } = await serverKy
+    .post('/api/upload/analytics', {
+      body: props.formData,
+      searchParams: { storeId: props.storeId, saleDate: props.saleDate },
+      timeout: 60000,
+      retry: 0,
+    })
+    .json<{ data: TOrderAnalyze }>();
+
+  return data;
+};

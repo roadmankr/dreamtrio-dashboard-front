@@ -15,6 +15,7 @@ import {
   getStoreDetailInServer,
   getStoreListInServer,
 } from '@/actions/store.server';
+import { uploadAnalysticsFile } from '@/actions/upload.server';
 import type { ActionDef } from '@/shared/types/http';
 
 type ApiRegistrySpec = {
@@ -22,7 +23,8 @@ type ApiRegistrySpec = {
   getStoreList: ActionDef<typeof getStoreListInServer>;
   getStoreDetail: ActionDef<typeof getStoreDetailInServer>;
   uploadSalesFile: ActionDef<typeof uploadSalesFile, 'POST'>;
-  getProductByBarcode: ActionDef<typeof getProductByBarcodeInServer, 'GET'>;
+  uploadAnalysticsFile: ActionDef<typeof uploadAnalysticsFile, 'POST'>;
+  getProductByBarcode: ActionDef<typeof getProductByBarcodeInServer>;
 };
 
 export const apiRegistry = {
@@ -46,6 +48,12 @@ export const apiRegistry = {
       (await import('@/actions/sales.server')).uploadSalesFile,
     client: { path: '/api/sales', method: 'POST' as const },
   },
+  uploadAnalysticsFile: {
+    server: async () =>
+      (await import('@/actions/upload.server')).uploadAnalysticsFile,
+    client: { path: '/api/upload/analytics', method: 'POST' as const },
+  },
+
   getProductByBarcode: {
     server: async () =>
       (await import('@/actions/product.server')).getProductByBarcodeInServer,

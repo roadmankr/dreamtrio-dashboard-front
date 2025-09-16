@@ -1,4 +1,3 @@
-import { uploadOrderEvaluatorFileInServer } from '@/actions/upload.server';
 import {
   getOptimalStockColor,
   getSaleRateColor,
@@ -7,6 +6,7 @@ import {
 import { showToastSuccess } from '@/lib/toast';
 import { useMutation } from '@tanstack/react-query';
 import { orderAnalyticsStore } from '../_store';
+import { uploadAnalysticsFile } from '../actions';
 
 const useUploadOrderEvaluatorFile = () => {
   const setOrderAnalytics = orderAnalyticsStore(
@@ -14,8 +14,8 @@ const useUploadOrderEvaluatorFile = () => {
   );
 
   return useMutation({
-    // mutationFn: uploadAnalysticsFile,
-    mutationFn: uploadOrderEvaluatorFileInServer,
+    mutationFn: uploadAnalysticsFile,
+    // mutationFn: uploadOrderEvaluatorFileInServer, // 서버액션 직접 호출용
     onSuccess: (data) => {
       showToastSuccess({ description: '파일 업로드에 성공하였습니다.' });
       const products = data.productInfo.map((d) => ({

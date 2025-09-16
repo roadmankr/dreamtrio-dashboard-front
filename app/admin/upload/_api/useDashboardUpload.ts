@@ -1,19 +1,19 @@
-import { uploadSalesFile } from '@/actions/sales.server';
 import { getErrorMessage } from '@/lib/error';
 import { showToastError, showToastSuccess } from '@/lib/toast';
 import { ErrorCode } from '@/shared/constants';
 import { useMutation } from '@tanstack/react-query';
-import { UploadFile } from '../_config';
+import { dashboardUpload } from '../actions';
 
 const useDashboardUpload = () => {
   return useMutation({
-    mutationFn: ({
-      uploadType,
-      formData,
-    }: {
-      uploadType: UploadFile;
-      formData: FormData;
-    }) => uploadSalesFile({ uploadType, formData }),
+    // mutationFn: ({
+    //   uploadType,
+    //   formData,
+    // }: {
+    //   uploadType: UploadFile;
+    //   formData: FormData;
+    // }) => uploadSalesFile({ uploadType, formData }),
+    mutationFn: dashboardUpload,
     onError: async (error) => {
       const description =
         (await getErrorMessage(error)) || ErrorCode.EXCEL_UPLOAD_FAILED;

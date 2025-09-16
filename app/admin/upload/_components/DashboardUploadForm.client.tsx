@@ -7,14 +7,14 @@ import { Form } from '@/components/ui/form';
 import LabelFormField from '@/components/ui/form/label-form-field';
 import { UploadIcon } from 'lucide-react';
 import {
-  dashboardUploadFileField,
   dashboardUploadFileTypeField,
   dashboardUploadPasswordField,
 } from '../_config';
 import useDashboadUploadForm from '../_hooks/useDashboadUploadForm';
 
 const DashboardUploadForm = () => {
-  const { form, onSubmit, rootError, isPending } = useDashboadUploadForm();
+  const { form, onSubmit, rootError, isPending, uploadFileField } =
+    useDashboadUploadForm();
 
   return (
     <div className='flex w-full max-w-2xl'>
@@ -25,7 +25,7 @@ const DashboardUploadForm = () => {
             className='flex w-full flex-col gap-3'
           >
             <LabelFormField form={form} {...dashboardUploadFileTypeField} />
-            <LabelFormField form={form} {...dashboardUploadFileField} />
+            <LabelFormField form={form} {...uploadFileField} />
             <LabelFormField form={form} {...dashboardUploadPasswordField} />
             <SubmitButton
               isPending={isPending}

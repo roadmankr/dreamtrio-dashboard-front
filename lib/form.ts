@@ -66,4 +66,13 @@ export function isFormData(value: unknown): value is FormData {
   );
 }
 
+export function hasFormDataProp(x: any): x is { formData: FormData } {
+  return (
+    x &&
+    typeof x === 'object' &&
+    'formData' in x &&
+    x.formData instanceof FormData
+  );
+}
+
 export const nf = new Intl.NumberFormat('ko-KR');
