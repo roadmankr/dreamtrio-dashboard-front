@@ -21,8 +21,11 @@ const ProductCart = () => {
 
   return (
     <InfoSectionWrapper title='담은 상품' className='h-auto min-h-0'>
-      <div aria-busy={status === ViewState.PENDING} className='flex flex-col'>
-        <div className='overflow-hidden rounded-2xl border'>
+      <div
+        aria-busy={status === ViewState.PENDING}
+        className='flex flex-1 flex-col'
+      >
+        <div className='grid h-full place-items-center overflow-hidden rounded-2xl border'>
           {status === ViewState.ERROR && <EmptyState />}
 
           {status === ViewState.SUCCESS && (

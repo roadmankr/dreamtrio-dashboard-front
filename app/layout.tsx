@@ -45,11 +45,44 @@ export default function RootLayout({
       <body
         className={`${roboto.variable} ${sora.variable} flex min-h-dvh w-full min-w-full justify-center bg-gray-50 antialiased`}
       >
+        <div aria-hidden className='pointer-events-none fixed inset-0 -z-10'>
+          {/* gradient base */}
+          <div className='absolute inset-0 bg-gradient-to-br from-white via-gray-50 to-gray-100' />
+
+          {/* pastel aurora spots */}
+          <div className='absolute top-[-10%] left-[-10%] h-[40vh] w-[40vw] rounded-full bg-blue-300/20 blur-[100px]' />
+          <div className='absolute right-[-10%] bottom-[-15%] h-[35vh] w-[35vw] rounded-full bg-purple-300/20 blur-[100px]' />
+          <div className='absolute bottom-[10%] left-[20%] h-[30vh] w-[30vw] rounded-full bg-emerald-300/20 blur-[120px]' />
+        </div>
+
         <QueryProvider>
-          <div className='font-sora flex min-h-dvh w-full max-w-[1440px] flex-col'>
+          <div className='font-sora relative flex min-h-dvh w-full max-w-[1440px] flex-col'>
             <ToastProvider>
-              <Header />
-              <div className='flex flex-1'>{children}</div>
+              <div className='sticky top-0 z-40 border-b bg-white/80 backdrop-blur'>
+                <Header />
+              </div>
+
+              <main className='flex flex-1'>
+                <div className='flex flex-1 space-y-6'>{children}</div>
+              </main>
+
+              {/* footer */}
+              <footer className='border-t bg-white/60'>
+                <div className='mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-8'>
+                  <div className='flex h-14 items-center justify-between text-xs text-gray-500'>
+                    <span>© {new Date().getFullYear()} DREAM TRIO</span>
+                    {/* <div className='flex items-center gap-3'>
+                      <a className='hover:text-gray-700' href='#'>
+                        도움말
+                      </a>
+                      <span className='text-gray-300'>•</span>
+                      <a className='hover:text-gray-700' href='#'>
+                        이용약관
+                      </a>
+                    </div> */}
+                  </div>
+                </div>
+              </footer>
             </ToastProvider>
           </div>
         </QueryProvider>

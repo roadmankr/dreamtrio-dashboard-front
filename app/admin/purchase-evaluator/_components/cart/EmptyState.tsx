@@ -2,7 +2,7 @@ import { ShoppingCart } from 'lucide-react';
 
 const EmptyState = () => {
   return (
-    <div className='flex flex-col items-center gap-3 px-6 py-12 text-center'>
+    <div className='flex flex-1 flex-col items-center justify-center gap-3 px-6 py-12 text-center'>
       <div className='flex h-12 w-12 items-center justify-center rounded-2xl border bg-slate-50'>
         <ShoppingCart className='h-5 w-5' />
       </div>

@@ -27,7 +27,7 @@ const PurchaseEvaluator = async () => {
         <PurchaseSearchFilters />
       </div>
 
-      <div className='w-full'>
+      <div className='flex w-full flex-1 flex-col'>
         <div
           aria-label='검색일자 기준'
           className='w-full px-2 text-right font-semibold'
@@ -38,13 +38,13 @@ const PurchaseEvaluator = async () => {
           />
         </div>
 
-        <div className='space-y-5'>
+        <div className='flex flex-1 flex-col space-y-5'>
           <section className='mt-1 grid gap-5 lg:grid-cols-2'>
             <StoreInfoCard />
             <ProductInfoCard />
           </section>
 
-          <section className='grid flex-1'>
+          <section className='flex flex-1'>
             <ProductCart />
           </section>
         </div>
