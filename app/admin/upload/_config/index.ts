@@ -55,3 +55,9 @@ export const dashboardUploadPasswordField: FormDataType<TDashboardUpload> = {
   type: 'password',
   label: '비밀번호 입력',
 } as const;
+
+export const defaultUploadField = {
+  uploadType: UploadFileMap.STOCK,
+  file: null,
+  password: '',
+} as const;

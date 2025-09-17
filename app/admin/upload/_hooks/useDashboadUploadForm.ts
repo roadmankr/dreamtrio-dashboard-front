@@ -6,7 +6,7 @@ import useDashboardUpload from '../_api/useDashboardUpload';
 import {
   dashboardUploadFileField,
   dashboardUploadFileTypeConfig,
-  UploadFileMap,
+  defaultUploadField,
 } from '../_config';
 import { dashboardUploadSchema, TDashboardUpload } from '../_schema';
 import { validateDashboardUpload } from '../_server/service';
@@ -14,14 +14,10 @@ import { validateDashboardUpload } from '../_server/service';
 const useDashboadUploadForm = () => {
   const form = useForm<TDashboardUpload>({
     resolver: zodResolver(dashboardUploadSchema),
-    defaultValues: {
-      uploadType: UploadFileMap.STOCK,
-      file: null,
-      password: '',
-    },
+    defaultValues: defaultUploadField,
   });
   const [isPending, startTransition] = useTransition();
-  const { mutateAsync } = useDashboardUpload();
+  const { mutateAsync } = useDashboardUpload({ form });
   const { handlerSafeParse } = useZodParsErrorHandler<TDashboardUpload>();
   const [uploadType] = useWatch({
     control: form.control,
