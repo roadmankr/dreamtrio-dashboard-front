@@ -29,7 +29,7 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: '드림트리오 - Dashboard',
-  description: '드림트리오 | 완구',
+  description: '드림트리오 | 완구 , 토이',
 };
 
 export default function RootLayout({
