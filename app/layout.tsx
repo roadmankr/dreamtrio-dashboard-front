@@ -1,7 +1,6 @@
 import AppProvider from '@/shared/providers/app-provider';
 import Footer from '@/widgets/footer/ui/footer';
 
-import Header from '@/widgets/header/ui/header';
 import Navigation from '@/widgets/navigation/ui/navigation';
 import type { Metadata, Viewport } from 'next';
 import { Roboto, Sora } from 'next/font/google';
@@ -53,9 +52,9 @@ export default function RootLayout({
         <AppProvider>
           <div className='font-sora relative flex min-h-dvh w-full max-w-[1440px] flex-col'>
             <div className='sticky top-0 z-40 border-b bg-white/80 backdrop-blur'>
-              <Header>
-                <Navigation />
-              </Header>
+              {/* <Header> */}
+              <Navigation />
+              {/* </Header> */}
             </div>
 
             <main className='flex flex-1'>
