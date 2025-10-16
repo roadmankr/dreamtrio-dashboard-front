@@ -1,4 +1,4 @@
-import { getStoreListInServer } from '@/actions/store.server';
+import { getStoreListInServer } from '@/entities/stores/api/store.server';
 import { jsonNoStore } from '@/lib/http.server';
 
 export const dynamic = 'force-dynamic';

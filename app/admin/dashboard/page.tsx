@@ -1,5 +1,5 @@
-import { getStoreListInServer } from '@/actions/store.server';
 import PageWrapper from '@/components/ui/page/page-wrapper';
+import { getStoreListForPrefetch } from '@/entities/stores/api/store.server';
 import { queries } from '@/shared/queries';
 import {
   dehydrate,
@@ -18,7 +18,7 @@ const DashboardPage = async () => {
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
     queryKey: queries.store.getStoreList.queryKey,
-    queryFn: getStoreListInServer,
+    queryFn: getStoreListForPrefetch,
   });
 
   return (

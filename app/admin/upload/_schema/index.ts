@@ -1,15 +1,7 @@
-import { excelFileTypeSchema, zipFileTypeSchema } from '@/shared/schema/file';
+import { excelFileTypeSchema, zipFileTypeSchema } from '@/shared/file/schema';
 import z from 'zod';
 import { UploadFileMap } from '../_config';
 
-// export const dashboardUploadSchema = z.object({
-//   uploadType: z.enum(uploadFileValues),
-//   file: excelFileTypeSchema,
-//   password: z
-//     .string()
-//     .trim() // 앞뒤 공백 제거
-//     .min(1, { message: '비밀번호를 입력해주세요.' }),
-// });
 const passwordSchema = z
   .string()
   .trim()

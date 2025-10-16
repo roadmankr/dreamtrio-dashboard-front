@@ -1,11 +1,10 @@
-import {
-  getSalesBreakDownInServer,
-  uploadSalesFile,
-} from '@/actions/sales.server';
+import { uploadSalesFile } from '@/app/admin/upload/_actions';
 import {
   DashboardUploadFileMime,
   UploadFile,
 } from '@/app/admin/upload/_config';
+import { getSalesBreakDownInServer } from '@/entities/sales/api/sales.server';
+import { salesListFilterSchema } from '@/entities/sales/model/list-filter.schema';
 import { getErrorMessage } from '@/lib/error';
 import { validateFile } from '@/lib/file.server';
 import { jsonNoStore } from '@/lib/http.server';
@@ -21,15 +20,16 @@ export const GET = async (request: NextRequest) => {
   const dimension = (searchParams.get('dimension') as Dimension) ?? '';
 
   try {
-    if (!dimension) throw new Error('타입이 존재하지 않습니다.');
-    if (!saleDate) throw new Error('일자가 존재하지 않습니다.');
+    const params = { saleDate, storeId, dimension };
+    const result = salesListFilterSchema.safeParse(params);
 
-    const data = await getSalesBreakDownInServer({
-      saleDate,
-      storeId:
-        Number(storeId) && !isNaN(Number(storeId)) ? Number(storeId) : null,
-      dimension,
-    });
+    if (!result.success)
+      return jsonNoStore(
+        { message: result.error.issues[0].message },
+        { status: 415 },
+      );
+
+    const data = await getSalesBreakDownInServer(result.data);
 
     return jsonNoStore({ data }, { status: 200 });
   } catch (err: unknown) {

@@ -1,6 +1,7 @@
-import { getStoreListInServer } from '@/actions/store.server';
 import UnderlineLable from '@/components/ui/label/underline-label';
 import PageWrapper from '@/components/ui/page/page-wrapper';
+
+import { getStoreListForPrefetch } from '@/entities/stores/api/store.server';
 import { queries } from '@/shared/queries';
 import { QueryClient } from '@tanstack/react-query';
 import ProductCart from './_components/ProductCart';
@@ -14,7 +15,7 @@ const PurchaseEvaluator = async () => {
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
     queryKey: queries.store.getStoreList.queryKey,
-    queryFn: getStoreListInServer,
+    queryFn: getStoreListForPrefetch,
   });
 
   return (

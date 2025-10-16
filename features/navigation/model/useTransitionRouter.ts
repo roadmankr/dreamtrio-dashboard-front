@@ -3,7 +3,7 @@ import { useCallback, useTransition } from 'react';
 
 const useTransitionRouter = () => {
   const router = useRouter();
-  const [_, startTransition] = useTransition();
+  const [isPending, startTransition] = useTransition();
 
   const push = useCallback(
     (pathname: string) => {
@@ -12,7 +12,7 @@ const useTransitionRouter = () => {
     [router],
   );
 
-  return { push };
+  return { push, isPending };
 };
 
 export default useTransitionRouter;

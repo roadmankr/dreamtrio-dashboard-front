@@ -15,7 +15,6 @@ const ProductInfoCard = () => {
     saleRateSignal,
     stockRateSignal,
     optimalSignal,
-    priceSignal,
     searchProduct,
   } = useProductInfo();
 
@@ -35,7 +34,7 @@ const ProductInfoCard = () => {
 
         {status === ViewState.SUCCESS && searchProduct && (
           <div className='flex flex-col gap-4'>
-            <div className='flex w-full gap-4'>
+            <div className='flex w-full flex-col gap-4 md:flex-row'>
               <div className='max-w-full min-w-0 flex-1'>
                 <DataSection
                   title='상품명'

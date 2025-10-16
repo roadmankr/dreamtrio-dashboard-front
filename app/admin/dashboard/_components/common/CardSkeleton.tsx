@@ -14,8 +14,8 @@ export function CardSkeleton({
   variant = 'bar',
   withHeader = true,
   withLegend = true,
-  className,
-  minHeightClassName = 'h-72',
+  // className,
+  // minHeightClassName = 'h-72',
 }: CardSkeletonProps) {
   return (
     <div className={cn('h-full w-full')} aria-label='차트 로딩 중'>

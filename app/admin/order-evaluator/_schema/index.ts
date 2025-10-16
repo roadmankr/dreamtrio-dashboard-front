@@ -1,5 +1,6 @@
 import dayjs from '@/lib/dayjs';
-import { excelFileTypeSchema } from '@/shared/schema/file';
+import { excelFileTypeSchema } from '@/shared/file/schema';
+
 import z from 'zod';
 
 export const orderEvaluatorFileUploadSchema = z.object({

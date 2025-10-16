@@ -136,6 +136,11 @@
   input:disabled {
     background-color: white;
   }
+
+  td,
+  tr {
+    background-color: transparent;
+  }
 }
 
 /* @layer utilities {

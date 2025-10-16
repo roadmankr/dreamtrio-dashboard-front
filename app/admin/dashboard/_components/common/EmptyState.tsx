@@ -20,8 +20,8 @@ export function EmptyState({
   action,
   size = 'md',
   tone = 'neutral',
-  className,
-  minHeightClassName = 'h-72',
+  // className,
+  // minHeightClassName = 'h-72',
 }: EmptyStateProps) {
   const sizeMap = {
     sm: {

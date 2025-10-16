@@ -1,3 +1,4 @@
+import { uploadSalesFile } from '@/app/admin/upload/_actions';
 import { getErrorMessage } from '@/lib/error';
 import { showToastError, showToastSuccess } from '@/lib/toast';
 import { ErrorCode } from '@/shared/constants';
@@ -5,7 +6,6 @@ import { useMutation } from '@tanstack/react-query';
 import { UseFormReturn } from 'react-hook-form';
 import { defaultUploadField } from '../_config';
 import { TDashboardUpload } from '../_schema';
-import { dashboardUpload } from '../actions';
 
 interface Props {
   form: UseFormReturn<TDashboardUpload>;
@@ -13,14 +13,7 @@ interface Props {
 
 const useDashboardUpload = ({ form }: Props) => {
   return useMutation({
-    // mutationFn: ({
-    //   uploadType,
-    //   formData,
-    // }: {
-    //   uploadType: UploadFile;
-    //   formData: FormData;
-    // }) => uploadSalesFile({ uploadType, formData }),
-    mutationFn: dashboardUpload,
+    mutationFn: uploadSalesFile,
     onError: async (error) => {
       const description =
         (await getErrorMessage(error)) || ErrorCode.EXCEL_UPLOAD_FAILED;

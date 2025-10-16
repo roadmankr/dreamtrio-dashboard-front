@@ -1,4 +1,5 @@
-import { getStoreDetailInServer } from '@/actions/store.server';
+import { getStoreDetailInServer } from '@/entities/stores/api/store.server';
+import { storeIdRequiredSchema } from '@/entities/stores/model/id.schema';
 import { getErrorMessage } from '@/lib/error';
 import { jsonNoStore } from '@/lib/http.server';
 import { NextRequest } from 'next/server';
@@ -9,16 +10,16 @@ export async function GET(
 ) {
   try {
     const { storeId } = await params;
+    const result = storeIdRequiredSchema.safeParse(storeId);
 
-    const id = Number(storeId);
-    if (!Number.isFinite(id)) {
+    if (!result.success)
       return jsonNoStore(
-        { message: '매장아이디가 존재하지 않습니다' },
-        { status: 400 },
+        { message: result.error.issues[0].message },
+        { status: 415 },
       );
-    }
 
-    const data = await getStoreDetailInServer({ storeId: id });
+    const data = await getStoreDetailInServer({ storeId: result.data });
+
     return jsonNoStore({ data }, { status: 200 });
   } catch (err: unknown) {
     return jsonNoStore(

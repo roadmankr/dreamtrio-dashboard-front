@@ -1,4 +1,4 @@
-import { uploadOrderEvaluatorFileInServer } from '@/actions/upload.server';
+import { uploadOrderEvaluatorFileInServer } from '@/app/admin/order-evaluator/_actions';
 import dayjs from '@/lib/dayjs';
 import { getErrorMessage } from '@/lib/error';
 import { validateFile } from '@/lib/file.server';
@@ -19,7 +19,6 @@ export async function POST(req: NextRequest) {
   try {
     const validate = validateFile(file);
     if (!validate.result) {
-      console.log(validate);
       return jsonNoStore({ message: validate.message }, { status: 415 });
     }
 

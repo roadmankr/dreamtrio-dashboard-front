@@ -41,7 +41,7 @@ const OrderAnalyticsTable = () => {
         </div>
       </div>
 
-      <div className='-mx-4 overflow-x-auto overscroll-x-contain px-4'>
+      <div className='w-full min-w-0 overscroll-x-auto px-4'>
         <Table className='w-full min-w-[720px] border-collapse sm:min-w-full'>
           <TableHeader className='sticky top-0 z-10 bg-neutral-50/95 backdrop-blur supports-[backdrop-filter]:bg-neutral-50/60'>
             <TableRow className='text-sm tracking-wide text-neutral-600 uppercase'>
@@ -65,15 +65,12 @@ const OrderAnalyticsTable = () => {
             </TableRow>
           </TableHeader>
 
-          <TableBody className='[&_tr:hover]:bg-neutral-50'>
+          <TableBody>
             {isPending ? (
               <SkeletonRows padY='py-3' />
             ) : orderAnalytics.length === 0 ? (
-              <TableRow className=''>
-                <TableCell
-                  colSpan={7}
-                  className='px-6 py-16 text-center hover:bg-none'
-                >
+              <TableRow className='hover:bg-transparent data-[state=selected]:bg-transparent'>
+                <TableCell colSpan={7} className='px-6 py-16 text-center'>
                   <div className='w-full rounded-xl border border-dashed p-12 text-neutral-500'>
                     업로드 후 결과가 여기에 표시됩니다.
                   </div>

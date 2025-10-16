@@ -151,7 +151,7 @@ const DashboardBarChart = ({ data }: Props) => {
                   position='top'
                   fill='#374151'
                   style={{ fontSize: 12 }}
-                  formatter={(v: any, ...props) => {
+                  formatter={(v: any) => {
                     return v.toLocaleString() as unknown as React.ReactNode;
                   }}
                 />

@@ -1,5 +1,4 @@
-import { apiRegistry, TApiRegistry } from '@/shared/api/registry';
-import { InputOf } from '@/shared/types/http';
+// import { apiRegistry, TApiRegistry } from '@/shared/api/registry';
 import { KyResponse } from 'ky';
 
 export const parseDownloadFilename = (response: KyResponse) => {
@@ -61,29 +60,29 @@ export const buildQuery = (params: unknown) => {
   return s ? `?${s}` : '';
 };
 
-export const splitPathParams = <K extends keyof TApiRegistry>(
-  key: K,
-  input: InputOf<TApiRegistry, K> | undefined,
-) => {
-  type In = InputOf<TApiRegistry, K>;
-  const url = apiRegistry[key].client.path;
-  const paramKeys = [...url.matchAll(/:([A-Za-z0-9_]+)/g)].map((m) => m[1]);
+// export const splitPathParams = <K extends keyof TApiRegistry>(
+//   key: K,
+//   input: InputOf<TApiRegistry, K> | undefined,
+// ) => {
+//   type In = InputOf<TApiRegistry, K>;
+//   const url = apiRegistry[key].client.path;
+//   const paramKeys = [...url.matchAll(/:([A-Za-z0-9_]+)/g)].map((m) => m[1]);
 
-  const pathParams = {} as Partial<In>;
-  const restQuery = {} as Partial<In>;
+//   const pathParams = {} as Partial<In>;
+//   const restQuery = {} as Partial<In>;
 
-  if (input) {
-    const entries = Object.keys(input) as (keyof In)[];
-    for (const k of entries) {
-      const v = input[k];
-      if (v === undefined || v === null) continue; // 빈 값은 제외
-      if (paramKeys.includes(String(k))) {
-        pathParams[k] = v;
-      } else {
-        restQuery[k] = v;
-      }
-    }
-  }
+//   if (input) {
+//     const entries = Object.keys(input) as (keyof In)[];
+//     for (const k of entries) {
+//       const v = input[k];
+//       if (v === undefined || v === null) continue; // 빈 값은 제외
+//       if (paramKeys.includes(String(k))) {
+//         pathParams[k] = v;
+//       } else {
+//         restQuery[k] = v;
+//       }
+//     }
+//   }
 
-  return { pathParams, restQuery };
-};
+//   return { pathParams, restQuery };
+// };

@@ -1,6 +1,6 @@
 import { queries } from '@/shared/queries';
 import { queryOptions } from '@tanstack/react-query';
-import { getProductByBarcode } from '../api';
+import { getProductByBarcode } from '../api/product';
 
 export const productQueries = {
   // byId: (id: string) =>

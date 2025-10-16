@@ -1,6 +1,6 @@
+import { getStoreDetail, getStoreList } from '@/entities/stores/api/store';
 import { queries } from '@/shared/queries';
 import { queryOptions } from '@tanstack/react-query';
-import { getStoreDetail, getStoreList } from '../api';
 
 export const storeQueries = {
   list: () =>
