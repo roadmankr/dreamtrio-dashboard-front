@@ -1,4 +1,4 @@
-import { uploadSalesFile } from '@/app/admin/upload/_actions';
+import { uploadSalesFileInServer } from '@/app/admin/upload/_actions';
 import { getErrorMessage } from '@/lib/error';
 import { showToastError, showToastSuccess } from '@/lib/toast';
 import { ErrorCode } from '@/shared/constants';
@@ -13,7 +13,7 @@ interface Props {
 
 const useDashboardUpload = ({ form }: Props) => {
   return useMutation({
-    mutationFn: uploadSalesFile,
+    mutationFn: uploadSalesFileInServer,
     onError: async (error) => {
       const description =
         (await getErrorMessage(error)) || ErrorCode.EXCEL_UPLOAD_FAILED;

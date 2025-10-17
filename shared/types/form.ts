@@ -39,13 +39,21 @@ export type FormHiddenType = {
 };
 
 export type FormDateType = {
-  type: 'date' | 'dateTime';
+  type: 'date' | 'dateTime' | 'dateRange';
   className?: string;
   minDate?: string;
   maxDate?: string | number;
   placeholder?: string;
   clearable?: boolean;
   value?: Date;
+};
+
+export type FormDateRangeType = {
+  type: 'dateRange';
+  className?: string;
+  placeholder?: string;
+  clearable?: boolean;
+  value?: { from: Date; to: Date };
 };
 
 export type FormLabelType = {
@@ -98,8 +106,8 @@ export type FormSelectType<T extends FieldValues = FieldValues, TExtra = {}> = {
   // onChange?: (v: string) => void;
 };
 
-export type CommonFormPart<T extends FieldValues, TExtra> = {
-  name: FieldPath<T>;
+export type CommonFormPart<T extends FieldValues, TExtra = {}> = {
+  name: Path<T>;
   autoFocus?: boolean;
   extra?: TExtra;
   label?: string;

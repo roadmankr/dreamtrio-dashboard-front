@@ -1,4 +1,4 @@
-import { uploadSalesFile } from '@/app/admin/upload/_actions';
+import { uploadSalesFileInServer } from '@/app/admin/upload/_actions';
 import {
   DashboardUploadFileMime,
   UploadFile,
@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
   };
 
   try {
-    const data = await uploadSalesFile(params);
+    const data = await uploadSalesFileInServer(params);
     return jsonNoStore({ data }, { status: 200 });
   } catch (err: unknown) {
     return jsonNoStore(

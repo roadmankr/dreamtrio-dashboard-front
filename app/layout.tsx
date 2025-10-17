@@ -51,7 +51,7 @@ export default function RootLayout({
         </div>
 
         <AppProvider>
-          <div className='font-sora relative flex min-h-dvh w-full max-w-[1440px] flex-col'>
+          <div className='font-sora relative flex min-h-dvh w-full max-w-[1536px] flex-col'>
             <div className='sticky top-0 z-40 border-b bg-white/80 backdrop-blur'>
               <Header>
                 <Navigation />
@@ -59,6 +59,7 @@ export default function RootLayout({
             </div>
 
             <main className='flex flex-1'>
+              {/* <div className='flex flex-1 space-y-6 overflow-hidden'> */}
               <div className='flex flex-1 space-y-6 overflow-hidden'>
                 {children}
               </div>

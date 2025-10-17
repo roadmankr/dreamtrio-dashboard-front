@@ -70,7 +70,7 @@ export const requestApiInClient = async <T>(
   }
 };
 
-export const requestApiForGet = async <T>(
+export const requestApiForActions = async <T>(
   url: string,
   config: ClientOptions,
 ): Promise<T> => {

@@ -96,3 +96,14 @@ export const requestApiJson = async <T>(
     };
   }
 };
+
+export const requestApiJsonOrThrow = async <T>(
+  url: string,
+  options: Options,
+): Promise<T> => {
+  const result = await requestApiJson<T>(url, options);
+
+  if (!result.ok) throw new Error(result.err.message);
+
+  return result.data;
+};

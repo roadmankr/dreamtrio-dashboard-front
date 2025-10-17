@@ -1,5 +1,5 @@
 import { buildQuery } from '@/lib/http';
-import { requestApiForGet } from '@/shared/api/request/request.client';
+import { requestApiForActions } from '@/shared/api/request/request.client';
 
 import {
   TSalesBreakDownQuery,
@@ -11,7 +11,7 @@ export const getSalesBreakDown = async ({
   storeId,
   dimension,
 }: TSalesBreakDownQuery) => {
-  return await requestApiForGet<TSalesBreakDownResponse[]>(
+  return await requestApiForActions<TSalesBreakDownResponse[]>(
     `/api/sales${buildQuery({ saleDate, storeId, dimension })}`,
     { method: 'get' },
   );

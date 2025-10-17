@@ -1,5 +1,6 @@
 'use client';
 
+import { DatePickerWithRange } from '@/components/ui/datepicker/datepicker-range';
 import {
   FormControl,
   FormField,
@@ -140,6 +141,23 @@ const LabelFormField = <T extends FieldValues, TExtra extends object = object>({
                       autoFocus={autoFocus}
                     />
                   )} */}
+
+                  {props.type === 'dateRange' && (
+                    <DatePickerWithRange
+                      clearable={props.clearable}
+                      value={field.value}
+                      startDate={field.value.from}
+                      endDate={field.value.to}
+                      onSelect={({ from, to }) => field.onChange({ from, to })}
+                      {...props}
+                      // minDate={
+                      //   props?.minDate ? new Date(props.minDate) : undefined
+                      // }
+                      // maxDate={
+                      //   props?.maxDate ? new Date(props.maxDate) : undefined
+                      // }
+                    />
+                  )}
 
                   {props.type === 'label' && (
                     <span

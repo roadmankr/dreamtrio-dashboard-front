@@ -21,8 +21,20 @@ export const makeOptionalPositiveIntNullable = (message: string) =>
   );
 
 export const makePositiveInt = (message: string) =>
-  z
-    .union([z.number(), z.string()])
-    .transform((v) => Number(v))
-    .refine((n) => !isNaN(n), { message }) // 숫자로 변환 가능한지 확인
-    .refine((n) => Number.isInteger(n) && n > 0, { message });
+  z.preprocess(
+    (input) => (!input ? undefined : input),
+    z.coerce
+      .number({
+        error: (issue) => {
+          if (issue.code === 'invalid_type') return message;
+          return issue.message;
+        },
+      })
+      .int({ message })
+      .positive({ message }),
+  );
+// z
+//   .union([z.number(), z.string(), z.undefined()])
+//   .transform((v) => Number(v))
+//   .refine((n) => !isNaN(n), { message }) // 숫자로 변환 가능한지 확인
+//   .refine((n) => Number.isInteger(n) && n > 0, { message });
