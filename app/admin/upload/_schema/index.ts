@@ -24,6 +24,11 @@ export const dashboardUploadSchema = z.discriminatedUnion('uploadType', [
     file: excelFileTypeSchema,
     password: passwordSchema,
   }),
+  z.object({
+    uploadType: z.literal(UploadFileMap.MASTER),
+    file: excelFileTypeSchema,
+    password: passwordSchema,
+  }),
 ]);
 
 export type TDashboardUpload = z.infer<typeof dashboardUploadSchema>;

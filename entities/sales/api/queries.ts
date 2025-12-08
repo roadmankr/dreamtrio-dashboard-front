@@ -1,4 +1,4 @@
-import { getSalesBreakDown } from '@/entities/sales/api/sales';
+import { getSalesBreakDown } from '@/entities/sales/api/fetchers';
 import { queries } from '@/shared/queries';
 import { TSalesBreakDownQuery } from '@/shared/types/sales';
 import { queryOptions } from '@tanstack/react-query';

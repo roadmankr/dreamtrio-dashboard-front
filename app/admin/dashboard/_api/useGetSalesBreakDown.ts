@@ -3,6 +3,8 @@
 import type { Dimension } from '@/shared/model/dimension';
 
 import { useGetSales } from '@/entities/sales/api/useGetSales';
+import { salesListFilterSchema } from '@/entities/sales/model/list-filter.schema';
+import { TSalesBreakDownQuery } from '@/shared/types/sales';
 import { useMemo } from 'react';
 import useStoreDateSearchParams from '../_hooks/useStoreDateSearchParams';
 
@@ -17,13 +19,15 @@ const useGetSalesBreakDown = ({ dimension }: Props) => {
     () => ({ storeId, saleDate, dimension }),
     [storeId, saleDate, dimension],
   );
-  const enabled = useMemo(
-    () => !!params.saleDate && !!params.dimension,
-    [params],
-  );
 
-  return useGetSales(params, {
-    enabled,
+  const parsed = salesListFilterSchema.safeParse(params);
+  const enabled = parsed.success && !!params.dimension;
+  const data = enabled
+    ? { ...parsed.data, dimension }
+    : ({} as TSalesBreakDownQuery);
+
+  return useGetSales(data, {
+    enabled: enabled,
     select: (data) =>
       data.map((d) => ({
         ...d,

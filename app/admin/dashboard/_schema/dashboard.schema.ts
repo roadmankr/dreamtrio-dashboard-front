@@ -1,18 +1,10 @@
-import dayjs from '@/lib/dayjs';
+import { storeIdRequiredSchema } from '@/entities/stores/model/id.schema';
+import { yearMonthDateSchema } from '@/shared/date/schema';
 import z from 'zod';
 
 export const storeDateFilterSchema = z.object({
-  storeId: z
-    .number()
-    .nullable()
-    .transform((v) => (v ? +v : null)),
-  saleDate: z
-    .string()
-    .refine(
-      (v) => dayjs(v, 'YYYY-MM', true).isValid(),
-      'YYYY-MM 형식이어야 합니다.',
-    )
-    .transform((v) => (v ? dayjs(v).format('YYYY-MM') : v)),
+  storeId: storeIdRequiredSchema,
+  saleDate: yearMonthDateSchema,
 });
 
 export type TStoreDateFilter = z.infer<typeof storeDateFilterSchema>;

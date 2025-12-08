@@ -42,6 +42,7 @@ export const HttpResponseCode = {
   NETWORK: 'NETWORK',
   HTTP_401: 'HTTP_401',
   HTTP_403: 'HTTP_403',
+  HTTP_404: 'HTTP_404',
   HTTP_5XX: 'HTTP_5XX',
   HTTP_4XX: 'HTTP_4XX',
   UNKNOWN: 'UNKNOWN',

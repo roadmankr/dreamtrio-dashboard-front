@@ -1,12 +1,12 @@
 import { storeIdRequiredSchema } from '@/entities/stores/model/id.schema';
 import dayjs from '@/lib/dayjs';
-import { fullDateSchema } from '@/shared/date/schema';
+import { fullDateSlashSchema } from '@/shared/date/schema';
 import z from 'zod';
 
 const dateRangeSchema = z
   .object({
-    from: fullDateSchema,
-    to: fullDateSchema,
+    from: fullDateSlashSchema,
+    to: fullDateSlashSchema,
   })
   .refine(({ from, to }) => dayjs(from).isBefore(dayjs(to), 'day'), {
     message: '종료일은 시작일 이후여야 합니다.',

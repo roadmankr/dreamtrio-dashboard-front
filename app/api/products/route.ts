@@ -21,7 +21,9 @@ export const GET = async (request: NextRequest) => {
       );
 
     const data = await getProductByBarcodeInServer(result.data);
-    return jsonNoStore({ data }, { status: 200 });
+    return jsonNoStore(data.ok ? data : { message: data.err.message }, {
+      status: data.ok ? 200 : (data.err.status ?? 400),
+    });
   } catch (err: unknown) {
     const message = await getErrorMessage(err);
     return jsonNoStore({ message }, { status: 500 });

@@ -9,7 +9,7 @@ import {
 
 export type SelectOption = { label: string; value: any; disabled?: boolean };
 export type TFormBaseChange<T extends FieldValues> = {
-  value: any;
+  value: unknown;
   form: UseFormReturn<T>;
 };
 export type TFormValue =
@@ -102,12 +102,12 @@ export type FormSelectType<T extends FieldValues = FieldValues, TExtra = {}> = {
   options?: { label: string; value: any }[];
   placeholder?: string;
   useSearchMode?: boolean;
-  onChange?: (props?: TFormBaseChange<T> & TExtra) => any;
+  onChange?: (props?: TFormBaseChange<T>) => void;
   // onChange?: (v: string) => void;
 };
 
 export type CommonFormPart<T extends FieldValues, TExtra = {}> = {
-  name: Path<T>;
+  name: FieldPath<T>;
   autoFocus?: boolean;
   extra?: TExtra;
   label?: string;
@@ -139,4 +139,13 @@ export type FormProps<T extends FieldValues, TExtra = {}> = FormDataType<
   autoFocus?: boolean;
   extra?: TExtra;
   toastOnError?: boolean;
+};
+
+export type TFormFieldBaseProps<T extends FieldValues> = {
+  isValid: boolean;
+  field: ControllerRenderProps<T, Path<T>>;
+  form: UseFormReturn<T>;
+  autoFocus?: boolean;
+  disabled?: boolean;
+  className?: string;
 };

@@ -10,7 +10,9 @@ import { CircleXIcon } from 'lucide-react';
 import React, { JSX } from 'react';
 
 interface Props<T> {
+  name: string;
   options: { label: string; value: T }[] | undefined;
+  inValid?: boolean;
   isDeletable?: boolean;
   value?: T;
   defaultValue?: T;
@@ -25,8 +27,10 @@ interface Props<T> {
 }
 
 const SelectBox = <T,>({
+  name,
   options = [],
   value,
+  inValid,
   defaultValue,
   onValueChange,
   className,
@@ -52,7 +56,9 @@ const SelectBox = <T,>({
         }
       >
         <SelectTrigger
+          aria-invalid={inValid}
           ref={ref}
+          id={name}
           disabled={disabled}
           labelTextPosition={labelTextPosition}
           className={cn(

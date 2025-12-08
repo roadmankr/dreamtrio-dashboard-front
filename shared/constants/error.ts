@@ -13,4 +13,5 @@ export enum ErrorCode {
   EXPIRED_SESSION_TEXT = '세션이 만료되어 로그인 페이지로 이동합니다.',
   ERROR_GET_NEW_TOKEN = '새로운 토큰값을 받아오는데 실패하였습니다.',
   FILE_NOT_FOUND_MESSAGE = '파일이 존재하지 않습니다',
+  NOT_FOUND_404 = '페이지를 찾을 수 없습니다.\nurl을 확인해주세요',
 }

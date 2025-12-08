@@ -6,7 +6,8 @@
 
 import { isDimension, type Dimension } from '@/shared/model/dimension';
 import { useEffect, useRef } from 'react';
-import { CHART_DIMENSIONS_LENGTH } from '../_config';
+
+import { CHART_DIMENSIONS_LENGTH } from '@/components/ui/charts/pie-chart/pie-chart.config';
 import { queryStringScrollStore } from '../_store';
 import useStoreDateSearchParams from './useStoreDateSearchParams';
 

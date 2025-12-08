@@ -26,7 +26,7 @@ const SubmitButton = ({
       type='submit'
       className={cn(`group h-10 cursor-pointer`, className)}
     >
-      {isPending ? <ReloadIcon className='size-2 animate-spin' /> : submitIcon}
+      {isPending ? <ReloadIcon className='animate-spin' /> : submitIcon}
       {submitText}
     </Button>
   );

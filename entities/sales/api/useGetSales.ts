@@ -15,6 +15,7 @@ export const useGetSales = <TData = TSalesBreakDownResponse[]>(
   options?: QueryOpts<TSalesBreakDownResponse[], TData, SalesKey>, // 원본리턴타입, select 리턴타입, queryKey타입
 ) => {
   const { queryKey, queryFn } = salesQueries.breakdown(params);
+
   return useQuery<TSalesBreakDownResponse[], Error, TData, SalesKey>({
     queryKey,
     queryFn,

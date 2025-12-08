@@ -29,10 +29,26 @@ export const defaultParse = (value: string, type?: TFormValue): any => {
       const inputValue = v.trim().replace(/[\D]/gi, '');
       return inputValue ? Number(inputValue) : '';
     case 'decimal':
-      return value
-        .replace(/[^0-9.]/g, '') // 숫자와 점(.)만 허용
-        .replace(/^(\d*\.\d{2}).*$/, '$1') // 소수점 2자리까지만 유지
-        .replace(/(\..*)\./g, '$1'); // 소수점 하나만 허용
+      const cleaned = value.replace(/[^0-9.]/g, '');
+
+      // 2️⃣ 소수점이 두 번 이상 등장하면 첫 번째만 남기기
+      const parts = cleaned.split('.');
+      const integerPart = parts[0];
+      const decimalPart = parts[1]?.slice(0, 2) ?? ''; // 소수점 2자리 제한
+
+      // 3️⃣ 정수부는 toLocaleString 적용
+      const formattedInteger = integerPart
+        ? Number(integerPart).toLocaleString('ko-KR') // 천 단위 콤마
+        : '';
+
+      // 4️⃣ 소수점 이하 붙이기
+      return decimalPart
+        ? `${formattedInteger}.${decimalPart}`
+        : formattedInteger;
+    // return value
+    //   .replace(/[^0-9.]/g, '') // 숫자와 점(.)만 허용
+    //   .replace(/^(\d*\.\d{2}).*$/, '$1') // 소수점 2자리까지만 유지
+    //   .replace(/(\..*)\./g, '$1'); // 소수점 하나만 허용
     case 'regNum':
       return formatBizNumber(v);
     case 'date':

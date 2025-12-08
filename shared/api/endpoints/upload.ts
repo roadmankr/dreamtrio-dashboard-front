@@ -1,8 +1,9 @@
+import { EndpointBuilder } from '@/shared/types/api';
 import { Options } from 'ky';
 
 export const upload = {
   dashboardUpload: (formData: FormData) =>
-    [`file/upload/sales`, { method: 'post', body: formData }] as const,
+    [`file/upload/sales`, { method: 'POST', body: formData }] as const,
   analyzeUpload: ({
     storeId,
     saleDate,
@@ -14,6 +15,6 @@ export const upload = {
   }): [url: string, options: Options] =>
     [
       `file/upload/sales/analyze`,
-      { method: 'post', searchParams: { storeId, saleDate }, body: formData },
+      { method: 'POST', searchParams: { storeId, saleDate }, body: formData },
     ] as const,
-} as const;
+} as const satisfies Record<string, EndpointBuilder>;

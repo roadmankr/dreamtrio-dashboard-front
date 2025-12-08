@@ -4,13 +4,18 @@
  */
 
 import AnalyticsLayout from '@/app/admin/analytics/purchase/_components/analytics-layout';
-import PurchaseAnalyticsFilter from '@/app/admin/analytics/purchase/_components/purchase-analytics-filter';
+import PurchaseAnalyticsFilterForm from '@/app/admin/analytics/purchase/_components/purchase-analytics-filter-form';
+import PurchaseAnalyticsFilterSkeleton from '@/app/admin/analytics/purchase/_components/purchase-analytics-filter-skeleton'; // 스켈레톤 컴포넌트 임포트
 import PageWrapper from '@/components/ui/page/page-wrapper';
+import { Suspense } from 'react';
 
-const PurchaseAnalyticsPage = () => {
+const PurchaseAnalyticsPage = async () => {
   return (
     <PageWrapper>
-      <PurchaseAnalyticsFilter />
+      <Suspense fallback={<PurchaseAnalyticsFilterSkeleton />}>
+        <PurchaseAnalyticsFilterForm />
+      </Suspense>
+
       <AnalyticsLayout />
     </PageWrapper>
   );

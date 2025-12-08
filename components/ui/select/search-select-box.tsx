@@ -25,6 +25,7 @@ interface Props {
   value: string | number;
   options: SelectOption[] | undefined;
   onValueChange: (v: any) => void;
+  isValid?: boolean;
   placeholder?: string;
   label?: string;
   className?: string;
@@ -46,6 +47,7 @@ export default function SearchSelectBox({
   isSearchMode = true,
   onFocus,
   disabled = false,
+  isValid,
   ref,
 }: Props) {
   const [open, setOpen] = useState<boolean>(false);
@@ -74,6 +76,7 @@ export default function SearchSelectBox({
               `hover:bg-background focus-visible:border-ring focus-visible:outline-ring/20 h-10 w-full justify-between bg-transparent bg-white px-3 font-normal outline-offset-0 focus-visible:outline-[3px]`,
               className,
             )}
+            aria-invalid={isValid}
             disabled={disabled}
           >
             <span

@@ -11,7 +11,7 @@ import { SearchIcon } from 'lucide-react';
 import { FormProvider } from 'react-hook-form';
 
 const PurchaseAnalyticsFilter = () => {
-  const { form, onSubmit } = usePurchaseAnalyticsFilter();
+  const { form, onSubmit, isPending } = usePurchaseAnalyticsFilter();
 
   return (
     <CardWrapper containerClassName='h-auto'>
@@ -30,7 +30,8 @@ const PurchaseAnalyticsFilter = () => {
 
             <div className='flex items-end'>
               <SubmitButton
-                disabled={!form.formState.isValid}
+                disabled={isPending || !form.formState.isValid}
+                isPending={isPending}
                 submitText='검색'
                 submitIcon={<SearchIcon />}
               />

@@ -22,6 +22,7 @@ const PeriodOption = ({
       placeholder,
       options: getMonthOptions(),
       onValueChange: onChange,
+      name: 'period',
       className,
     }),
     [value, onChange, disabled, placeholder, className],

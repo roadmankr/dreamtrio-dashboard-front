@@ -5,6 +5,8 @@ const nextConfig: NextConfig = {
     serverActions: {
       bodySizeLimit: '4.5mb',
     },
+    typedEnv: true,
+    // typedRoutes: true,
   },
 };
 

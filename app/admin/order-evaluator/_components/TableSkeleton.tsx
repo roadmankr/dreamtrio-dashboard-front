@@ -3,6 +3,7 @@ import { TableCell, TableRow } from '@/components/ui/table';
 export function SkeletonRows({ padY }: { padY: string }) {
   const arr = Array.from({ length: 7 });
   const col = Array.from({ length: 7 });
+
   return (
     <>
       {arr.map((_, i) => (

@@ -20,7 +20,9 @@ export async function GET(
 
     const data = await getStoreDetailInServer({ storeId: result.data });
 
-    return jsonNoStore({ data }, { status: 200 });
+    return jsonNoStore(data.ok ? data : { message: data.err.message }, {
+      status: data.ok ? 200 : (data.err.status ?? 400),
+    });
   } catch (err: unknown) {
     return jsonNoStore(
       { message: await getErrorMessage(err) },

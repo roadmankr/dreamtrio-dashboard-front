@@ -9,20 +9,31 @@ export function sleep(ms: number = 1000) {
   return new Promise((r) => setTimeout(r, ms));
 }
 
-export const debounce = <T extends (...args: any) => any>(
+export const debounce = <T extends (...args: any[]) => any>(
   func: T,
-  delay: number = 150,
+  delay = 150,
 ) => {
   let timeout: ReturnType<typeof setTimeout> | null = null;
 
-  return (...args: Parameters<T>): ReturnType<T> => {
-    let result: any;
-
+  return function (this: ThisParameterType<T>, ...args: Parameters<T>): void {
     if (timeout) clearTimeout(timeout);
-
     timeout = setTimeout(() => {
-      result = func(...args);
+      func.apply(this, args);
     }, delay);
-    return result;
+  };
+};
+
+export const throttle = <T extends (...args: any[]) => any>(
+  func: T,
+  delay = 150,
+) => {
+  let timeout: ReturnType<typeof setTimeout> | null = null;
+
+  return function (this: ThisParameterType<T>, ...args: Parameters<T>) {
+    if (timeout) return;
+    timeout = setTimeout(() => {
+      func.apply(this, args);
+      timeout = null;
+    }, delay);
   };
 };

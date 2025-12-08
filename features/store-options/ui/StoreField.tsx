@@ -23,6 +23,7 @@ const StoreField = <T extends FieldValues, TExtra extends object = {}>({
   ...props
 }: Props<T, TExtra>) => {
   const { storeOptions } = useStoreOptions({ isNeedTotalOption });
+
   const form = useFormContext<T>();
   const field = useMemo(
     () =>

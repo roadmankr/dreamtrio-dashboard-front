@@ -52,7 +52,7 @@ export function EmptyState({
   return (
     <div
       className={cn(
-        'flex flex-1 flex-col items-center justify-center text-center',
+        'flex h-full flex-1 flex-col items-center justify-center text-center',
         sizeMap[size].gap,
       )}
     >

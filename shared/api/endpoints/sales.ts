@@ -1,4 +1,5 @@
 import { UploadFile, UploadFileMap } from '@/app/admin/upload/_config';
+import { EndpointBuilder } from '@/shared/types/api';
 import { Options } from 'ky';
 
 export const sales = {
@@ -16,4 +17,4 @@ export const sales = {
     formData: FormData;
   }) =>
     [`file/upload/${uploadType}`, { method: 'POST', body: formData }] as const,
-} as const;
+} as const satisfies Record<string, EndpointBuilder>;

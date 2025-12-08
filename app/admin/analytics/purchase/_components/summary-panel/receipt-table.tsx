@@ -1,85 +1,75 @@
-import {
-  Card,
-  CardBody,
-  CardHeader,
-} from '@/app/admin/analytics/purchase/_components/card-layout';
+import useVoucherAnalyze from '@/app/admin/analytics/purchase/_api/useVoucherAnalyze';
+import { summaryPanelColumns } from '@/app/admin/analytics/purchase/_config/table.config';
 import useReceiptTableState from '@/app/admin/analytics/purchase/_hooks/useReceiptTableState';
+import { performanceAnalyticsStore } from '@/app/admin/analytics/purchase/_store/performance.store';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { TableBody, TableCell, TableRow } from '@/components/ui/table';
+import {
+  PanelCard,
+  PanelCardBody,
+  PanelCardHeader,
+} from '@/components/ui/card/panel-card';
+import { CommonDataTable } from '@/components/ui/table/common-data-table';
+import { TSlip } from '@/shared/types/analyze';
+import { ReloadIcon } from '@radix-ui/react-icons';
+import { ChartAreaIcon } from 'lucide-react';
+import { useEffect } from 'react';
+import { useStore } from 'zustand';
 
-export default function ReceiptTable() {
-  const { rows, selected, isAllSelected, toggleAll, toggleOne } =
-    useReceiptTableState();
+export default function ReceiptTable({
+  rows,
+  storeName,
+  isPending,
+}: {
+  rows: TSlip[];
+  storeName: string;
+  isPending?: boolean;
+}) {
+  const setPending = useStore(
+    performanceAnalyticsStore,
+    (state) => state.setPending,
+  );
+  const { selection } = useReceiptTableState({ rows });
+  const { mutateAsync, isPending: isUpdatePending } = useVoucherAnalyze({
+    storeName,
+  });
+
+  useEffect(() => {
+    setPending?.(isUpdatePending);
+  }, [isUpdatePending, setPending]);
 
   return (
-    <Card>
+    <PanelCard>
       <div className='flex items-center justify-between py-2 pr-5'>
-        <CardHeader title='전표 선택' />
+        <PanelCardHeader title='전표 선택' />
         <Button
           type='button'
-          disabled={selected.size === 0}
-          aria-disabled={selected.size === 0}
+          disabled={selection.selected.size === 0 || isUpdatePending}
+          aria-disabled={selection.selected.size === 0 || isUpdatePending}
           aria-label='선택된 전표 분석'
           className='cursor-pointer'
+          onClick={() => mutateAsync([...selection.selected])}
         >
+          {isUpdatePending ? (
+            <ReloadIcon className='animate-spin' />
+          ) : (
+            <ChartAreaIcon />
+          )}
           전표 분석
         </Button>
       </div>
-      <CardBody className='w-full'>
+
+      <PanelCardBody className='w-full'>
         <div className='max-h-60 min-h-0 max-w-full overflow-x-auto overflow-y-auto rounded-xl border border-zinc-100'>
-          <table className='w-full text-sm'>
-            <thead className='sticky top-0 z-10 bg-zinc-50'>
-              <tr className='text-xs text-zinc-500'>
-                <th className='sticky w-10 px-4 py-2 text-left font-medium'>
-                  <Input
-                    type='checkbox'
-                    className='size-4 accent-zinc-800'
-                    onChange={toggleAll}
-                    checked={isAllSelected}
-                  />
-                </th>
-                <th className='px-4 py-2 text-left font-medium'>전표별</th>
-                <th className='px-4 py-2 text-right font-medium'>수량</th>
-                <th className='px-4 py-2 text-right font-medium'>공급가액</th>
-                <th className='px-4 py-2 text-right font-medium'>부가세</th>
-                <th className='px-4 py-2 text-right font-medium'>합계</th>
-              </tr>
-            </thead>
-            <TableBody className='divide-y divide-zinc-100'>
-              {rows.map((r) => (
-                <TableRow key={r.id} className='hover:bg-zinc-50/60'>
-                  <TableCell className='px-4 py-2'>
-                    <Input
-                      type='checkbox'
-                      checked={selected.has(r.id)}
-                      className='size-4 accent-zinc-800'
-                      onChange={() => toggleOne(r.id)}
-                    />
-                  </TableCell>
-                  <TableCell
-                    className={`px-4 py-2 ${r.strong ? 'font-semibold text-zinc-900' : ''}`}
-                  >
-                    {r.id}
-                  </TableCell>
-                  <TableCell className='px-4 py-2 text-right tabular-nums'>
-                    {r.qty}
-                  </TableCell>
-                  <TableCell className='px-4 py-2 text-right tabular-nums'>
-                    {r.supply}
-                  </TableCell>
-                  <TableCell className='px-4 py-2 text-right tabular-nums'>
-                    {r.vat}
-                  </TableCell>
-                  <TableCell className='px-4 py-2 text-right tabular-nums'>
-                    {r.total}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </table>
+          <CommonDataTable
+            rows={rows}
+            columns={summaryPanelColumns}
+            selection={selection}
+            getRowId={(row) => row.slipNo}
+            isPending={isPending}
+            stickyHeader={true}
+          />
         </div>
-      </CardBody>
-    </Card>
+      </PanelCardBody>
+    </PanelCard>
   );
 }

@@ -24,6 +24,7 @@ const StoreOption = ({
   const common = useMemo(
     () => ({
       value,
+      name: 'storeId',
       disabled,
       placeholder,
       options: storeOptions,

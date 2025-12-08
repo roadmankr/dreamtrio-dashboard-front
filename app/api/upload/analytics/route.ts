@@ -13,8 +13,6 @@ export async function POST(req: NextRequest) {
   const file = form.get('file');
   const storeId = form.get('storeId');
   const saleDate = String(form.get('saleDate'));
-  // const storeId = req.nextUrl.searchParams.get('storeId');
-  // const saleDate = req.nextUrl.searchParams.get('saleDate');
 
   try {
     const validate = validateFile(file);
@@ -34,7 +32,7 @@ export async function POST(req: NextRequest) {
       formData: form,
     };
     const data = await uploadOrderEvaluatorFileInServer(params);
-    return jsonNoStore({ data }, { status: 200 });
+    return jsonNoStore(data, { status: 200 });
   } catch (err: unknown) {
     return jsonNoStore(
       { message: await getErrorMessage(err) },

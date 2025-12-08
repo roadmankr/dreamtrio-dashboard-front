@@ -1,14 +1,12 @@
-import { storeIdOptionalSchema } from '@/entities/stores/model/id.schema';
-import dayjs from '@/lib/dayjs';
+import { storeIdRequiredSchema } from '@/entities/stores/model/id.schema';
+import { yearMonthDateSchema } from '@/shared/date/schema';
 import { DIMENSION_VALUES } from '@/shared/model/dimension';
 
 import z from 'zod';
 
 export const salesListFilterSchema = z.object({
-  saleDate: z.string().refine((v) => dayjs(v, 'YYYY-MM', true).isValid(), {
-    error: '날짜를 선택해주세요',
-  }),
-  storeId: storeIdOptionalSchema,
+  saleDate: yearMonthDateSchema,
+  storeId: storeIdRequiredSchema,
   dimension: z.enum(DIMENSION_VALUES, {
     error: (issue) => {
       if (issue.code === 'invalid_value')

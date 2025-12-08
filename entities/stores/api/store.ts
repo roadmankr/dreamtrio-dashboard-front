@@ -1,14 +1,16 @@
 import { TStore, TStoreOptimal } from '@/entities/stores/model/type';
-import { requestApiForActions } from '@/shared/api/request/request.client';
+import { requestApiInClient } from '@/shared/api/request/request.client';
 
 export const getStoreList = async () => {
-  return await requestApiForActions<TStore[]>(`/api/store`, {
+  return await requestApiInClient<TStore[]>(`store`, {
     method: 'get',
+    mode: 'route',
   });
 };
 
 export const getStoreDetail = async (storeId: number) => {
-  return await requestApiForActions<TStoreOptimal>(`/api/store/${storeId}`, {
+  return await requestApiInClient<TStoreOptimal>(`store/${storeId}`, {
     method: 'get',
+    mode: 'route',
   });
 };

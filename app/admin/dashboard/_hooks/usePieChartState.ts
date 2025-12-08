@@ -1,6 +1,9 @@
+import {
+  pichartCololrsConfig,
+  TPieChartTooltip,
+} from '@/components/ui/charts/pie-chart/pie-chart.config';
 import { formatCurrency } from '@/lib/format';
 import { TSalesBreakDownResponse } from '@/shared/types/sales';
-import { pichartCololrsConfig, TPieChartTooltip } from '../_config';
 
 const usePieChartState = ({ data }: { data?: TSalesBreakDownResponse[] }) => {
   const maxLabelPx = (data ?? []).reduce((max, d) => {

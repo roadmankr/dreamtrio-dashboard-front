@@ -4,6 +4,7 @@ import { getErrorMessage } from '@/lib/error';
 
 import { prefetchKy, serverKy } from '@/shared/api/ky/ky.server';
 import { ActionResult, HttpResponseCode } from '@/shared/api/request/error';
+import { ErrorCode } from '@/shared/constants';
 import { HTTPError, Options, TimeoutError } from 'ky';
 
 export const requestApiForPrefetch = async <T>(
@@ -18,6 +19,15 @@ export const requestApiJson = async <T>(
   options: Options,
 ): Promise<ActionResult<T>> => {
   try {
+    if (!url)
+      return {
+        ok: false,
+        err: {
+          code: HttpResponseCode.HTTP_404,
+          message: ErrorCode.NOT_FOUND_404,
+        },
+      };
+
     const data = await serverKy(url, options).json<T>();
     return { ok: true, data };
   } catch (err: unknown) {
@@ -97,7 +107,7 @@ export const requestApiJson = async <T>(
   }
 };
 
-export const requestApiJsonOrThrow = async <T>(
+export const requestApiInServer = async <T>(
   url: string,
   options: Options,
 ): Promise<T> => {

@@ -11,7 +11,8 @@ import useDashboardFilter from '../_hooks/useDashboardFilter';
 import { TStoreDateFilter } from '../_schema/dashboard.schema';
 
 const DashboardFilter = () => {
-  const { form, onSubmit, resetParams, disabled } = useDashboardFilter();
+  const { form, onSubmit, resetParams, disabled, isPending } =
+    useDashboardFilter();
 
   return (
     <CardWrapper className='flex max-w-3xl'>
@@ -27,6 +28,7 @@ const DashboardFilter = () => {
             <ResetButton onClick={resetParams} />
             <SubmitButton
               disabled={disabled}
+              isPending={isPending}
               submitText='검색'
               submitIcon={<SearchIcon />}
             />

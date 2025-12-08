@@ -53,11 +53,11 @@ export type QueryOpts<TFnData, TData, TKey extends QueryKey = QueryKey> = Omit<
   UseQueryOptions<TFnData, Error, TData, TKey>,
   'queryKey' | 'queryFn'
 >;
-type ParamKeys<S extends string> = S extends `${string}:${infer P}/${infer R}`
-  ? P | ParamKeys<R>
-  : S extends `${string}:${infer P}`
-    ? P
-    : never;
+// type ParamKeys<S extends string> = S extends `${string}:${infer P}/${infer R}`
+//   ? P | ParamKeys<R>
+//   : S extends `${string}:${infer P}`
+//     ? P
+//     : never;
 
 // // 레지스트리 K에 대한 param 키 유니온
 // export type PathParamKeys<K extends keyof TApiRegistry> = ParamKeys<
