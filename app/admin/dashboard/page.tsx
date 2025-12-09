@@ -1,6 +1,8 @@
-import ProductPerformanceSection from '@/app/admin/dashboard/_components/product/product-performance-section';
+import AgeDashboardChart from '@/app/admin/dashboard/_components/AgeDashboardChart.client';
+import AnimationDashboardChart from '@/app/admin/dashboard/_components/AnimationDashboardChart.client';
+import BrandDashboardChart from '@/app/admin/dashboard/_components/BrandDashboardChart.client';
+import GenderDashboardChart from '@/app/admin/dashboard/_components/GenderDashboardChart.client';
 import ProductDashboardChart from '@/app/admin/dashboard/_components/ProductDashboardChart.client';
-import StorePerformanceSection from '@/app/admin/dashboard/_components/store/store-performance-section';
 import PageWrapper from '@/components/ui/page/page-wrapper';
 import { getStoreListForPrefetch } from '@/entities/stores/api/store.server';
 import { queries } from '@/shared/queries';
@@ -22,26 +24,25 @@ const DashboardPage = async () => {
   return (
     <PageWrapper>
       <HydrationBoundary state={dehydrate(queryClient)}>
-        {/* useSearchParams를 사용하기 위해 Suspense wrapper */}
         <Suspense>
           <div className='flex w-full flex-col gap-3 p-3'>
             {/* 매장/일자 검색 */}
             <DashboardFilter />
-            {/* <StoreDateFilter /> */}
-            <div className='grid grid-cols-1 gap-4 xl:grid-cols-2 xl:gap-4'>
+            {/* <div className='grid grid-cols-1 gap-4 xl:grid-cols-2 xl:gap-4'>
               <StorePerformanceSection />
               <ProductPerformanceSection />
             </div>
+            <ProductDashboardChart /> */}
             {/* <SellerTables /> */}
-            <ProductDashboardChart />
-            {/* <div className='grid gap-3 lg:grid-cols-2'>
+
+            <div className='grid gap-3 lg:grid-cols-2'>
               <GenderDashboardChart />
               <AgeDashboardChart />
             </div>
 
             <ProductDashboardChart />
             <BrandDashboardChart />
-            <AnimationDashboardChart /> */}
+            <AnimationDashboardChart />
           </div>
         </Suspense>
       </HydrationBoundary>
